@@ -2,7 +2,7 @@ export default {
   // 网站标题
   Title: 'Chenxi Blog',
   // 网站地址
-  Site: 'https://acdd3af2-2b01-47ce-a682-fbe486507210.dev.coze.site/',
+  Site: 'https://zjhcx.github.io/',
   // 网站副标题
   Subtitle: '114514',
   // 网站描述
