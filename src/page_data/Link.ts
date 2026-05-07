@@ -6,8 +6,14 @@ export default {
     {
       "name": "网盘",
       "link": "https://cdr.zeabur.app/",
-      "avatar": "https://zv3t4m88w6.coze.site/img/cloudreve.png",
+      "avatar": "https://zfl.pages.dev/files/cloudreve.png",
       "descr": "网盘"
+    },
+    {
+      "name": "OJ",
+      "link": "https://codeconfig.coze.site/",
+      "avatar": "https://zfl.pages.dev/files/coj.png",
+      "descr": "OJ"
     }
   ]
 }
