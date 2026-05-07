@@ -1,0 +1,9 @@
+---
+const { prev, next } = Astro.props;
+import "./PrevNextArticle.less";
+---
+
+<section class="vh-otarticle">
+	<a class="art-item" style={`background-image: url('${prev.cover}')`} href={prev.id}><span class="vh-ellipsis line-2">{prev.title}</span></a>
+	<a class="art-item" style={`background-image: url('${next.cover}')`} href={next.id}><span class="vh-ellipsis line-2">{next.title}</span></a>
+</section>

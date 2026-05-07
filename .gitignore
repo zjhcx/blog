@@ -1,0 +1,17 @@
+.DS_Store
+*.swp
+.git/*
+__pycache__/
+*.pyc
+.venv/*
+*.o
+*.a
+/vendor
+*.egg-info/
+/.env
+dist
+node_modules
+build
+*.log
+*.bak
+*.tmp
