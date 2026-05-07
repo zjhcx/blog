@@ -16,8 +16,24 @@ import { remarkNote, addClassNames } from './src/plugins/markdown.custom'
 import SITE_INFO from './src/config';
 import swup from '@swup/astro';
 // https://astro.build/config
+
+// 自动检测各平台的默认 URL 环境变量
+const getSiteUrl = () => {
+  // Cloudflare Pages 默认提供 CF_PAGES_URL
+  if (process.env.CF_PAGES === 'true') return process.env.CF_PAGES_URL || SITE_INFO.Site;
+  
+  // Vercel 默认提供 VERCEL_URL
+  if (process.env.VERCEL === '1') return `https://${process.env.VERCEL_URL}`;
+  
+  // GitHub Pages 手动指定或保持默认
+  if (process.env.GITHUB_ACTIONS === 'true') return SITE_INFO.Site;
+  
+  // 默认指向配置中的 Site
+  return SITE_INFO.Site;
+};
+
 export default defineConfig({
-	site: SITE_INFO.Site,
+	site: getSiteUrl(),
 	build: { assets: 'vh_static' },
 	integrations: [swup({
 		theme: false,
