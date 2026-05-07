@@ -3,6 +3,12 @@ export default {
   Title: 'Chenxi Blog',
   // 网站地址
   Site: 'https://zjhcx.github.io/',
+  // Cloudflare Pages 地址,非CF Pages部署可忽略
+  CFSite: 'https://cx12.pages.dev/',
+  // Vercel 地址,非Vercel部署可忽略
+  VercelSite: 'https://your-vercel-app.vercel.app/',
+  // GitHub Pages 地址,非GitHub Pages部署可忽略
+  GHSite: 'https://zjhcx.github.io/',
   // 网站副标题
   Subtitle: '114514',
   // 网站描述

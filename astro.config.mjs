@@ -20,13 +20,13 @@ import swup from '@swup/astro';
 // 自动检测各平台的默认 URL 环境变量
 const getSiteUrl = () => {
   // Cloudflare Pages 默认提供 CF_PAGES_URL
-  if (process.env.CF_PAGES === '1') return process.env.CF_PAGES_URL || SITE_INFO.Site;
+  if (process.env.platform === 'cloudflare' || process.env.CF_PAGES === '1') return process.env.CF_PAGES_URL || SITE_INFO.CFSite || SITE_INFO.Site;
   
   // Vercel 默认提供 VERCEL_URL
-  if (process.env.VERCEL === '1') return `https://${process.env.VERCEL_URL}`;
+  if (process.env.platform === 'vercel' || process.env.VERCEL === '1') return `https://${process.env.VERCEL_URL}` || SITE_INFO.VercelSite || SITE_INFO.Site;
   
   // GitHub Pages 手动指定或保持默认
-  if (process.env.GITHUB_ACTIONS === 'true') return SITE_INFO.Site;
+  if (process.env.platform === 'github' || process.env.GITHUB_ACTIONS === 'true') return SITE_INFO.GHSite || SITE_INFO.Site;
   
   // 默认指向配置中的 Site
   return SITE_INFO.Site;
