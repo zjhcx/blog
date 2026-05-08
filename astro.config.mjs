@@ -1,73 +1,172 @@
-import path from "path";
-import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
-import Compress from "@playform/compress";
-import Compressor from "astro-compressor";
-import { defineConfig } from 'astro/config';
-import { fileURLToPath } from 'url';
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// Markdown 配置================
-import remarkMath from "remark-math";
-import rehypeSlug from "rehype-slug";
+import sitemap from "@astrojs/sitemap";
+import svelte from "@astrojs/svelte";
+import tailwind from "@astrojs/tailwind";
+import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
+import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
+import swup from "@swup/astro";
+import expressiveCode from "astro-expressive-code";
+import icon from "astro-icon";
+import { defineConfig } from "astro/config";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeComponents from "rehype-components"; /* Render the custom directive content */
 import rehypeKatex from "rehype-katex";
-import remarkDirective from "remark-directive";
-import { remarkNote, addClassNames } from './src/plugins/markdown.custom'
-// Markdown 配置================
-import SITE_INFO from './src/config';
-import swup from '@swup/astro';
+import rehypeSlug from "rehype-slug";
+import remarkDirective from "remark-directive"; /* Handle directives */
+import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-directives";
+import remarkMath from "remark-math";
+import remarkSectionize from "remark-sectionize";
+import { expressiveCodeConfig } from "./src/config.ts";
+import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
+import { AdmonitionComponent } from "./src/plugins/rehype-component-admonition.mjs";
+import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.mjs";
+import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
+import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
+import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
+import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
+
 // https://astro.build/config
-
-// 自动检测各平台的默认 URL 环境变量
-const getSiteUrl = () => {
-  // Cloudflare Pages 默认提供 CF_PAGES_URL
-  if (process.env.platform === 'cloudflare' || process.env.CF_PAGES === '1') return process.env.CF_PAGES_URL || SITE_INFO.CFSite || SITE_INFO.Site;
-  
-  // Vercel 默认提供 VERCEL_URL
-  if (process.env.platform === 'vercel' || process.env.VERCEL === '1') return `https://${process.env.VERCEL_URL}` || SITE_INFO.VercelSite || SITE_INFO.Site;
-  
-  // GitHub Pages 手动指定或保持默认
-  if (process.env.platform === 'github' || process.env.GITHUB_ACTIONS === 'true') return SITE_INFO.GHSite || SITE_INFO.Site;
-  
-  // 默认指向配置中的 Site
-  return SITE_INFO.Site;
-};
-
 export default defineConfig({
-	site: getSiteUrl(),
-	build: { assets: 'vh_static' },
-	integrations: [swup({
-		theme: false,
-		animationClass: "vh-animation-",
-		containers: [".main-inner>.main-inner-content", '.vh-header>.main'],
-		smoothScrolling: true,
-		progress: true,
-		cache: true,
-		preload: true,
-		accessibility: true,
-		updateHead: true,
-		updateBodyClass: false,
-		globalInstance: true
-	}),
-	Compress({ Image: false, Action: { Passed: async () => true } }),
-	sitemap({
-		// 处理末尾带 / 的 url
-		serialize: (item) => ({ ...item, url: item.url.endsWith('/') ? item.url.slice(0, -1) : item.url })
-	}),
-	mdx({ extendMarkdownConfig: false }),
-	Compressor({ gzip: false, brotli: true, fileExtensions: [".html", ".css", ".js"] })
+	site: "https://cx12.pages.dev",
+	base: "/",
+	trailingSlash: "always",
+	integrations: [
+		tailwind({
+			nesting: true,
+		}),
+		swup({
+			theme: false,
+			animationClass: "transition-swup-", // see https://swup.js.org/options/#animationselector
+			// the default value `transition-` cause transition delay
+			// when the Tailwind class `transition-all` is used
+			containers: ["main", "#toc"],
+			smoothScrolling: true,
+			cache: true,
+			preload: true,
+			accessibility: true,
+			updateHead: true,
+			updateBodyClass: false,
+			globalInstance: true,
+		}),
+		icon({
+			include: {
+				"preprocess: vitePreprocess(),": ["*"],
+				"fa6-brands": ["*"],
+				"fa6-regular": ["*"],
+				"fa6-solid": ["*"],
+			},
+		}),
+		expressiveCode({
+			themes: [expressiveCodeConfig.theme, expressiveCodeConfig.theme],
+			plugins: [
+				pluginCollapsibleSections(),
+				pluginLineNumbers(),
+				pluginLanguageBadge(),
+				pluginCustomCopyButton()
+			],
+			defaultProps: {
+				wrap: true,
+				overridesByLang: {
+					'shellsession': {
+						showLineNumbers: false,
+					},
+				},
+			},
+			styleOverrides: {
+				codeBackground: "var(--codeblock-bg)",
+				borderRadius: "0.75rem",
+				borderColor: "none",
+				codeFontSize: "0.875rem",
+				codeFontFamily: "'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+				codeLineHeight: "1.5rem",
+				frames: {
+					editorBackground: "var(--codeblock-bg)",
+					terminalBackground: "var(--codeblock-bg)",
+					terminalTitlebarBackground: "var(--codeblock-topbar-bg)",
+					editorTabBarBackground: "var(--codeblock-topbar-bg)",
+					editorActiveTabBackground: "none",
+					editorActiveTabIndicatorBottomColor: "var(--primary)",
+					editorActiveTabIndicatorTopColor: "none",
+					editorTabBarBorderBottomColor: "var(--codeblock-topbar-bg)",
+					terminalTitlebarBorderBottomColor: "none"
+				},
+				textMarkers: {
+					delHue: 0,
+					insHue: 180,
+					markHue: 250
+				}
+			},
+			frames: {
+				showCopyToClipboardButton: false,
+			}
+		}),
+        svelte(),
+		sitemap(),
 	],
 	markdown: {
-		remarkPlugins: [remarkMath, remarkDirective, remarkNote,],
-		rehypePlugins: [[
-			rehypeKatex, {
-				output: 'mathml',
-				trust: true,
-				strict: false
-			}
-		], rehypeSlug, addClassNames],
-		syntaxHighlight: 'shiki',
-		shikiConfig: { theme: 'github-light' },
+		remarkPlugins: [
+			remarkMath,
+			remarkReadingTime,
+			remarkExcerpt,
+			remarkGithubAdmonitionsToDirectives,
+			remarkDirective,
+			remarkSectionize,
+			parseDirectiveNode,
+		],
+		rehypePlugins: [
+			rehypeKatex,
+			rehypeSlug,
+			[
+				rehypeComponents,
+				{
+					components: {
+						github: GithubCardComponent,
+						note: (x, y) => AdmonitionComponent(x, y, "note"),
+						tip: (x, y) => AdmonitionComponent(x, y, "tip"),
+						important: (x, y) => AdmonitionComponent(x, y, "important"),
+						caution: (x, y) => AdmonitionComponent(x, y, "caution"),
+						warning: (x, y) => AdmonitionComponent(x, y, "warning"),
+					},
+				},
+			],
+			[
+				rehypeAutolinkHeadings,
+				{
+					behavior: "append",
+					properties: {
+						className: ["anchor"],
+					},
+					content: {
+						type: "element",
+						tagName: "span",
+						properties: {
+							className: ["anchor-icon"],
+							"data-pagefind-ignore": true,
+						},
+						children: [
+							{
+								type: "text",
+								value: "#",
+							},
+						],
+					},
+				},
+			],
+		],
 	},
-	vite: { resolve: { alias: { "@": path.resolve(__dirname, "./src") } } },
-	server: { host: '0.0.0.0' }
+	vite: {
+		build: {
+			rollupOptions: {
+				onwarn(warning, warn) {
+					// temporarily suppress this warning
+					if (
+						warning.message.includes("is dynamically imported by") &&
+						warning.message.includes("but also statically imported by")
+					) {
+						return;
+					}
+					warn(warning);
+				},
+			},
+		},
+	},
 });
