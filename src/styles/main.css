@@ -1,8 +1,19 @@
 @tailwind components;
 
+body {
+    background-image: url('/bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
 @layer components {
     .card-base {
         @apply rounded-[var(--radius-large)] overflow-hidden bg-[var(--card-bg)] transition;
+        /*border: 1px solid var(--card-border);*/
+        box-shadow: var(--card-shadow);
+        /*-webkit-backdrop-filter: saturate(1.2) blur(var(--card-backdrop-blur));*/
+        /*backdrop-filter: saturate(1.2) blur(var(--card-backdrop-blur));*/
     }
     h1, h2, h3, h4, h5, h6, p, a, span, li, ul, ol, blockquote, code, pre, table, th, td, strong {
         @apply transition;
@@ -21,7 +32,10 @@
         @apply transition rounded-md p-1.5 -m-1.5 expand-animation;
     }
     .float-panel {
-        @apply top-[5.25rem] rounded-[var(--radius-large)] overflow-hidden bg-[var(--float-panel-bg)] transition shadow-xl dark:shadow-none
+        @apply top-[5.25rem] rounded-[var(--radius-large)] overflow-hidden bg-[var(--float-panel-bg)] transition shadow-xl dark:shadow-none;
+        border: 1px solid var(--card-border);
+        -webkit-backdrop-filter: saturate(1.2) blur(var(--card-backdrop-blur));
+        backdrop-filter: saturate(1.2) blur(var(--card-backdrop-blur));
     }
     .float-panel-closed {
         @apply -translate-y-1 opacity-0 pointer-events-none

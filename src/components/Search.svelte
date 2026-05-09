@@ -12,6 +12,9 @@ let result: SearchResult[] = [];
 let isSearching = false;
 let pagefindLoaded = false;
 let initialized = false;
+let pagefindLoadPromise: Promise<boolean> | null = null;
+let desktopSearchTimer: ReturnType<typeof setTimeout> | null = null;
+let mobileSearchTimer: ReturnType<typeof setTimeout> | null = null;
 
 const fakeResult: SearchResult[] = [
 	{
@@ -63,7 +66,11 @@ const search = async (keyword: string, isDesktop: boolean): Promise<void> => {
 	try {
 		let searchResults: SearchResult[] = [];
 
-		if (import.meta.env.PROD && pagefindLoaded && window.pagefind) {
+		if (
+			import.meta.env.PROD &&
+			(await ensurePagefindLoaded()) &&
+			window.pagefind
+		) {
 			const response = await window.pagefind.search(keyword);
 			searchResults = await Promise.all(
 				response.results.map((item) => item.data()),
@@ -86,6 +93,52 @@ const search = async (keyword: string, isDesktop: boolean): Promise<void> => {
 	}
 };
 
+function scheduleSearch(keyword: string, isDesktop: boolean): void {
+	const timer = isDesktop ? desktopSearchTimer : mobileSearchTimer;
+	if (timer) {
+		clearTimeout(timer);
+	}
+
+	const nextTimer = setTimeout(() => {
+		search(keyword, isDesktop);
+	}, 180);
+
+	if (isDesktop) {
+		desktopSearchTimer = nextTimer;
+	} else {
+		mobileSearchTimer = nextTimer;
+	}
+}
+
+async function ensurePagefindLoaded(): Promise<boolean> {
+	if (!import.meta.env.PROD) {
+		return false;
+	}
+	if (pagefindLoaded && window.pagefind) {
+		return true;
+	}
+	if (!pagefindLoadPromise) {
+		pagefindLoadPromise = import(
+			/* @vite-ignore */ url("/pagefind/pagefind.js")
+		)
+			.then(async (pagefind) => {
+				await pagefind.options({
+					excerptLength: 20,
+				});
+				window.pagefind = pagefind;
+				pagefindLoaded = true;
+				return true;
+			})
+			.catch((error) => {
+				console.error("Failed to load Pagefind:", error);
+				pagefindLoaded = false;
+				return false;
+			});
+	}
+
+	return pagefindLoadPromise;
+}
+
 onMount(() => {
 	const initializeSearch = () => {
 		initialized = true;
@@ -93,48 +146,19 @@ onMount(() => {
 			typeof window !== "undefined" &&
 			!!window.pagefind &&
 			typeof window.pagefind.search === "function";
-		console.log("Pagefind status on init:", pagefindLoaded);
 		if (keywordDesktop) search(keywordDesktop, true);
 		if (keywordMobile) search(keywordMobile, false);
 	};
 
-	if (import.meta.env.DEV) {
-		console.log(
-			"Pagefind is not available in development mode. Using mock data.",
-		);
-		initializeSearch();
-	} else {
-		document.addEventListener("pagefindready", () => {
-			console.log("Pagefind ready event received.");
-			initializeSearch();
-		});
-		document.addEventListener("pagefindloaderror", () => {
-			console.warn(
-				"Pagefind load error event received. Search functionality will be limited.",
-			);
-			initializeSearch(); // Initialize with pagefindLoaded as false
-		});
-
-		// Fallback in case events are not caught or pagefind is already loaded by the time this script runs
-		setTimeout(() => {
-			if (!initialized) {
-				console.log("Fallback: Initializing search after timeout.");
-				initializeSearch();
-			}
-		}, 2000); // Adjust timeout as needed
-	}
+	initializeSearch();
 });
 
-$: if (initialized && keywordDesktop) {
-	(async () => {
-		await search(keywordDesktop, true);
-	})();
+$: if (initialized) {
+	scheduleSearch(keywordDesktop, true);
 }
 
-$: if (initialized && keywordMobile) {
-	(async () => {
-		await search(keywordMobile, false);
-	})();
+$: if (initialized) {
+	scheduleSearch(keywordMobile, false);
 }
 </script>
 

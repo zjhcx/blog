@@ -5,7 +5,19 @@ export const vi: Translation = {
 	[Key.home]: "Trang chủ",
 	[Key.about]: "Giới thiệu",
 	[Key.archive]: "Kho bài",
+	[Key.links]: "Liên kết",
+	[Key.linksDescription]: "Blog bạn bè và các trang được đề xuất",
+	[Key.other]: "Khác",
 	[Key.search]: "Tìm kiếm",
+	[Key.language]: "Ngôn ngữ",
+
+	[Key.friendGithubDescription]:
+		"Nền tảng lưu trữ dự án phần mềm nguồn mở và riêng tư",
+	[Key.friendOpenAIDescription]: "Nền tảng nghiên cứu và sản phẩm AI",
+	[Key.friendBilibiliDescription]: "Cộng đồng video và nền tảng sáng tạo",
+	[Key.friendXDescription]: "Nền tảng mạng xã hội",
+	[Key.friendDiscordDescription]: "Nền tảng trò chuyện và cộng đồng phổ biến",
+	[Key.friendCloudflareDescription]: "Nền tảng hiệu năng và bảo mật web",
 
 	[Key.tags]: "Thẻ",
 	[Key.categories]: "Danh mục",

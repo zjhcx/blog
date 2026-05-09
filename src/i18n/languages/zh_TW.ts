@@ -5,7 +5,18 @@ export const zh_TW: Translation = {
 	[Key.home]: "首頁",
 	[Key.about]: "關於",
 	[Key.archive]: "彙整",
+	[Key.links]: "友鏈",
+	[Key.linksDescription]: "朋友們的部落格和推薦站點",
+	[Key.other]: "其他",
 	[Key.search]: "搜尋",
+	[Key.language]: "語言",
+
+	[Key.friendGithubDescription]: "面向開源及私有軟體專案的託管平台",
+	[Key.friendOpenAIDescription]: "AI 研究與產品平台",
+	[Key.friendBilibiliDescription]: "影音社群與創作平台",
+	[Key.friendXDescription]: "社群平台",
+	[Key.friendDiscordDescription]: "流行的聊天和社群平台",
+	[Key.friendCloudflareDescription]: "Web 效能與安全平台",
 
 	[Key.tags]: "標籤",
 	[Key.categories]: "分類",

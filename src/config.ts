@@ -1,16 +1,18 @@
 import type {
 	ExpressiveCodeConfig,
+	FriendLink,
 	LicenseConfig,
 	NavBarConfig,
 	ProfileConfig,
 	SiteConfig,
 } from "./types/config";
+import I18nKey from "./i18n/i18nKey";
 import { LinkPreset } from "./types/config";
 
 export const siteConfig: SiteConfig = {
 	title: "Chenxi's Blog",
 	subtitle: "114514",
-	lang: "zh_CN", // Language code, e.g. 'en', 'zh_CN', 'ja', etc.
+	lang: "zh_CN", // 语言代码, e.g. 'en', 'zh_CN', 'ja', etc.
 	themeColor: {
 		hue: 250, // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
 		fixed: false, // Hide the theme color picker for visitors
@@ -44,13 +46,61 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Home,
 		LinkPreset.Archive,
 		LinkPreset.About,
+		LinkPreset.Links,
 		{
-			name: "友链",
-			url: "/links/", // Internal links should not include the base path, as it is automatically added
+			name: "其他",
+			url: "/other/", // Internal links should not include the base path, as it is automatically added
 			external: false, // Show an external link icon and will open in a new tab
+			i18nKey: I18nKey.other,
 		},
 	],
 };
+
+export const linksConfig: FriendLink[] = [
+	{
+		name: "GitHub",
+		url: "https://github.com",
+		avatar: "https://github.com/github.png",
+		desc: "GitHub 是一个面向开源及私有软件项目的托管平台",
+		descI18nKey: I18nKey.friendGithubDescription,
+	},
+	{
+		name: "OpenAI",
+		url: "https://openai.com",
+		avatar: "https://github.com/openai.png",
+		desc: "ChatGPT",
+		descI18nKey: I18nKey.friendOpenAIDescription,
+	},
+	{
+		name: "哔哩哔哩",
+		url: "https://www.bilibili.com",
+		avatar: "https://www.bilibili.com/favicon.ico",
+		desc: "哔哩哔哩",
+		descI18nKey: I18nKey.friendBilibiliDescription,
+	},
+	{
+		name: "X",
+		url: "https://x.com",
+		avatar: "https://x.com/favicon.ico",
+		desc: "社交平台",
+		descI18nKey: I18nKey.friendXDescription,
+	},
+	{
+		name: "Discord",
+		url: "https://discord.com",
+		avatar:
+			"https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/62fddf0fde45a8baedcc7ee5_847541504914fd33810e70a0ea73177e%20(2)-1.png",
+		desc: "Discord 是一个流行的聊天和社交平台",
+		descI18nKey: I18nKey.friendDiscordDescription,
+	},
+	{
+		name: "Cloudflare",
+		url: "https://cloudflare.com",
+		avatar: "https://cloudflare.com/favicon.ico",
+		desc: "赛博活佛",
+		descI18nKey: I18nKey.friendCloudflareDescription,
+	},
+];
 
 export const profileConfig: ProfileConfig = {
 	avatar: "/avatar.jpg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'

@@ -5,7 +5,19 @@ export const en: Translation = {
 	[Key.home]: "Home",
 	[Key.about]: "About",
 	[Key.archive]: "Archive",
+	[Key.links]: "Links",
+	[Key.linksDescription]: "Friends' blogs and recommended sites",
+	[Key.other]: "Other",
 	[Key.search]: "Search",
+	[Key.language]: "Language",
+
+	[Key.friendGithubDescription]:
+		"A hosting platform for open-source and private software projects",
+	[Key.friendOpenAIDescription]: "AI research and product platform",
+	[Key.friendBilibiliDescription]: "Video community and creative platform",
+	[Key.friendXDescription]: "Social networking platform",
+	[Key.friendDiscordDescription]: "A popular chat and community platform",
+	[Key.friendCloudflareDescription]: "Web performance and security platform",
 
 	[Key.tags]: "Tags",
 	[Key.categories]: "Categories",
