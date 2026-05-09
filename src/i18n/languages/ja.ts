@@ -2,10 +2,25 @@ import Key from "../i18nKey";
 import type { Translation } from "../translation";
 
 export const ja: Translation = {
-	[Key.home]: "Home",
-	[Key.about]: "About",
-	[Key.archive]: "Archive",
+	[Key.home]: "ホーム",
+	[Key.about]: "プロフィール",
+	[Key.archive]: "アーカイブ",
+	[Key.links]: "リンク",
+	[Key.linksDescription]: "友人のブログとおすすめサイト",
+	[Key.other]: "その他",
 	[Key.search]: "検索",
+	[Key.language]: "言語",
+
+	[Key.friendGithubDescription]:
+		"オープンソースと非公開ソフトウェアプロジェクトのホスティングプラットフォーム",
+	[Key.friendOpenAIDescription]: "AI の研究とプロダクトのプラットフォーム",
+	[Key.friendBilibiliDescription]:
+		"動画コミュニティとクリエイティブプラットフォーム",
+	[Key.friendXDescription]: "ソーシャルネットワーキングプラットフォーム",
+	[Key.friendDiscordDescription]:
+		"人気のチャットとコミュニティプラットフォーム",
+	[Key.friendCloudflareDescription]:
+		"Web パフォーマンスとセキュリティのプラットフォーム",
 
 	[Key.tags]: "タグ",
 	[Key.categories]: "カテゴリ",

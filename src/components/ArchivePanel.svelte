@@ -2,8 +2,8 @@
 import { onMount } from "svelte";
 
 import I18nKey from "../i18n/i18nKey";
-import { i18n } from "../i18n/translation";
 import { getPostUrlBySlug } from "../utils/url-utils";
+import { language, translate } from "@/i18n/client";
 
 export let tags: string[];
 export let categories: string[];
@@ -99,7 +99,7 @@ onMount(async () => {
                     ></div>
                 </div>
                 <div class="w-[70%] md:w-[80%] transition text-left text-50">
-                    {group.posts.length} {i18n(group.posts.length === 1 ? I18nKey.postCount : I18nKey.postsCount)}
+                    {group.posts.length} {translate(group.posts.length === 1 ? I18nKey.postCount : I18nKey.postsCount, $language)}
                 </div>
             </div>
 

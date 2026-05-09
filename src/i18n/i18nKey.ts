@@ -2,7 +2,18 @@ enum I18nKey {
 	home = "home",
 	about = "about",
 	archive = "archive",
+	links = "links",
+	linksDescription = "linksDescription",
+	other = "other",
 	search = "search",
+	language = "language",
+
+	friendGithubDescription = "friendGithubDescription",
+	friendOpenAIDescription = "friendOpenAIDescription",
+	friendBilibiliDescription = "friendBilibiliDescription",
+	friendXDescription = "friendXDescription",
+	friendDiscordDescription = "friendDiscordDescription",
+	friendCloudflareDescription = "friendCloudflareDescription",
 
 	tags = "tags",
 	categories = "categories",

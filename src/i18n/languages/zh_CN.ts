@@ -5,7 +5,18 @@ export const zh_CN: Translation = {
 	[Key.home]: "主页",
 	[Key.about]: "关于",
 	[Key.archive]: "归档",
+	[Key.links]: "友链",
+	[Key.linksDescription]: "朋友们的博客和推荐站点",
+	[Key.other]: "其他",
 	[Key.search]: "搜索",
+	[Key.language]: "语言",
+
+	[Key.friendGithubDescription]: "面向开源及私有软件项目的托管平台",
+	[Key.friendOpenAIDescription]: "AI 研究与产品平台",
+	[Key.friendBilibiliDescription]: "视频社区与创作平台",
+	[Key.friendXDescription]: "社交平台",
+	[Key.friendDiscordDescription]: "流行的聊天和社群平台",
+	[Key.friendCloudflareDescription]: "Web 性能与安全平台",
 
 	[Key.tags]: "标签",
 	[Key.categories]: "分类",

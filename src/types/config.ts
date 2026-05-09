@@ -1,4 +1,5 @@
 import type { AUTO_MODE, DARK_MODE, LIGHT_MODE } from "@constants/constants";
+import type I18nKey from "@i18n/i18nKey";
 
 export type SiteConfig = {
 	title: string;
@@ -48,16 +49,26 @@ export enum LinkPreset {
 	Home = 0,
 	Archive = 1,
 	About = 2,
+	Links = 3,
 }
 
 export type NavBarLink = {
 	name: string;
 	url: string;
 	external?: boolean;
+	i18nKey?: I18nKey;
 };
 
 export type NavBarConfig = {
 	links: (NavBarLink | LinkPreset)[];
+};
+
+export type FriendLink = {
+	name: string;
+	url: string;
+	avatar: string;
+	desc: string;
+	descI18nKey?: I18nKey;
 };
 
 export type ProfileConfig = {

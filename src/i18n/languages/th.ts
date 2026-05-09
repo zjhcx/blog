@@ -5,7 +5,18 @@ export const th: Translation = {
 	[Key.home]: "หน้าแรก",
 	[Key.about]: "เกี่ยวกับ",
 	[Key.archive]: "คลัง",
+	[Key.links]: "ลิงก์",
+	[Key.linksDescription]: "บล็อกของเพื่อนและเว็บไซต์แนะนำ",
+	[Key.other]: "อื่น ๆ",
 	[Key.search]: "ค้นหา",
+	[Key.language]: "ภาษา",
+
+	[Key.friendGithubDescription]: "แพลตฟอร์มโฮสต์โปรเจกต์ซอฟต์แวร์โอเพนซอร์สและส่วนตัว",
+	[Key.friendOpenAIDescription]: "แพลตฟอร์มวิจัยและผลิตภัณฑ์ AI",
+	[Key.friendBilibiliDescription]: "ชุมชนวิดีโอและแพลตฟอร์มสร้างสรรค์",
+	[Key.friendXDescription]: "แพลตฟอร์มโซเชียล",
+	[Key.friendDiscordDescription]: "แพลตฟอร์มแชตและชุมชนยอดนิยม",
+	[Key.friendCloudflareDescription]: "แพลตฟอร์มประสิทธิภาพและความปลอดภัยเว็บ",
 
 	[Key.tags]: "ป้ายกำกับ",
 	[Key.categories]: "หมวดหมู่",

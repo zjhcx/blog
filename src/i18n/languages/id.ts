@@ -5,7 +5,19 @@ export const id: Translation = {
 	[Key.home]: "Beranda",
 	[Key.about]: "Tentang",
 	[Key.archive]: "Arsip",
+	[Key.links]: "Tautan",
+	[Key.linksDescription]: "Blog teman dan situs rekomendasi",
+	[Key.other]: "Lainnya",
 	[Key.search]: "Cari",
+	[Key.language]: "Bahasa",
+
+	[Key.friendGithubDescription]:
+		"Platform hosting untuk proyek perangkat lunak terbuka dan privat",
+	[Key.friendOpenAIDescription]: "Platform riset dan produk AI",
+	[Key.friendBilibiliDescription]: "Komunitas video dan platform kreatif",
+	[Key.friendXDescription]: "Platform jejaring sosial",
+	[Key.friendDiscordDescription]: "Platform chat dan komunitas populer",
+	[Key.friendCloudflareDescription]: "Platform performa dan keamanan web",
 
 	[Key.tags]: "Tag",
 	[Key.categories]: "Kategori",

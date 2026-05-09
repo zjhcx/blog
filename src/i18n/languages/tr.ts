@@ -5,17 +5,29 @@ export const tr: Translation = {
 	[Key.home]: "Anasayfa",
 	[Key.about]: "Hakkında",
 	[Key.archive]: "Arşiv",
+	[Key.links]: "Bağlantılar",
+	[Key.linksDescription]: "Arkadaş blogları ve önerilen siteler",
+	[Key.other]: "Diğer",
 	[Key.search]: "Ara",
+	[Key.language]: "Dil",
 
-	[Key.tags]: "Taglar",
-	[Key.categories]: "Katagoriler",
-	[Key.recentPosts]: "Son Paylaşımlar",
+	[Key.friendGithubDescription]:
+		"Açık kaynak ve özel yazılım projeleri için barındırma platformu",
+	[Key.friendOpenAIDescription]: "AI araştırma ve ürün platformu",
+	[Key.friendBilibiliDescription]: "Video topluluğu ve yaratıcı platform",
+	[Key.friendXDescription]: "Sosyal ağ platformu",
+	[Key.friendDiscordDescription]: "Popüler sohbet ve topluluk platformu",
+	[Key.friendCloudflareDescription]: "Web performansı ve güvenlik platformu",
+
+	[Key.tags]: "Etiketler",
+	[Key.categories]: "Kategoriler",
+	[Key.recentPosts]: "Son Yazılar",
 
 	[Key.comments]: "Yorumlar",
 
 	[Key.untitled]: "Başlıksız",
-	[Key.uncategorized]: "Katagorisiz",
-	[Key.noTags]: "Tag Bulunamadı",
+	[Key.uncategorized]: "Kategorisiz",
+	[Key.noTags]: "Etiket yok",
 
 	[Key.wordCount]: "kelime",
 	[Key.wordsCount]: "kelime",
@@ -33,6 +45,6 @@ export const tr: Translation = {
 	[Key.more]: "Daha Fazla",
 
 	[Key.author]: "Yazar",
-	[Key.publishedAt]: "Yayınlanma:",
+	[Key.publishedAt]: "Yayınlandı",
 	[Key.license]: "Lisans",
 };
