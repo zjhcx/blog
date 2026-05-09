@@ -1,0 +1,17 @@
+/* 全局背景设置 */
+body {
+  background-image: url('/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* ===== 全局卡片半透明背景（颜色跟随主题） ===== */
+:root {
+  --card-bg: rgba(255, 255, 255, 0.7) !important;
+}
+
+:root.dark {
+  /* 用 color-mix 保持深色主题的色相跟随 var(--hue) */
+  --card-bg: color-mix(in srgb, oklch(0.23 0.015 var(--hue)) 65%, transparent) !important;
+}

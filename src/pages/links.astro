@@ -12,19 +12,19 @@ const friends = [
     name: 'OpenAI',
     url: 'https://openai.com',
     avatar: 'https://github.com/openai.png',
-    desc: 'ChatGPT 是 OpenAI 开发的一个基于 GPT-4 架构的语言模型',
+    desc: 'ChatGPT',
   },
   {
     name: '哔哩哔哩',
-    url: 'https://space.bilibili.com',
+    url: 'https://www.bilibili.com',
     avatar: 'https://www.bilibili.com/favicon.ico',
-    desc: '哔哩哔哩是国内知名的视频弹幕网站',
+    desc: '哔哩哔哩',
   },
   {
     name: 'X',
     url: 'https://x.com',
     avatar: 'https://x.com/favicon.ico',
-    desc: 'X 是一个社交媒体平台',
+    desc: '社交平台',
   },
   {
     name: 'Discord',
@@ -75,10 +75,9 @@ const friends = [
 
 .hero-card {
   padding: 1.6rem;
-  border-radius: 1.5rem;
+  border-radius: var(--radius-large);
   background: var(--card-bg);
   box-shadow: var(--shadow);
-  border: 1px solid var(--line-divider);
 }
 
 .hero-card h1 {
@@ -108,9 +107,8 @@ const friends = [
   min-height: 96px;
   padding: 1rem;
 
-  border-radius: 1.4rem;
+  border-radius: var(--radius-large);
   background: var(--card-bg);
-  border: 1px solid var(--line-divider);
   box-shadow: var(--shadow);
 
   overflow: hidden;
