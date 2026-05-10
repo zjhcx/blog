@@ -1,10 +1,10 @@
 <script lang="ts">
 import I18nKey from "@i18n/i18nKey";
-import { i18n } from "@i18n/translation";
 import Icon from "@iconify/svelte";
 import { url } from "@utils/url-utils.ts";
 import { onMount } from "svelte";
 import type { SearchResult } from "@/global";
+import { language, translate } from "@/i18n/client";
 
 let keywordDesktop = "";
 let keywordMobile = "";
@@ -16,21 +16,20 @@ let pagefindLoadPromise: Promise<boolean> | null = null;
 let desktopSearchTimer: ReturnType<typeof setTimeout> | null = null;
 let mobileSearchTimer: ReturnType<typeof setTimeout> | null = null;
 
-const fakeResult: SearchResult[] = [
+const getFakeResult = (): SearchResult[] => [
 	{
 		url: url("/"),
 		meta: {
-			title: "This Is a Fake Search Result",
+			title: translate(I18nKey.searchDevTitle, $language),
 		},
-		excerpt:
-			"Because the search cannot work in the <mark>dev</mark> environment.",
+		excerpt: translate(I18nKey.searchDevDescription, $language),
 	},
 	{
 		url: url("/"),
 		meta: {
-			title: "If You Want to Test the Search",
+			title: translate(I18nKey.searchDevTestTitle, $language),
 		},
-		excerpt: "Try running <mark>npm build && npm preview</mark> instead.",
+		excerpt: translate(I18nKey.searchDevTestDescription, $language),
 	},
 ];
 
@@ -76,7 +75,7 @@ const search = async (keyword: string, isDesktop: boolean): Promise<void> => {
 				response.results.map((item) => item.data()),
 			);
 		} else if (import.meta.env.DEV) {
-			searchResults = fakeResult;
+			searchResults = getFakeResult();
 		} else {
 			searchResults = [];
 			console.error("Pagefind is not available in production environment.");
@@ -160,6 +159,9 @@ $: if (initialized) {
 $: if (initialized) {
 	scheduleSearch(keywordMobile, false);
 }
+
+$: searchText = translate(I18nKey.search, $language);
+$: searchPanelText = translate(I18nKey.searchPanel, $language);
 </script>
 
 <!-- search bar for desktop view -->
@@ -168,14 +170,14 @@ $: if (initialized) {
       dark:bg-white/5 dark:hover:bg-white/10 dark:focus-within:bg-white/10
 ">
     <Icon icon="material-symbols:search" class="absolute text-[1.25rem] pointer-events-none ml-3 transition my-auto text-black/30 dark:text-white/30"></Icon>
-    <input placeholder="{i18n(I18nKey.search)}" bind:value={keywordDesktop} on:focus={() => search(keywordDesktop, true)}
+    <input placeholder={searchText} aria-label={searchText} bind:value={keywordDesktop} on:focus={() => search(keywordDesktop, true)}
            class="transition-all pl-10 text-sm bg-transparent outline-0
          h-full w-40 active:w-60 focus:w-60 text-black/50 dark:text-white/50"
     >
 </div>
 
 <!-- toggle btn for phone/tablet view -->
-<button on:click={togglePanel} aria-label="Search Panel" id="search-switch"
+<button on:click={togglePanel} aria-label={searchPanelText} id="search-switch"
         class="btn-plain scale-animation lg:!hidden rounded-lg w-11 h-11 active:scale-90">
     <Icon icon="material-symbols:search" class="text-[1.25rem]"></Icon>
 </button>
@@ -190,7 +192,7 @@ top-20 left-4 md:left-[unset] right-4 shadow-2xl rounded-2xl p-2">
       dark:bg-white/5 dark:hover:bg-white/10 dark:focus-within:bg-white/10
   ">
         <Icon icon="material-symbols:search" class="absolute text-[1.25rem] pointer-events-none ml-3 transition my-auto text-black/30 dark:text-white/30"></Icon>
-        <input placeholder="Search" bind:value={keywordMobile}
+        <input placeholder={searchText} aria-label={searchText} bind:value={keywordMobile}
                class="pl-10 absolute inset-0 text-sm bg-transparent outline-0
                focus:w-60 text-black/50 dark:text-white/50"
         >

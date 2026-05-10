@@ -4,6 +4,8 @@ import MomentsComponent from "@components/Moments.astro";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 import type { GetStaticPaths } from "astro";
 import { MomentsConfig } from "@/config";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
 import { getMomentsFeedResults, getSortedMoments } from "@/utils/moments";
 
 export const getStaticPaths = (async ({ paginate }) => {
@@ -22,7 +24,7 @@ const showPagination =
 	!MomentsConfig.hidePaginationWhenSinglePage || page.lastPage > 1;
 ---
 
-<MainGridLayout title="朋友圈" description="来自 RSS 源的朋友最新动态">
+<MainGridLayout title={i18n(I18nKey.moments)} description={i18n(I18nKey.momentsDescription)}>
 	<MomentsComponent items={page.data} errors={errors} />
 	{
 		showPagination && (

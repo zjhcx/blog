@@ -1,5 +1,7 @@
 import sanitizeHtml from "sanitize-html";
 import { MomentsConfig } from "@/config";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
 import type { MomentsFeedSource } from "@/types/config";
 
 export type MomentItem = {
@@ -67,7 +69,7 @@ const parseFeedItems = (xml: string, source: MomentsFeedSource) => {
 
 	return entries.map((match): MomentItem => {
 		const entry = match[1];
-		const title = getTagValue(entry, "title") || "未命名动态";
+		const title = getTagValue(entry, "title") || i18n(I18nKey.momentsUntitled);
 		const link = isAtom ? getAtomLink(entry) : getTagValue(entry, "link");
 		const summary =
 			getTagValue(entry, "description") ||
@@ -113,7 +115,10 @@ const fetchFeed = async (source: MomentsFeedSource): Promise<FeedResult> => {
 		return {
 			source,
 			items: [],
-			error: error instanceof Error ? error.message : "RSS 请求失败",
+			error:
+				error instanceof Error
+					? error.message
+					: i18n(I18nKey.momentsRequestFailed),
 		};
 	}
 };

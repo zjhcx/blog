@@ -1,6 +1,8 @@
 ---
 import { Icon } from "astro-icon/components";
 import { BangumiConfig } from "@/config";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
 import type { BangumiItem } from "@/utils/bangumi";
 import "../styles/bangumi.css";
 
@@ -9,11 +11,17 @@ interface Props {
 	errorMessage?: string;
 }
 
-const pageTitle = BangumiConfig.type === 2 ? "追剧" : "追番";
+const pageTitleKey =
+	BangumiConfig.type === 2 ? I18nKey.bangumiDrama : I18nKey.bangumi;
+const pageDescriptionKey =
+	BangumiConfig.type === 2
+		? I18nKey.bangumiDramaDescription
+		: I18nKey.bangumiDescription;
+const pageTitle = i18n(pageTitleKey);
 const pageDescription =
 	BangumiConfig.type === 2
-		? "来自哔哩哔哩的剧集收藏"
-		: "来自哔哩哔哩的番剧收藏";
+		? i18n(I18nKey.bangumiDramaDescription)
+		: i18n(I18nKey.bangumiDescription);
 
 const { items: bangumiList, errorMessage = "" } = Astro.props;
 
@@ -30,27 +38,38 @@ const getBangumiUrl = (item: BangumiItem) =>
 
 <div class="bangumi-page bangumi-page-root">
 	<section class="bangumi-page-hero card-base">
-		<h1 class="bangumi-page-title text-90">{pageTitle}</h1>
-		<p class="bangumi-page-description text-50">{pageDescription}</p>
+		<h1 class="bangumi-page-title text-90" data-i18n-key={pageTitleKey}>
+			{pageTitle}
+		</h1>
+		<p class="bangumi-page-description text-50" data-i18n-key={pageDescriptionKey}>
+			{pageDescription}
+		</p>
 	</section>
 
 	{
 		!BangumiConfig.enable && (
-			<section class="bangumi-state card-base text-50">追番页已关闭。</section>
+			<section class="bangumi-state card-base text-50" data-i18n-key={I18nKey.bangumiDisabled}>
+				{i18n(I18nKey.bangumiDisabled)}
+			</section>
 		)
 	}
 
 	{
 		BangumiConfig.enable && errorMessage && (
 			<section class="bangumi-state card-base text-50">
-				加载哔哩哔哩追番数据失败：{errorMessage}
+				<span data-i18n-key={I18nKey.bangumiLoadFailed}>
+					{i18n(I18nKey.bangumiLoadFailed)}
+				</span>
+				{errorMessage}
 			</section>
 		)
 	}
 
 	{
 		BangumiConfig.enable && !errorMessage && bangumiList.length === 0 && (
-			<section class="bangumi-state card-base text-50">暂无追番数据。</section>
+			<section class="bangumi-state card-base text-50" data-i18n-key={I18nKey.bangumiEmpty}>
+				{i18n(I18nKey.bangumiEmpty)}
+			</section>
 		)
 	}
 
@@ -101,10 +120,20 @@ const getBangumiUrl = (item: BangumiItem) =>
 								)}
 								{item.progress && <span>{item.progress}</span>}
 								{item.stat?.follow !== undefined && (
-									<span>{formatCount(item.stat.follow)} 追番</span>
+									<span>
+										{formatCount(item.stat.follow)}{" "}
+										<span data-i18n-key={I18nKey.bangumiFollow}>
+											{i18n(I18nKey.bangumiFollow)}
+										</span>
+									</span>
 								)}
 								{item.stat?.view !== undefined && (
-									<span>{formatCount(item.stat.view)} 播放</span>
+									<span>
+										{formatCount(item.stat.view)}{" "}
+										<span data-i18n-key={I18nKey.bangumiPlay}>
+											{i18n(I18nKey.bangumiPlay)}
+										</span>
+									</span>
 								)}
 							</div>
 						</div>

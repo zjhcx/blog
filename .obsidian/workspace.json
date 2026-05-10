@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "eef8822b6255f9f9",
+        "id": "cf70536fbe4486dd",
         "type": "tabs",
         "children": [
           {
-            "id": "3f550d20ded81810",
+            "id": "6aeddc332a64c3ce",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -176,20 +176,19 @@
       "bases:新建数据库": false
     }
   },
-  "active": "3f550d20ded81810",
+  "active": "6aeddc332a64c3ce",
   "lastOpenFiles": [
-    "src/content/posts/稻香.md",
-    "src/content/posts/【再见2024】【AI天禄&辟邪】稻香.md",
-    "dist/pagefind/index/zh-cn_e714709.pf_index",
-    "dist/pagefind/fragment/zh-cn_9258ebc.pf_fragment",
+    "dist/pagefind/index/zh-cn_b92cf0d.pf_index",
     "dist/pagefind/fragment/zh-cn_51913cf.pf_fragment",
+    "dist/pagefind/fragment/zh-cn_4d2ee83.pf_fragment",
     "dist/pagefind/wasm.unknown.pagefind",
-    "dist/pagefind/pagefind.zh-cn_91e43439df1e8.pf_meta",
-    "dist/pagefind/pagefind.js",
+    "dist/pagefind/pagefind.zh-cn_98171c107bd1a.pf_meta",
     "dist/pagefind/pagefind-ui.js",
+    "dist/pagefind/pagefind.js",
     "dist/pagefind/pagefind-ui.css",
     "dist/pagefind/pagefind-modular-ui.js",
     "dist/pagefind/pagefind-modular-ui.css",
+    "dist/pagefind/pagefind-entry.json",
     "dist/favicon/favicon-light-32.png",
     "dist/favicon/favicon-light-192.png",
     "dist/favicon/favicon-light-180.png",
@@ -199,6 +198,8 @@
     "dist/favicon/favicon-dark-180.png",
     "dist/favicon/favicon-dark-128.png",
     "dist/bg.jpg",
-    "dist/avatar.jpg"
+    "dist/avatar.jpg",
+    "src/content/posts/稻香.md",
+    "src/content/posts/【再见2024】【AI天禄&辟邪】稻香.md"
   ]
 }

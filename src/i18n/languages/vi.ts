@@ -8,8 +8,40 @@ export const vi: Translation = {
 	[Key.links]: "Liên kết",
 	[Key.linksDescription]: "Blog bạn bè và các trang được đề xuất",
 	[Key.other]: "Khác",
+	[Key.otherDescription]: "Các trang và tính năng khác của trang web",
 	[Key.search]: "Tìm kiếm",
+	[Key.searchPanel]: "Bảng tìm kiếm",
+	[Key.searchDevTitle]: "Đây là kết quả tìm kiếm giả",
+	[Key.searchDevDescription]:
+		"Vì tìm kiếm không hoạt động trong môi trường <mark>dev</mark>.",
+	[Key.searchDevTestTitle]: "Nếu bạn muốn thử tìm kiếm",
+	[Key.searchDevTestDescription]:
+		"Hãy chạy <mark>npm build && npm preview</mark> thay thế.",
 	[Key.language]: "Ngôn ngữ",
+
+	[Key.bangumi]: "Bangumi",
+	[Key.bangumiDrama]: "Phim bộ",
+	[Key.bangumiDescription]: "Anime đang theo dõi trên Bilibili",
+	[Key.bangumiDramaDescription]: "Phim bộ đang theo dõi trên Bilibili",
+	[Key.bangumiDisabled]: "Trang bangumi đã bị tắt.",
+	[Key.bangumiLoadFailed]: "Không thể tải dữ liệu Bilibili bangumi: ",
+	[Key.bangumiEmpty]: "Chưa có dữ liệu bangumi.",
+	[Key.bangumiFollow]: "theo dõi",
+	[Key.bangumiPlay]: "lượt xem",
+	[Key.bangumiOtherDescription]: "Xem danh sách bangumi trên Bilibili",
+	[Key.bangumiDramaOtherDescription]: "Xem danh sách phim bộ trên Bilibili",
+
+	[Key.moments]: "Khoảnh khắc",
+	[Key.momentsDescription]: "Cập nhật mới nhất từ RSS của bạn bè",
+	[Key.momentsDisabled]: "Trang khoảnh khắc đã bị tắt.",
+	[Key.momentsNoSources]:
+		"Chưa có nguồn RSS. Hãy cấu hình MomentsConfig.sources trong src/config.ts.",
+	[Key.momentsLoadFailed]: "tải thất bại: ",
+	[Key.momentsEmpty]: "Chưa có khoảnh khắc.",
+	[Key.momentsUnknownTime]: "Không rõ thời gian",
+	[Key.momentsUntitled]: "Cập nhật không tiêu đề",
+	[Key.momentsRequestFailed]: "Yêu cầu RSS thất bại",
+	[Key.momentsOtherDescription]: "Xem cập nhật mới nhất của bạn bè từ RSS",
 
 	[Key.friendGithubDescription]:
 		"Nền tảng lưu trữ dự án phần mềm nguồn mở và riêng tư",
@@ -47,4 +79,7 @@ export const vi: Translation = {
 	[Key.author]: "Tác giả",
 	[Key.publishedAt]: "Đăng vào lúc",
 	[Key.license]: "Giấy phép bản quyền",
+	[Key.allRightsReserved]: "Bảo lưu mọi quyền.",
+	[Key.poweredBy]: "Được xây dựng bằng",
+	[Key.siteSource]: "Mã nguồn trang web tại",
 };

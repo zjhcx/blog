@@ -1,6 +1,8 @@
 ---
 import { Icon } from "astro-icon/components";
 import { MomentsConfig } from "@/config";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
 import type { FeedResult, MomentItem } from "@/utils/moments";
 import "../styles/moments.css";
 
@@ -10,7 +12,7 @@ interface Props {
 }
 
 const formatDate = (date?: Date) => {
-	if (!date) return "未知时间";
+	if (!date) return "";
 	return date.toLocaleDateString("zh-CN", {
 		year: "numeric",
 		month: "2-digit",
@@ -23,20 +25,28 @@ const { items: moments, errors = [] } = Astro.props;
 
 <div class="moments-page moments-page-root">
 	<section class="moments-page-hero card-base">
-		<h1 class="moments-page-title text-90">朋友圈</h1>
-		<p class="moments-page-description text-50">来自 RSS 源的朋友最新动态</p>
+		<h1 class="moments-page-title text-90" data-i18n-key={I18nKey.moments}>
+			{i18n(I18nKey.moments)}
+		</h1>
+		<p class="moments-page-description text-50" data-i18n-key={I18nKey.momentsDescription}>
+			{i18n(I18nKey.momentsDescription)}
+		</p>
 	</section>
 
 	{
 		!MomentsConfig.enable && (
-			<section class="moments-state card-base text-50">朋友圈已关闭。</section>
+			<section class="moments-state card-base text-50" data-i18n-key={I18nKey.momentsDisabled}>
+				{i18n(I18nKey.momentsDisabled)}
+			</section>
 		)
 	}
 
 	{
 		MomentsConfig.enable && MomentsConfig.sources.length === 0 && (
 			<section class="moments-state card-base text-50">
-				暂无 RSS 源，请在 src/config.ts 的 MomentsConfig.sources 中配置。
+				<span data-i18n-key={I18nKey.momentsNoSources}>
+					{i18n(I18nKey.momentsNoSources)}
+				</span>
 			</section>
 		)
 	}
@@ -46,7 +56,11 @@ const { items: moments, errors = [] } = Astro.props;
 			<section class="moments-state card-base text-50">
 				{errors.map((result) => (
 					<p>
-						{result.source.name} 加载失败：{result.error}
+						{result.source.name}{" "}
+						<span data-i18n-key={I18nKey.momentsLoadFailed}>
+							{i18n(I18nKey.momentsLoadFailed)}
+						</span>
+						{result.error}
 					</p>
 				))}
 			</section>
@@ -57,7 +71,9 @@ const { items: moments, errors = [] } = Astro.props;
 		MomentsConfig.enable &&
 			MomentsConfig.sources.length > 0 &&
 			moments.length === 0 && (
-				<section class="moments-state card-base text-50">暂无朋友圈动态。</section>
+				<section class="moments-state card-base text-50" data-i18n-key={I18nKey.momentsEmpty}>
+					{i18n(I18nKey.momentsEmpty)}
+				</section>
 			)
 	}
 
@@ -82,7 +98,15 @@ const { items: moments, errors = [] } = Astro.props;
 						<div class="moments-content">
 							<div class="moments-meta text-50">
 								<span>{item.source.name}</span>
-								<span>{formatDate(item.published)}</span>
+								<span>
+									{item.published ? (
+										formatDate(item.published)
+									) : (
+										<span data-i18n-key={I18nKey.momentsUnknownTime}>
+											{i18n(I18nKey.momentsUnknownTime)}
+										</span>
+									)}
+								</span>
 							</div>
 							<h2>{item.title}</h2>
 							{item.summary && <p class="text-75">{item.summary}</p>}

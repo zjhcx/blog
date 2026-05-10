@@ -8,8 +8,40 @@ export const id: Translation = {
 	[Key.links]: "Tautan",
 	[Key.linksDescription]: "Blog teman dan situs rekomendasi",
 	[Key.other]: "Lainnya",
+	[Key.otherDescription]: "Halaman dan fitur situs lainnya",
 	[Key.search]: "Cari",
+	[Key.searchPanel]: "Panel Pencarian",
+	[Key.searchDevTitle]: "Ini adalah hasil pencarian palsu",
+	[Key.searchDevDescription]:
+		"Karena pencarian tidak dapat berjalan di lingkungan <mark>dev</mark>.",
+	[Key.searchDevTestTitle]: "Jika ingin menguji pencarian",
+	[Key.searchDevTestDescription]:
+		"Jalankan <mark>npm build && npm preview</mark> sebagai gantinya.",
 	[Key.language]: "Bahasa",
+
+	[Key.bangumi]: "Bangumi",
+	[Key.bangumiDrama]: "Drama",
+	[Key.bangumiDescription]: "Anime yang diikuti di Bilibili",
+	[Key.bangumiDramaDescription]: "Drama yang diikuti di Bilibili",
+	[Key.bangumiDisabled]: "Halaman bangumi dinonaktifkan.",
+	[Key.bangumiLoadFailed]: "Gagal memuat data bangumi Bilibili: ",
+	[Key.bangumiEmpty]: "Belum ada data bangumi.",
+	[Key.bangumiFollow]: "mengikuti",
+	[Key.bangumiPlay]: "tayangan",
+	[Key.bangumiOtherDescription]: "Lihat daftar bangumi Bilibili",
+	[Key.bangumiDramaOtherDescription]: "Lihat daftar drama Bilibili",
+
+	[Key.moments]: "Momen",
+	[Key.momentsDescription]: "Pembaruan terbaru dari RSS teman",
+	[Key.momentsDisabled]: "Halaman momen dinonaktifkan.",
+	[Key.momentsNoSources]:
+		"Belum ada sumber RSS. Atur MomentsConfig.sources di src/config.ts.",
+	[Key.momentsLoadFailed]: "gagal dimuat: ",
+	[Key.momentsEmpty]: "Belum ada momen.",
+	[Key.momentsUnknownTime]: "Waktu tidak diketahui",
+	[Key.momentsUntitled]: "Pembaruan tanpa judul",
+	[Key.momentsRequestFailed]: "Permintaan RSS gagal",
+	[Key.momentsOtherDescription]: "Lihat pembaruan terbaru teman dari RSS",
 
 	[Key.friendGithubDescription]:
 		"Platform hosting untuk proyek perangkat lunak terbuka dan privat",
@@ -47,4 +79,7 @@ export const id: Translation = {
 	[Key.author]: "Penulis",
 	[Key.publishedAt]: "Diterbitkan pada",
 	[Key.license]: "Lisensi",
+	[Key.allRightsReserved]: "Hak cipta dilindungi.",
+	[Key.poweredBy]: "Didukung oleh",
+	[Key.siteSource]: "Sumber situs tersedia di",
 };

@@ -8,8 +8,40 @@ export const en: Translation = {
 	[Key.links]: "Links",
 	[Key.linksDescription]: "Friends' blogs and recommended sites",
 	[Key.other]: "Other",
+	[Key.otherDescription]: "More pages and site features",
 	[Key.search]: "Search",
+	[Key.searchPanel]: "Search Panel",
+	[Key.searchDevTitle]: "This Is a Fake Search Result",
+	[Key.searchDevDescription]:
+		"Because search cannot work in the <mark>dev</mark> environment.",
+	[Key.searchDevTestTitle]: "If You Want to Test Search",
+	[Key.searchDevTestDescription]:
+		"Try running <mark>npm build && npm preview</mark> instead.",
 	[Key.language]: "Language",
+
+	[Key.bangumi]: "Bangumi",
+	[Key.bangumiDrama]: "Drama",
+	[Key.bangumiDescription]: "Anime followed on Bilibili",
+	[Key.bangumiDramaDescription]: "Drama series followed on Bilibili",
+	[Key.bangumiDisabled]: "Bangumi page is disabled.",
+	[Key.bangumiLoadFailed]: "Failed to load Bilibili bangumi data: ",
+	[Key.bangumiEmpty]: "No bangumi data yet.",
+	[Key.bangumiFollow]: "following",
+	[Key.bangumiPlay]: "views",
+	[Key.bangumiOtherDescription]: "View Bilibili bangumi list",
+	[Key.bangumiDramaOtherDescription]: "View Bilibili drama list",
+
+	[Key.moments]: "Moments",
+	[Key.momentsDescription]: "Latest updates from friends' RSS feeds",
+	[Key.momentsDisabled]: "Moments page is disabled.",
+	[Key.momentsNoSources]:
+		"No RSS sources yet. Configure MomentsConfig.sources in src/config.ts.",
+	[Key.momentsLoadFailed]: "failed to load: ",
+	[Key.momentsEmpty]: "No moments yet.",
+	[Key.momentsUnknownTime]: "Unknown time",
+	[Key.momentsUntitled]: "Untitled update",
+	[Key.momentsRequestFailed]: "RSS request failed",
+	[Key.momentsOtherDescription]: "View friends' latest updates from RSS feeds",
 
 	[Key.friendGithubDescription]:
 		"A hosting platform for open-source and private software projects",
@@ -47,4 +79,7 @@ export const en: Translation = {
 	[Key.author]: "Author",
 	[Key.publishedAt]: "Published at",
 	[Key.license]: "License",
+	[Key.allRightsReserved]: "All Rights Reserved.",
+	[Key.poweredBy]: "Powered by",
+	[Key.siteSource]: "Source available on",
 };

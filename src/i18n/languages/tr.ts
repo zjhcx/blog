@@ -8,8 +8,40 @@ export const tr: Translation = {
 	[Key.links]: "Bağlantılar",
 	[Key.linksDescription]: "Arkadaş blogları ve önerilen siteler",
 	[Key.other]: "Diğer",
+	[Key.otherDescription]: "Daha fazla sayfa ve site özelliği",
 	[Key.search]: "Ara",
+	[Key.searchPanel]: "Arama Paneli",
+	[Key.searchDevTitle]: "Bu Sahte Bir Arama Sonucudur",
+	[Key.searchDevDescription]:
+		"Arama <mark>dev</mark> ortamında çalışmadığı için gösterilir.",
+	[Key.searchDevTestTitle]: "Aramayı Test Etmek İsterseniz",
+	[Key.searchDevTestDescription]:
+		"Bunun yerine <mark>npm build && npm preview</mark> çalıştırın.",
 	[Key.language]: "Dil",
+
+	[Key.bangumi]: "Bangumi",
+	[Key.bangumiDrama]: "Dizi",
+	[Key.bangumiDescription]: "Bilibili'de takip edilen animeler",
+	[Key.bangumiDramaDescription]: "Bilibili'de takip edilen diziler",
+	[Key.bangumiDisabled]: "Bangumi sayfası devre dışı.",
+	[Key.bangumiLoadFailed]: "Bilibili bangumi verisi yüklenemedi: ",
+	[Key.bangumiEmpty]: "Henüz bangumi verisi yok.",
+	[Key.bangumiFollow]: "takip",
+	[Key.bangumiPlay]: "izlenme",
+	[Key.bangumiOtherDescription]: "Bilibili bangumi listesini görüntüle",
+	[Key.bangumiDramaOtherDescription]: "Bilibili dizi listesini görüntüle",
+
+	[Key.moments]: "Anlar",
+	[Key.momentsDescription]: "Arkadaş RSS kaynaklarından son güncellemeler",
+	[Key.momentsDisabled]: "Anlar sayfası devre dışı.",
+	[Key.momentsNoSources]:
+		"RSS kaynağı yok. src/config.ts içinde MomentsConfig.sources yapılandırın.",
+	[Key.momentsLoadFailed]: "yüklenemedi: ",
+	[Key.momentsEmpty]: "Henüz an yok.",
+	[Key.momentsUnknownTime]: "Bilinmeyen zaman",
+	[Key.momentsUntitled]: "Başlıksız güncelleme",
+	[Key.momentsRequestFailed]: "RSS isteği başarısız",
+	[Key.momentsOtherDescription]: "Arkadaşların RSS güncellemelerini görüntüle",
 
 	[Key.friendGithubDescription]:
 		"Açık kaynak ve özel yazılım projeleri için barındırma platformu",
@@ -47,4 +79,7 @@ export const tr: Translation = {
 	[Key.author]: "Yazar",
 	[Key.publishedAt]: "Yayınlandı",
 	[Key.license]: "Lisans",
+	[Key.allRightsReserved]: "Tüm hakları saklıdır.",
+	[Key.poweredBy]: "Powered by",
+	[Key.siteSource]: "Site kaynağı",
 };
