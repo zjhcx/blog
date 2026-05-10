@@ -46,6 +46,8 @@ export const BangumiConfig: BangumiConfigType = {
 	enable: true,
 	uid: 3546871542843760,
 	type: 1, // 1: 追番, 2: 追剧
+	pn: 1, // 请求页码
+	ps: 30, // 请求个数，必须在 30 及以下
 };
 
 export const navBarConfig: NavBarConfig = {
@@ -54,15 +56,7 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Archive,
 		LinkPreset.About,
 		LinkPreset.Links,
-		...(BangumiConfig.enable
-			? [
-					{
-						name: BangumiConfig.type === 2 ? "追剧" : "追番",
-						url: "/bangumi/",
-						external: false,
-					},
-				]
-			: []),
+		...(BangumiConfig.enable ? [LinkPreset.Bangumi] : []),
 		{
 			name: "其他",
 			url: "/other/", // Internal links should not include the base path, as it is automatically added
