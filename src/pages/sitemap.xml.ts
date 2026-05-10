@@ -1,9 +1,10 @@
 import type { APIRoute } from "astro";
+import { absoluteUrl } from "@/utils/url-utils";
 
 const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>${new URL("sitemap-index.xml", import.meta.env.SITE).href}</loc>
+    <loc>${absoluteUrl("/sitemap-index.xml")}</loc>
   </sitemap>
 </sitemapindex>`;
 
