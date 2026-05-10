@@ -56,7 +56,7 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Archive,
 		LinkPreset.About,
 		LinkPreset.Links,
-		...(BangumiConfig.enable ? [LinkPreset.Bangumi] : []),
+		/* ...(BangumiConfig.enable ? [LinkPreset.Bangumi] : []), */ // 追番不建议放在导航栏
 		{
 			name: "其他",
 			url: "/other/", // Internal links should not include the base path, as it is automatically added

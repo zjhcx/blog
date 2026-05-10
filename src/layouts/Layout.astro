@@ -211,6 +211,7 @@ import {
 	MAIN_PANEL_OVERLAPS_BANNER_HEIGHT
 } from "../constants/constants";
 import { siteConfig } from '../config';
+import { applyLanguage, getCurrentLanguage } from "../i18n/client";
 
 /* Preload fonts */
 // (async function() {
@@ -367,6 +368,7 @@ function init() {
 	// disableAnimation()()		// TODO
 	loadTheme();
 	loadHue();
+	applyLanguage(getCurrentLanguage());
 	initCustomScrollbar();
 	showBanner();
 }
@@ -427,6 +429,8 @@ const setup = () => {
 		}
 	});
 	window.swup.hooks.on('page:view', () => {
+		applyLanguage(getCurrentLanguage());
+
 		// hide the temp high element when the transition is done
 		const heightExtend = document.getElementById('page-height-extend')
 		if (heightExtend) {
