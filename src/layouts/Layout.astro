@@ -197,6 +197,7 @@ const bannerOffset =
 
 <script>
 import 'overlayscrollbars/overlayscrollbars.css';
+import SwupHeadPlugin from "@swup/astro/client/SwupHeadPlugin";
 import {
 	OverlayScrollbars,
 	// ScrollbarsHidingPlugin,
@@ -213,6 +214,8 @@ import {
 } from "../constants/constants";
 import { siteConfig } from '../config';
 import { applyLanguage, getCurrentLanguage } from "../i18n/client";
+
+let swupHeadPluginInstalled = false;
 
 /* Preload fonts */
 // (async function() {
@@ -378,6 +381,16 @@ function init() {
 init();
 
 const setup = () => {
+	if (!swupHeadPluginInstalled) {
+		window.swup.use(
+			new SwupHeadPlugin({
+				awaitAssets: true,
+				persistAssets: true,
+			}),
+		);
+		swupHeadPluginInstalled = true;
+	}
+
 	// TODO: temp solution to change the height of the banner
 /*
 	window.swup.hooks.on('animation:out:start', () => {
