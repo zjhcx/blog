@@ -71,6 +71,12 @@ export type FriendLink = {
 	descI18nKey?: I18nKey;
 };
 
+export type BangumiConfig = {
+	enable: boolean;
+	uid: string | number;
+	type: 1 | 2;
+};
+
 export type ProfileConfig = {
 	avatar?: string;
 	name: string;

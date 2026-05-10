@@ -1,4 +1,6 @@
+import I18nKey from "./i18n/i18nKey";
 import type {
+	BangumiConfig as BangumiConfigType,
 	ExpressiveCodeConfig,
 	FriendLink,
 	LicenseConfig,
@@ -6,7 +8,6 @@ import type {
 	ProfileConfig,
 	SiteConfig,
 } from "./types/config";
-import I18nKey from "./i18n/i18nKey";
 import { LinkPreset } from "./types/config";
 
 export const siteConfig: SiteConfig = {
@@ -41,12 +42,27 @@ export const siteConfig: SiteConfig = {
 	],
 };
 
+export const BangumiConfig: BangumiConfigType = {
+	enable: true,
+	uid: 3546871542843760,
+	type: 1, // 1: 追番, 2: 追剧
+};
+
 export const navBarConfig: NavBarConfig = {
 	links: [
 		LinkPreset.Home,
 		LinkPreset.Archive,
 		LinkPreset.About,
 		LinkPreset.Links,
+		...(BangumiConfig.enable
+			? [
+					{
+						name: BangumiConfig.type === 2 ? "追剧" : "追番",
+						url: "/bangumi/",
+						external: false,
+					},
+				]
+			: []),
 		{
 			name: "其他",
 			url: "/other/", // Internal links should not include the base path, as it is automatically added
