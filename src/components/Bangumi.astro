@@ -50,27 +50,27 @@ let bangumiList: BangumiItem[] = [];
 let errorMessage = "";
 
 if (BangumiConfig.enable) {
+	const pageSize = Math.min(Math.max(BangumiConfig.ps, 1), 30);
 	const params = new URLSearchParams({
 		vmid: String(BangumiConfig.uid),
 		type: String(BangumiConfig.type),
-		pn: "1",
-		ps: "50",
+		pn: String(Math.max(BangumiConfig.pn, 1)),
+		ps: String(pageSize),
 	});
+	const requestUrl = `https://api.bilibili.com/x/space/bangumi/follow/list?${params}`;
+	const requestHeaders = {
+		"User-Agent":
+			"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+		Referer: `https://space.bilibili.com/${BangumiConfig.uid}/bangumi`,
+	};
 
 	try {
-		const response = await fetch(
-			`https://api.bilibili.com/x/space/bangumi/follow/list?${params}`,
-			{
-				headers: {
-					"User-Agent":
-						"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
-					/*Referer: `https://space.bilibili.com/${BangumiConfig.uid}/bangumi`,*/
-				},
-			},
-		);
+		const response = await fetch(requestUrl, {
+			headers: requestHeaders,
+		});
 
 		if (!response.ok) {
-			throw new Error(`HTTP ${response.status}`);
+			throw new Error(`HTTP ${response.status} ${response.statusText}`);
 		}
 
 		const payload = (await response.json()) as BangumiApiResponse;
@@ -139,6 +139,7 @@ const getBangumiUrl = (item: BangumiItem) =>
 								src={item.cover}
 								alt={item.title}
 								loading="lazy"
+								referrerpolicy="no-referrer"
 							/>
 							{item.badge && <span class="bangumi-badge">{item.badge}</span>}
 						</div>

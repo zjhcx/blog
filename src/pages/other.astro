@@ -1,13 +1,183 @@
 ---
-import MainGridLayout from '../layouts/MainGridLayout.astro'
+import { Icon } from "astro-icon/components";
+import { BangumiConfig } from "@/config";
+import MainGridLayout from "../layouts/MainGridLayout.astro";
+
+const bangumiTitle = BangumiConfig.type === 2 ? "追剧" : "追番";
+const bangumiDescription =
+	BangumiConfig.type === 2
+		? "查看 Bilibili 追剧列表"
+		: "查看 Bilibili 追番列表";
 ---
 
-<MainGridLayout title="" description="">
-    <div class="other-list">
-        <ul>
-            <li>
-                <i class="fa-solid fa-link"></i>
-            </li>
-        </ul>
-    </div>
+<MainGridLayout title="其他" description="更多页面">
+	<div class="other-page">
+		<section class="other-hero card-base">
+			<h1 class="other-title text-90">其他</h1>
+			<p class="other-description text-50">更多页面与站点功能</p>
+		</section>
+
+		<section class="other-list">
+			{
+				BangumiConfig.enable && (
+					<a class="other-card card-base text-90" href="/bangumi/">
+						<div class="other-card-icon">
+							<Icon name="fa6-brands:bilibili" />
+						</div>
+						<div class="other-card-content">
+							<h2>{bangumiTitle}</h2>
+							<p class="text-50">{bangumiDescription}</p>
+						</div>
+						<Icon
+							class="other-card-enter"
+							name="material-symbols:chevron-right-rounded"
+						/>
+					</a>
+				)
+			}
+		</section>
+	</div>
 </MainGridLayout>
+
+<style>
+	.other-page {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.other-hero {
+		padding: 1.6rem;
+	}
+
+	.other-title {
+		margin: 0 0 0.5rem;
+		font-size: 2rem;
+		font-weight: 700;
+	}
+
+	.other-description {
+		margin: 0;
+	}
+
+	.other-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+		gap: 1rem;
+	}
+
+	.other-card {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		min-height: 96px;
+		padding: 1rem;
+		text-decoration: none;
+		transition:
+			transform 0.25s ease,
+			box-shadow 0.25s ease,
+			border-color 0.25s ease;
+	}
+
+	.other-card::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background:
+			radial-gradient(
+				circle at top left,
+				rgba(var(--primary), 0.18),
+				transparent 45%
+			),
+			linear-gradient(135deg, rgba(var(--primary), 0.08), transparent 55%);
+		opacity: 0;
+		transition: opacity 0.25s ease;
+	}
+
+	.other-card:hover {
+		transform: translateY(-4px);
+		border-color: rgba(var(--primary), 0.45);
+		box-shadow: 0 14px 35px rgba(0, 0, 0, 0.12);
+	}
+
+	.other-card:hover::before {
+		opacity: 1;
+	}
+
+	.other-card-icon {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		flex: 0 0 auto;
+		align-items: center;
+		justify-content: center;
+		width: 58px;
+		height: 58px;
+		border-radius: 50%;
+		background: linear-gradient(
+			135deg,
+			rgba(var(--primary), 0.9),
+			rgba(var(--primary), 0.25)
+		);
+		color: white;
+		font-size: 1.65rem;
+	}
+
+	.other-card-content {
+		position: relative;
+		z-index: 1;
+		min-width: 0;
+		flex: 1;
+	}
+
+	.other-card-content h2 {
+		margin: 0 0 0.35rem;
+		font-size: 1.05rem;
+		font-weight: 700;
+	}
+
+	.other-card-content p {
+		margin: 0;
+		font-size: 0.9rem;
+		line-height: 1.45;
+	}
+
+	.other-card-enter {
+		position: relative;
+		z-index: 1;
+		flex: 0 0 auto;
+		width: 2rem;
+		height: 2rem;
+		color: rgb(var(--primary));
+		opacity: 0;
+		transform: translateX(-0.25rem);
+		transition:
+			opacity 0.25s ease,
+			transform 0.25s ease;
+	}
+
+	.other-card:hover .other-card-enter {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	@media (max-width: 640px) {
+		.other-hero {
+			padding: 1.25rem;
+		}
+
+		.other-list {
+			grid-template-columns: 1fr;
+		}
+
+		.other-card {
+			min-height: 88px;
+		}
+
+		.other-card-icon {
+			width: 52px;
+			height: 52px;
+		}
+	}
+</style>

@@ -1,5 +1,6 @@
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
+import { BangumiConfig } from "@/config";
 import { LinkPreset, type NavBarLink } from "@/types/config";
 
 export const LinkPresets: { [key in LinkPreset]: NavBarLink } = {
@@ -22,5 +23,9 @@ export const LinkPresets: { [key in LinkPreset]: NavBarLink } = {
 		name: i18n(I18nKey.links),
 		url: "/links/",
 		i18nKey: I18nKey.links,
+	},
+	[LinkPreset.Bangumi]: {
+		name: BangumiConfig.type === 2 ? "追剧" : "追番",
+		url: "/bangumi/",
 	},
 };

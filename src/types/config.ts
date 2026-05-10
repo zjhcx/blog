@@ -50,6 +50,7 @@ export enum LinkPreset {
 	Archive = 1,
 	About = 2,
 	Links = 3,
+	Bangumi = 4,
 }
 
 export type NavBarLink = {
@@ -75,6 +76,8 @@ export type BangumiConfig = {
 	enable: boolean;
 	uid: string | number;
 	type: 1 | 2;
+	pn: number;
+	ps: number;
 };
 
 export type ProfileConfig = {
