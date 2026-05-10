@@ -1,20 +1,32 @@
 ---
 import { Icon } from "astro-icon/components";
 import { BangumiConfig, MomentsConfig } from "@/config";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
 
-const bangumiTitle = BangumiConfig.type === 2 ? "追剧" : "追番";
+const bangumiTitleKey =
+	BangumiConfig.type === 2 ? I18nKey.bangumiDrama : I18nKey.bangumi;
+const bangumiDescriptionKey =
+	BangumiConfig.type === 2
+		? I18nKey.bangumiDramaOtherDescription
+		: I18nKey.bangumiOtherDescription;
+const bangumiTitle = i18n(bangumiTitleKey);
 const bangumiDescription =
 	BangumiConfig.type === 2
-		? "查看 Bilibili 追剧列表"
-		: "查看 Bilibili 追番列表";
+		? i18n(I18nKey.bangumiDramaOtherDescription)
+		: i18n(I18nKey.bangumiOtherDescription);
 ---
 
-<MainGridLayout title="其他" description="更多页面">
+<MainGridLayout title={i18n(I18nKey.other)} description={i18n(I18nKey.otherDescription)}>
 	<div class="other-page">
 		<section class="other-hero card-base">
-			<h1 class="other-title text-90">其他</h1>
-			<p class="other-description text-50">更多页面与站点功能</p>
+			<h1 class="other-title text-90" data-i18n-key={I18nKey.other}>
+				{i18n(I18nKey.other)}
+			</h1>
+			<p class="other-description text-50" data-i18n-key={I18nKey.otherDescription}>
+				{i18n(I18nKey.otherDescription)}
+			</p>
 		</section>
 
 		<section class="other-list">
@@ -25,8 +37,10 @@ const bangumiDescription =
 							<Icon name="material-symbols:rss-feed-rounded" />
 						</div>
 						<div class="other-card-content">
-							<h2>朋友圈</h2>
-							<p class="text-50">查看 RSS 源聚合的朋友最新动态</p>
+							<h2 data-i18n-key={I18nKey.moments}>{i18n(I18nKey.moments)}</h2>
+							<p class="text-50" data-i18n-key={I18nKey.momentsOtherDescription}>
+								{i18n(I18nKey.momentsOtherDescription)}
+							</p>
 						</div>
 						<Icon
 							class="other-card-enter"
@@ -43,8 +57,10 @@ const bangumiDescription =
 							<Icon name="fa6-brands:bilibili" />
 						</div>
 						<div class="other-card-content">
-							<h2>{bangumiTitle}</h2>
-							<p class="text-50">{bangumiDescription}</p>
+							<h2 data-i18n-key={bangumiTitleKey}>{bangumiTitle}</h2>
+							<p class="text-50" data-i18n-key={bangumiDescriptionKey}>
+								{bangumiDescription}
+							</p>
 						</div>
 						<Icon
 							class="other-card-enter"

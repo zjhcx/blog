@@ -4,6 +4,8 @@ import Pagination from "@components/control/Pagination.astro";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 import type { GetStaticPaths } from "astro";
 import { BangumiConfig } from "@/config";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
 import { getBangumiItems } from "@/utils/bangumi";
 
 export const getStaticPaths = (async ({ paginate }) => {
@@ -16,12 +18,19 @@ export const getStaticPaths = (async ({ paginate }) => {
 }) satisfies GetStaticPaths;
 
 const { page, errorMessage } = Astro.props;
-const pageTitle = BangumiConfig.type === 2 ? "追剧" : "追番";
+const pageTitle = i18n(
+	BangumiConfig.type === 2 ? I18nKey.bangumiDrama : I18nKey.bangumi,
+);
+const pageDescription = i18n(
+	BangumiConfig.type === 2
+		? I18nKey.bangumiDramaDescription
+		: I18nKey.bangumiDescription,
+);
 const showPagination =
 	!BangumiConfig.hidePaginationWhenSinglePage || page.lastPage > 1;
 ---
 
-<MainGridLayout title={pageTitle} description="Bilibili Bangumi">
+<MainGridLayout title={pageTitle} description={pageDescription}>
 	<BangumiComponent items={page.data} errorMessage={errorMessage} />
 	{
 		showPagination && (

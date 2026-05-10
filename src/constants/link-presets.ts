@@ -25,11 +25,15 @@ export const LinkPresets: { [key in LinkPreset]: NavBarLink } = {
 		i18nKey: I18nKey.links,
 	},
 	[LinkPreset.Bangumi]: {
-		name: BangumiConfig.type === 2 ? "追剧" : "追番",
+		name: i18n(
+			BangumiConfig.type === 2 ? I18nKey.bangumiDrama : I18nKey.bangumi,
+		),
 		url: "/bangumi/",
+		i18nKey: BangumiConfig.type === 2 ? I18nKey.bangumiDrama : I18nKey.bangumi,
 	},
 	[LinkPreset.Moments]: {
-		name: "朋友圈",
+		name: i18n(I18nKey.moments),
 		url: "/moments/",
+		i18nKey: I18nKey.moments,
 	},
 };
