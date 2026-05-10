@@ -8,17 +8,13 @@
         "type": "tabs",
         "children": [
           {
-            "id": "1199aaa2c0ad788f",
+            "id": "3f550d20ded81810",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "src/content/posts/测试.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "测试"
+              "title": "新标签页"
             }
           }
         ]
@@ -94,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "src/content/posts/测试.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +99,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "测试 的反向链接列表"
+              "title": "反向链接"
             }
           },
           {
@@ -113,12 +108,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "src/content/posts/测试.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "测试 的出链列表"
+              "title": "出链"
             }
           },
           {
@@ -156,13 +150,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "src/content/posts/测试.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "测试 的大纲"
+              "title": "大纲"
             }
           }
         ]
@@ -183,8 +176,10 @@
       "bases:新建数据库": false
     }
   },
-  "active": "1199aaa2c0ad788f",
+  "active": "3f550d20ded81810",
   "lastOpenFiles": [
+    "src/content/posts/稻香.md",
+    "src/content/posts/【再见2024】【AI天禄&辟邪】稻香.md",
     "dist/pagefind/index/zh-cn_e714709.pf_index",
     "dist/pagefind/fragment/zh-cn_9258ebc.pf_fragment",
     "dist/pagefind/fragment/zh-cn_51913cf.pf_fragment",
@@ -195,7 +190,6 @@
     "dist/pagefind/pagefind-ui.css",
     "dist/pagefind/pagefind-modular-ui.js",
     "dist/pagefind/pagefind-modular-ui.css",
-    "dist/pagefind/pagefind-highlight.js",
     "dist/favicon/favicon-light-32.png",
     "dist/favicon/favicon-light-192.png",
     "dist/favicon/favicon-light-180.png",
@@ -205,7 +199,6 @@
     "dist/favicon/favicon-dark-180.png",
     "dist/favicon/favicon-dark-128.png",
     "dist/bg.jpg",
-    "dist/avatar.jpg",
-    "src/content/posts/测试.md"
+    "dist/avatar.jpg"
   ]
 }
