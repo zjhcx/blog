@@ -54,10 +54,7 @@ jobs:
 
       # 构建 Astro
       - name: Build with Astro
-        run: |
-          pnpm astro build \
-            --site "${{ steps.pages.outputs.origin }}" \
-            --base "${{ steps.pages.outputs.base_path }}"
+        run: pnpm build
         working-directory: ${{ env.BUILD_PATH }}
 
       # 上传构建产物
