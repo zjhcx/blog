@@ -5,6 +5,7 @@ import type { APIContext } from "astro";
 import MarkdownIt from "markdown-it";
 import sanitizeHtml from "sanitize-html";
 import { siteConfig } from "@/config";
+import { absoluteUrl } from "@/utils/url-utils";
 
 const parser = new MarkdownIt();
 
@@ -22,7 +23,7 @@ export async function GET(context: APIContext) {
 	const response = await rss({
 		title: siteConfig.title,
 		description: siteConfig.subtitle || "No description",
-		site: context.site ?? "https://fuwari.vercel.app",
+		site: absoluteUrl("/", context.site ?? undefined),
 		items: blog.map((post) => {
 			const content =
 				typeof post.body === "string" ? post.body : String(post.body || "");

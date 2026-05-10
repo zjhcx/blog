@@ -3,6 +3,7 @@ import { Icon } from "astro-icon/components";
 import { BangumiConfig, MomentsConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
+import { url } from "@/utils/url-utils";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
 
 const bangumiTitleKey =
@@ -32,7 +33,7 @@ const bangumiDescription =
 		<section class="other-list">
 			{
 				MomentsConfig.enable && (
-					<a class="other-card card-base text-90" href="/moments/">
+					<a class="other-card card-base text-90" href={url("/moments/")}>
 						<div class="other-card-icon">
 							<Icon name="material-symbols:rss-feed-rounded" />
 						</div>
@@ -52,7 +53,7 @@ const bangumiDescription =
 
 			{
 				BangumiConfig.enable && (
-					<a class="other-card card-base text-90" href="/bangumi/">
+					<a class="other-card card-base text-90" href={url("/bangumi/")}>
 						<div class="other-card-icon">
 							<Icon name="fa6-brands:bilibili" />
 						</div>
