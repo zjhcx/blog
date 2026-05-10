@@ -1,6 +1,6 @@
-import { writable, type Writable } from "svelte/store";
+import { type Writable, writable } from "svelte/store";
 import { siteConfig } from "@/config";
-import I18nKey from "./i18nKey";
+import type I18nKey from "./i18nKey";
 import { en } from "./languages/en";
 import { es } from "./languages/es";
 import { id } from "./languages/id";
@@ -52,6 +52,10 @@ function getInitialLanguage(): SupportedLanguage {
 
 	const stored = localStorage.getItem("language");
 	return isSupportedLanguage(stored) ? stored : siteConfig.lang;
+}
+
+export function getCurrentLanguage(): SupportedLanguage {
+	return getInitialLanguage();
 }
 
 export const language: Writable<SupportedLanguage> =
