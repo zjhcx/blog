@@ -1,0 +1,99 @@
+---
+import { Icon } from "astro-icon/components";
+import { MomentsConfig } from "@/config";
+import type { FeedResult, MomentItem } from "@/utils/moments";
+import "../styles/moments.css";
+
+interface Props {
+	items: MomentItem[];
+	errors?: FeedResult[];
+}
+
+const formatDate = (date?: Date) => {
+	if (!date) return "未知时间";
+	return date.toLocaleDateString("zh-CN", {
+		year: "numeric",
+		month: "2-digit",
+		day: "2-digit",
+	});
+};
+
+const { items: moments, errors = [] } = Astro.props;
+---
+
+<div class="moments-page moments-page-root">
+	<section class="moments-page-hero card-base">
+		<h1 class="moments-page-title text-90">朋友圈</h1>
+		<p class="moments-page-description text-50">来自 RSS 源的朋友最新动态</p>
+	</section>
+
+	{
+		!MomentsConfig.enable && (
+			<section class="moments-state card-base text-50">朋友圈已关闭。</section>
+		)
+	}
+
+	{
+		MomentsConfig.enable && MomentsConfig.sources.length === 0 && (
+			<section class="moments-state card-base text-50">
+				暂无 RSS 源，请在 src/config.ts 的 MomentsConfig.sources 中配置。
+			</section>
+		)
+	}
+
+	{
+		MomentsConfig.enable && errors.length > 0 && (
+			<section class="moments-state card-base text-50">
+				{errors.map((result) => (
+					<p>
+						{result.source.name} 加载失败：{result.error}
+					</p>
+				))}
+			</section>
+		)
+	}
+
+	{
+		MomentsConfig.enable &&
+			MomentsConfig.sources.length > 0 &&
+			moments.length === 0 && (
+				<section class="moments-state card-base text-50">暂无朋友圈动态。</section>
+			)
+	}
+
+	{
+		MomentsConfig.enable && moments.length > 0 && (
+			<section class="moments-list">
+				{moments.map((item, index) => (
+					<a
+						class="moments-card card-base text-90 onload-animation"
+						href={item.link}
+						target="_blank"
+						rel="noopener noreferrer"
+						style={`animation-delay: calc(var(--content-delay) + ${index * 50}ms);`}
+					>
+						<div class="moments-avatar">
+							{item.source.avatar ? (
+								<img src={item.source.avatar} alt={item.source.name} loading="lazy" />
+							) : (
+								<Icon name="material-symbols:rss-feed-rounded" />
+							)}
+						</div>
+						<div class="moments-content">
+							<div class="moments-meta text-50">
+								<span>{item.source.name}</span>
+								<span>{formatDate(item.published)}</span>
+							</div>
+							<h2>{item.title}</h2>
+							{item.summary && <p class="text-75">{item.summary}</p>}
+						</div>
+						<Icon
+							class="moments-enter"
+							name="material-symbols:chevron-right-rounded"
+						/>
+					</a>
+				))}
+			</section>
+		)
+	}
+</div>
