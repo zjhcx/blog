@@ -1,6 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
-import { BangumiConfig } from "@/config";
+import { BangumiConfig, MomentsConfig } from "@/config";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
 
 const bangumiTitle = BangumiConfig.type === 2 ? "追剧" : "追番";
@@ -18,6 +18,24 @@ const bangumiDescription =
 		</section>
 
 		<section class="other-list">
+			{
+				MomentsConfig.enable && (
+					<a class="other-card card-base text-90" href="/moments/">
+						<div class="other-card-icon">
+							<Icon name="material-symbols:rss-feed-rounded" />
+						</div>
+						<div class="other-card-content">
+							<h2>朋友圈</h2>
+							<p class="text-50">查看 RSS 源聚合的朋友最新动态</p>
+						</div>
+						<Icon
+							class="other-card-enter"
+							name="material-symbols:chevron-right-rounded"
+						/>
+					</a>
+				)
+			}
+
 			{
 				BangumiConfig.enable && (
 					<a class="other-card card-base text-90" href="/bangumi/">

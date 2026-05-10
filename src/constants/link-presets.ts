@@ -28,4 +28,8 @@ export const LinkPresets: { [key in LinkPreset]: NavBarLink } = {
 		name: BangumiConfig.type === 2 ? "追剧" : "追番",
 		url: "/bangumi/",
 	},
+	[LinkPreset.Moments]: {
+		name: "朋友圈",
+		url: "/moments/",
+	},
 };

@@ -1,0 +1,36 @@
+---
+import BangumiComponent from "@components/Bangumi.astro";
+import Pagination from "@components/control/Pagination.astro";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import type { GetStaticPaths } from "astro";
+import { BangumiConfig } from "@/config";
+import { getBangumiItems } from "@/utils/bangumi";
+
+export const getStaticPaths = (async ({ paginate }) => {
+	const { items, errorMessage } = await getBangumiItems();
+	return paginate(items, {
+		pageSize: Math.max(BangumiConfig.pageSize, 1),
+		params: { page: undefined },
+		props: { errorMessage },
+	});
+}) satisfies GetStaticPaths;
+
+const { page, errorMessage } = Astro.props;
+const pageTitle = BangumiConfig.type === 2 ? "追剧" : "追番";
+const showPagination =
+	!BangumiConfig.hidePaginationWhenSinglePage || page.lastPage > 1;
+---
+
+<MainGridLayout title={pageTitle} description="Bilibili Bangumi">
+	<BangumiComponent items={page.data} errorMessage={errorMessage} />
+	{
+		showPagination && (
+			<Pagination
+				class="mx-auto onload-animation"
+				page={page}
+				basePath="/bangumi/"
+				style={`animation-delay: calc(var(--content-delay) + ${page.data.length * 50}ms)`}
+			/>
+		)
+	}
+</MainGridLayout>

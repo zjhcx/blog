@@ -4,6 +4,7 @@ import type {
 	ExpressiveCodeConfig,
 	FriendLink,
 	LicenseConfig,
+	MomentsConfig as MomentsConfigType,
 	NavBarConfig,
 	ProfileConfig,
 	SiteConfig,
@@ -48,6 +49,29 @@ export const BangumiConfig: BangumiConfigType = {
 	type: 1, // 1: 追番, 2: 追剧
 	pn: 1, // 请求页码
 	ps: 30, // 请求个数，必须在 30 及以下
+	pageSize: 8, // 每页展示数量
+	hidePaginationWhenSinglePage: true, // 只有一页时隐藏底部分页
+};
+
+export const MomentsConfig: MomentsConfigType = {
+	enable: true,
+	limit: 30, // 多个 RSS 源合并后的最大展示条数
+	pageSize: 8, // 每页展示数量
+	hidePaginationWhenSinglePage: true, // 只有一页时隐藏底部分页
+	sources: [
+		// {
+		// 	name: "示例博客",
+		// 	url: "https://example.com/rss.xml",
+		// 	homepage: "https://example.com",
+		// 	avatar: "https://example.com/avatar.png",
+		// },
+		{
+			name: "CDNJS",
+			url: "https://status.cdnjs.com/history.rss",
+			homepage: "https://status.cdnjs.com/",
+			avatar: "https://cdnjs.com/_/f7a2ebfb819c118086546e481876aef6.svg",
+		},
+	],
 };
 
 export const navBarConfig: NavBarConfig = {
@@ -56,6 +80,7 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Archive,
 		LinkPreset.About,
 		LinkPreset.Links,
+		/* ...(MomentsConfig.enable ? [LinkPreset.Moments] : []), */ // 朋友圈不建议放在导航栏
 		/* ...(BangumiConfig.enable ? [LinkPreset.Bangumi] : []), */ // 追番不建议放在导航栏
 		{
 			name: "其他",

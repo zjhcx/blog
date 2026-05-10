@@ -51,6 +51,7 @@ export enum LinkPreset {
 	About = 2,
 	Links = 3,
 	Bangumi = 4,
+	Moments = 5,
 }
 
 export type NavBarLink = {
@@ -78,6 +79,23 @@ export type BangumiConfig = {
 	type: 1 | 2;
 	pn: number;
 	ps: number;
+	pageSize: number;
+	hidePaginationWhenSinglePage: boolean;
+};
+
+export type MomentsFeedSource = {
+	name: string;
+	url: string;
+	homepage?: string;
+	avatar?: string;
+};
+
+export type MomentsConfig = {
+	enable: boolean;
+	limit: number;
+	pageSize: number;
+	hidePaginationWhenSinglePage: boolean;
+	sources: MomentsFeedSource[];
 };
 
 export type ProfileConfig = {
