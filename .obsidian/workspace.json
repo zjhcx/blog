@@ -178,6 +178,7 @@
   },
   "active": "6aeddc332a64c3ce",
   "lastOpenFiles": [
+    "‎.github/workflows/astro.yml",
     "dist/pagefind/index/zh-cn_b92cf0d.pf_index",
     "dist/pagefind/fragment/zh-cn_51913cf.pf_fragment",
     "dist/pagefind/fragment/zh-cn_4d2ee83.pf_fragment",
@@ -188,7 +189,6 @@
     "dist/pagefind/pagefind-ui.css",
     "dist/pagefind/pagefind-modular-ui.js",
     "dist/pagefind/pagefind-modular-ui.css",
-    "dist/pagefind/pagefind-highlight.js",
     "dist/favicon/favicon-light-32.png",
     "dist/favicon/favicon-light-192.png",
     "dist/favicon/favicon-light-180.png",
