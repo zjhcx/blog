@@ -43,6 +43,15 @@ export const ko: Translation = {
 	[Key.momentsRequestFailed]: "RSS 요청 실패",
 	[Key.momentsOtherDescription]: "RSS로 모은 친구들의 최신 소식 보기",
 
+	[Key.follows]: "Bilibili 팔로우",
+	[Key.followsDescription]: "Bilibili에서 팔로우한 계정",
+	[Key.followsDisabled]: "Bilibili 팔로우 페이지가 비활성화되었습니다.",
+	[Key.followsLoadFailed]: "Bilibili 팔로우 데이터를 불러오지 못했습니다: ",
+	[Key.followsEmpty]: "아직 팔로우 데이터가 없습니다.",
+	[Key.followsOfficial]: "인증됨",
+	[Key.followsVip]: "VIP",
+	[Key.followsOtherDescription]: "Bilibili 팔로우 목록 보기",
+
 	[Key.friendGithubDescription]:
 		"오픈 소스 및 비공개 소프트웨어 프로젝트 호스팅 플랫폼",
 	[Key.friendOpenAIDescription]: "AI 연구 및 제품 플랫폼",

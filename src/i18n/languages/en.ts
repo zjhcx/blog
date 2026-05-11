@@ -43,6 +43,15 @@ export const en: Translation = {
 	[Key.momentsRequestFailed]: "RSS request failed",
 	[Key.momentsOtherDescription]: "View friends' latest updates from RSS feeds",
 
+	[Key.follows]: "Bilibili Follows",
+	[Key.followsDescription]: "Accounts followed on Bilibili",
+	[Key.followsDisabled]: "Bilibili follows page is disabled.",
+	[Key.followsLoadFailed]: "Failed to load Bilibili follows data: ",
+	[Key.followsEmpty]: "No follow data yet.",
+	[Key.followsOfficial]: "Verified",
+	[Key.followsVip]: "VIP",
+	[Key.followsOtherDescription]: "View Bilibili followings",
+
 	[Key.friendGithubDescription]:
 		"A hosting platform for open-source and private software projects",
 	[Key.friendOpenAIDescription]: "AI research and product platform",

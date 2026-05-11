@@ -43,6 +43,15 @@ export const vi: Translation = {
 	[Key.momentsRequestFailed]: "Yêu cầu RSS thất bại",
 	[Key.momentsOtherDescription]: "Xem cập nhật mới nhất của bạn bè từ RSS",
 
+	[Key.follows]: "Theo dõi Bilibili",
+	[Key.followsDescription]: "Các tài khoản đang theo dõi trên Bilibili",
+	[Key.followsDisabled]: "Trang theo dõi Bilibili đã bị tắt.",
+	[Key.followsLoadFailed]: "Không thể tải dữ liệu theo dõi Bilibili: ",
+	[Key.followsEmpty]: "Chưa có dữ liệu theo dõi.",
+	[Key.followsOfficial]: "Đã xác minh",
+	[Key.followsVip]: "VIP",
+	[Key.followsOtherDescription]: "Xem danh sách theo dõi Bilibili",
+
 	[Key.friendGithubDescription]:
 		"Nền tảng lưu trữ dự án phần mềm nguồn mở và riêng tư",
 	[Key.friendOpenAIDescription]: "Nền tảng nghiên cứu và sản phẩm AI",

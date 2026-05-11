@@ -2,6 +2,7 @@ import I18nKey from "./i18n/i18nKey";
 import type {
 	BangumiConfig as BangumiConfigType,
 	ExpressiveCodeConfig,
+	FollowsConfig as FollowsConfigType,
 	FriendLink,
 	LicenseConfig,
 	MomentsConfig as MomentsConfigType,
@@ -74,6 +75,17 @@ export const MomentsConfig: MomentsConfigType = {
 	],
 };
 
+export const FollowsConfig: FollowsConfigType = {
+	enable: true,
+	source: "json", // json: 读取 src/data/follows.json；api: 构建时请求 B 站接口，容易触发风控失败
+	uid: 3546871542843760, // 即 B 站 vmid
+	pn: 1, // 构建时请求页码
+	ps: 50, // 构建时请求个数
+	jsonPath: "src/data/follows.json", // B 站 API 原始返回格式，用于对抗风控
+	pageSize: 16, // 每页展示数量
+	hidePaginationWhenSinglePage: true, // 只有一页时隐藏底部分页
+};
+
 export const navBarConfig: NavBarConfig = {
 	links: [
 		LinkPreset.Home,
@@ -82,6 +94,7 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Links,
 		/* ...(MomentsConfig.enable ? [LinkPreset.Moments] : []), */ // 朋友圈不建议放在导航栏
 		/* ...(BangumiConfig.enable ? [LinkPreset.Bangumi] : []), */ // 追番不建议放在导航栏
+		/* ...(FollowsConfig.enable ? [LinkPreset.Follows] : []), */ // B 站关注不建议放在导航栏
 		{
 			name: "其他",
 			url: "/other/", // Internal links should not include the base path, as it is automatically added

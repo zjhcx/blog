@@ -42,6 +42,15 @@ export const ja: Translation = {
 	[Key.momentsRequestFailed]: "RSS リクエストに失敗しました",
 	[Key.momentsOtherDescription]: "RSS で集約した友人の最新更新を見る",
 
+	[Key.follows]: "Bilibili フォロー",
+	[Key.followsDescription]: "Bilibili でフォローしているアカウント",
+	[Key.followsDisabled]: "Bilibili フォローページは無効です。",
+	[Key.followsLoadFailed]: "Bilibili フォロー情報の読み込みに失敗しました：",
+	[Key.followsEmpty]: "フォローデータはまだありません。",
+	[Key.followsOfficial]: "認証済み",
+	[Key.followsVip]: "VIP",
+	[Key.followsOtherDescription]: "Bilibili のフォロー一覧を見る",
+
 	[Key.friendGithubDescription]:
 		"オープンソースと非公開ソフトウェアプロジェクトのホスティングプラットフォーム",
 	[Key.friendOpenAIDescription]: "AI の研究とプロダクトのプラットフォーム",

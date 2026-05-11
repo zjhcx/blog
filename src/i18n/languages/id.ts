@@ -43,6 +43,15 @@ export const id: Translation = {
 	[Key.momentsRequestFailed]: "Permintaan RSS gagal",
 	[Key.momentsOtherDescription]: "Lihat pembaruan terbaru teman dari RSS",
 
+	[Key.follows]: "Bilibili Follows",
+	[Key.followsDescription]: "Akun yang diikuti di Bilibili",
+	[Key.followsDisabled]: "Halaman Bilibili follows dinonaktifkan.",
+	[Key.followsLoadFailed]: "Gagal memuat data Bilibili follows: ",
+	[Key.followsEmpty]: "Belum ada data follows.",
+	[Key.followsOfficial]: "Terverifikasi",
+	[Key.followsVip]: "VIP",
+	[Key.followsOtherDescription]: "Lihat daftar follows Bilibili",
+
 	[Key.friendGithubDescription]:
 		"Platform hosting untuk proyek perangkat lunak terbuka dan privat",
 	[Key.friendOpenAIDescription]: "Platform riset dan produk AI",

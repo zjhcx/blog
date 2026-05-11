@@ -189,6 +189,7 @@
     "dist/pagefind/pagefind-modular-ui.js",
     "dist/pagefind/pagefind-modular-ui.css",
     "dist/pagefind/pagefind-highlight.js",
+    "dist/_astro/auth-icon.DDlHkiA5.svg",
     "dist/favicon/favicon-light-32.png",
     "dist/favicon/favicon-light-192.png",
     "dist/favicon/favicon-light-180.png",
@@ -198,7 +199,6 @@
     "dist/favicon/favicon-dark-180.png",
     "dist/favicon/favicon-dark-128.png",
     "dist/bg.jpg",
-    "dist/avatar.jpg",
     "src/content/posts/稻香.md",
     "src/content/posts/【再见2024】【AI天禄&辟邪】稻香.md"
   ]
