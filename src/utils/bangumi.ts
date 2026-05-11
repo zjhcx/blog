@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { BangumiConfig } from "@/config";
 
 export type BangumiItem = {
@@ -42,11 +44,29 @@ export type BangumiResult = {
 	errorMessage: string;
 };
 
-export async function getBangumiItems(): Promise<BangumiResult> {
-	if (!BangumiConfig.enable) {
-		return { items: [], errorMessage: "" };
+async function getBangumiFromJson(): Promise<BangumiResult> {
+	try {
+		const file = await readFile(
+			path.resolve(process.cwd(), BangumiConfig.jsonPath),
+			{
+				encoding: "utf-8",
+			},
+		);
+		const payload = JSON.parse(file) as BangumiApiResponse;
+		if (payload.code !== 0) {
+			throw new Error(payload.message || `Bilibili code ${payload.code}`);
+		}
+		return { items: payload.data?.list ?? [], errorMessage: "" };
+	} catch (error) {
+		return {
+			items: [],
+			errorMessage:
+				error instanceof Error ? error.message : "Bangumi JSON read failed",
+		};
 	}
+}
 
+async function getBangumiFromApi(): Promise<BangumiResult> {
 	const pageSize = Math.min(Math.max(BangumiConfig.ps, 1), 30);
 	const params = new URLSearchParams({
 		vmid: String(BangumiConfig.uid),
@@ -83,4 +103,16 @@ export async function getBangumiItems(): Promise<BangumiResult> {
 				error instanceof Error ? error.message : "Bangumi data request failed",
 		};
 	}
+}
+
+export async function getBangumiItems(): Promise<BangumiResult> {
+	if (!BangumiConfig.enable) {
+		return { items: [], errorMessage: "" };
+	}
+
+	if (BangumiConfig.source === "api") {
+		return getBangumiFromApi();
+	}
+
+	return getBangumiFromJson();
 }

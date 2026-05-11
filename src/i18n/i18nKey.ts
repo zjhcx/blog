@@ -46,6 +46,13 @@ enum I18nKey {
 	followsVip = "followsVip",
 	followsOtherDescription = "followsOtherDescription",
 
+	fans = "fans",
+	fansDescription = "fansDescription",
+	fansDisabled = "fansDisabled",
+	fansLoadFailed = "fansLoadFailed",
+	fansEmpty = "fansEmpty",
+	fansOtherDescription = "fansOtherDescription",
+
 	friendGithubDescription = "friendGithubDescription",
 	friendOpenAIDescription = "friendOpenAIDescription",
 	friendBilibiliDescription = "friendBilibiliDescription",

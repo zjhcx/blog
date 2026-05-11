@@ -52,6 +52,13 @@ export const en: Translation = {
 	[Key.followsVip]: "VIP",
 	[Key.followsOtherDescription]: "View Bilibili followings",
 
+	[Key.fans]: "Bilibili Fans",
+	[Key.fansDescription]: "Followers on Bilibili",
+	[Key.fansDisabled]: "Bilibili fans page is disabled.",
+	[Key.fansLoadFailed]: "Failed to load Bilibili fans data: ",
+	[Key.fansEmpty]: "No fan data yet.",
+	[Key.fansOtherDescription]: "View Bilibili followers",
+
 	[Key.friendGithubDescription]:
 		"A hosting platform for open-source and private software projects",
 	[Key.friendOpenAIDescription]: "AI research and product platform",

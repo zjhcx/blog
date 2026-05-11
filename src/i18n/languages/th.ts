@@ -52,6 +52,13 @@ export const th: Translation = {
 	[Key.followsVip]: "VIP",
 	[Key.followsOtherDescription]: "ดูรายการติดตาม Bilibili",
 
+	[Key.fans]: "แฟน Bilibili",
+	[Key.fansDescription]: "รายชื่อผู้ติดตามจาก Bilibili",
+	[Key.fansDisabled]: "หน้าผู้ติดตาม Bilibili ถูกปิดใช้งาน",
+	[Key.fansLoadFailed]: "โหลดข้อมูลผู้ติดตาม Bilibili ไม่สำเร็จ: ",
+	[Key.fansEmpty]: "ยังไม่มีข้อมูลผู้ติดตาม",
+	[Key.fansOtherDescription]: "ดูรายชื่อผู้ติดตาม Bilibili",
+
 	[Key.friendGithubDescription]: "แพลตฟอร์มโฮสต์โปรเจกต์ซอฟต์แวร์โอเพนซอร์สและส่วนตัว",
 	[Key.friendOpenAIDescription]: "แพลตฟอร์มวิจัยและผลิตภัณฑ์ AI",
 	[Key.friendBilibiliDescription]: "ชุมชนวิดีโอและแพลตฟอร์มสร้างสรรค์",

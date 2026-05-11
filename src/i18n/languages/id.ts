@@ -52,6 +52,13 @@ export const id: Translation = {
 	[Key.followsVip]: "VIP",
 	[Key.followsOtherDescription]: "Lihat daftar follows Bilibili",
 
+	[Key.fans]: "Fans Bilibili",
+	[Key.fansDescription]: "Daftar pengikut dari Bilibili",
+	[Key.fansDisabled]: "Halaman fans Bilibili dinonaktifkan.",
+	[Key.fansLoadFailed]: "Gagal memuat data fans Bilibili: ",
+	[Key.fansEmpty]: "Belum ada data fans.",
+	[Key.fansOtherDescription]: "Lihat daftar pengikut Bilibili",
+
 	[Key.friendGithubDescription]:
 		"Platform hosting untuk proyek perangkat lunak terbuka dan privat",
 	[Key.friendOpenAIDescription]: "Platform riset dan produk AI",
