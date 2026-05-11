@@ -43,6 +43,15 @@ export const th: Translation = {
 	[Key.momentsRequestFailed]: "คำขอ RSS ล้มเหลว",
 	[Key.momentsOtherDescription]: "ดูอัปเดตล่าสุดของเพื่อนจาก RSS",
 
+	[Key.follows]: "การติดตาม Bilibili",
+	[Key.followsDescription]: "บัญชีที่ติดตามบน Bilibili",
+	[Key.followsDisabled]: "หน้าการติดตาม Bilibili ถูกปิดใช้งาน",
+	[Key.followsLoadFailed]: "โหลดข้อมูลการติดตาม Bilibili ไม่สำเร็จ: ",
+	[Key.followsEmpty]: "ยังไม่มีข้อมูลการติดตาม",
+	[Key.followsOfficial]: "ยืนยันแล้ว",
+	[Key.followsVip]: "VIP",
+	[Key.followsOtherDescription]: "ดูรายการติดตาม Bilibili",
+
 	[Key.friendGithubDescription]: "แพลตฟอร์มโฮสต์โปรเจกต์ซอฟต์แวร์โอเพนซอร์สและส่วนตัว",
 	[Key.friendOpenAIDescription]: "แพลตฟอร์มวิจัยและผลิตภัณฑ์ AI",
 	[Key.friendBilibiliDescription]: "ชุมชนวิดีโอและแพลตฟอร์มสร้างสรรค์",

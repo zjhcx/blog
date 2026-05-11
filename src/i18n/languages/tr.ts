@@ -43,6 +43,15 @@ export const tr: Translation = {
 	[Key.momentsRequestFailed]: "RSS isteği başarısız",
 	[Key.momentsOtherDescription]: "Arkadaşların RSS güncellemelerini görüntüle",
 
+	[Key.follows]: "Bilibili Takipleri",
+	[Key.followsDescription]: "Bilibili'de takip edilen hesaplar",
+	[Key.followsDisabled]: "Bilibili takipleri sayfası devre dışı.",
+	[Key.followsLoadFailed]: "Bilibili takip verileri yüklenemedi: ",
+	[Key.followsEmpty]: "Henüz takip verisi yok.",
+	[Key.followsOfficial]: "Doğrulanmış",
+	[Key.followsVip]: "VIP",
+	[Key.followsOtherDescription]: "Bilibili takiplerini görüntüle",
+
 	[Key.friendGithubDescription]:
 		"Açık kaynak ve özel yazılım projeleri için barındırma platformu",
 	[Key.friendOpenAIDescription]: "AI araştırma ve ürün platformu",

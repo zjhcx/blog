@@ -42,6 +42,15 @@ export const zh_CN: Translation = {
 	[Key.momentsRequestFailed]: "RSS 请求失败",
 	[Key.momentsOtherDescription]: "查看 RSS 源聚合的朋友最新动态",
 
+	[Key.follows]: "B站关注",
+	[Key.followsDescription]: "来自哔哩哔哩的关注列表",
+	[Key.followsDisabled]: "B站关注页已关闭。",
+	[Key.followsLoadFailed]: "加载哔哩哔哩关注数据失败：",
+	[Key.followsEmpty]: "暂无关注数据。",
+	[Key.followsOfficial]: "认证",
+	[Key.followsVip]: "大会员",
+	[Key.followsOtherDescription]: "查看 Bilibili 关注列表",
+
 	[Key.friendGithubDescription]: "面向开源及私有软件项目的托管平台",
 	[Key.friendOpenAIDescription]: "AI 研究与产品平台",
 	[Key.friendBilibiliDescription]: "视频社区与创作平台",

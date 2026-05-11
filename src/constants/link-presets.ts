@@ -36,4 +36,9 @@ export const LinkPresets: { [key in LinkPreset]: NavBarLink } = {
 		url: "/moments/",
 		i18nKey: I18nKey.moments,
 	},
+	[LinkPreset.Follows]: {
+		name: i18n(I18nKey.follows),
+		url: "/follows/",
+		i18nKey: I18nKey.follows,
+	},
 };

@@ -37,6 +37,15 @@ enum I18nKey {
 	momentsRequestFailed = "momentsRequestFailed",
 	momentsOtherDescription = "momentsOtherDescription",
 
+	follows = "follows",
+	followsDescription = "followsDescription",
+	followsDisabled = "followsDisabled",
+	followsLoadFailed = "followsLoadFailed",
+	followsEmpty = "followsEmpty",
+	followsOfficial = "followsOfficial",
+	followsVip = "followsVip",
+	followsOtherDescription = "followsOtherDescription",
+
 	friendGithubDescription = "friendGithubDescription",
 	friendOpenAIDescription = "friendOpenAIDescription",
 	friendBilibiliDescription = "friendBilibiliDescription",

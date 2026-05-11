@@ -44,6 +44,15 @@ export const es: Translation = {
 	[Key.momentsOtherDescription]:
 		"Ver las últimas actualizaciones de amigos desde RSS",
 
+	[Key.follows]: "Seguidos en Bilibili",
+	[Key.followsDescription]: "Cuentas seguidas en Bilibili",
+	[Key.followsDisabled]: "La página de seguidos de Bilibili está desactivada.",
+	[Key.followsLoadFailed]: "Error al cargar los seguidos de Bilibili: ",
+	[Key.followsEmpty]: "Aún no hay datos de seguidos.",
+	[Key.followsOfficial]: "Verificado",
+	[Key.followsVip]: "VIP",
+	[Key.followsOtherDescription]: "Ver seguidos de Bilibili",
+
 	[Key.friendGithubDescription]:
 		"Plataforma de alojamiento para proyectos de software abiertos y privados",
 	[Key.friendOpenAIDescription]:
