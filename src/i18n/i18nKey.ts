@@ -53,6 +53,16 @@ enum I18nKey {
 	fansEmpty = "fansEmpty",
 	fansOtherDescription = "fansOtherDescription",
 
+	dynamic = "dynamic",
+	dynamicDescription = "dynamicDescription",
+	dynamicDisabled = "dynamicDisabled",
+	dynamicLoadFailed = "dynamicLoadFailed",
+	dynamicEmpty = "dynamicEmpty",
+	dynamicOtherDescription = "dynamicOtherDescription",
+	dynamicStatForward = "dynamicStatForward",
+	dynamicStatComment = "dynamicStatComment",
+	dynamicStatLike = "dynamicStatLike",
+
 	friendGithubDescription = "friendGithubDescription",
 	friendOpenAIDescription = "friendOpenAIDescription",
 	friendBilibiliDescription = "friendBilibiliDescription",

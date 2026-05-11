@@ -2,6 +2,7 @@
 import { Icon } from "astro-icon/components";
 import {
 	BangumiConfig,
+	DynamicConfig,
 	FansConfig,
 	FollowsConfig,
 	MomentsConfig,
@@ -106,6 +107,26 @@ const bangumiDescription =
 							<h2 data-i18n-key={I18nKey.fans}>{i18n(I18nKey.fans)}</h2>
 							<p class="text-50" data-i18n-key={I18nKey.fansOtherDescription}>
 								{i18n(I18nKey.fansOtherDescription)}
+							</p>
+						</div>
+						<Icon
+							class="other-card-enter"
+							name="material-symbols:chevron-right-rounded"
+						/>
+					</a>
+				)
+			}
+
+			{
+				DynamicConfig.enable && (
+					<a class="other-card card-base text-90" href={url("/dynamic/")}>
+						<div class="other-card-icon">
+							<Icon name="fa6-brands:bilibili" />
+						</div>
+						<div class="other-card-content">
+							<h2 data-i18n-key={I18nKey.dynamic}>{i18n(I18nKey.dynamic)}</h2>
+							<p class="text-50" data-i18n-key={I18nKey.dynamicOtherDescription}>
+								{i18n(I18nKey.dynamicOtherDescription)}
 							</p>
 						</div>
 						<Icon

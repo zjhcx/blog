@@ -46,4 +46,9 @@ export const LinkPresets: { [key in LinkPreset]: NavBarLink } = {
 		url: "/fans/",
 		i18nKey: I18nKey.fans,
 	},
+	[LinkPreset.Dynamic]: {
+		name: i18n(I18nKey.dynamic),
+		url: "/dynamic/",
+		i18nKey: I18nKey.dynamic,
+	},
 };

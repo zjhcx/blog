@@ -59,6 +59,16 @@ export const ko: Translation = {
 	[Key.fansEmpty]: "아직 팬 데이터가 없습니다.",
 	[Key.fansOtherDescription]: "Bilibili 팔로워 목록 보기",
 
+	[Key.dynamic]: "Bilibili 동적",
+	[Key.dynamicDescription]: "Bilibili 스페이스 업데이트",
+	[Key.dynamicDisabled]: "Bilibili 동적 페이지가 비활성화되었습니다.",
+	[Key.dynamicLoadFailed]: "Bilibili 동적 데이터를 불러오지 못했습니다: ",
+	[Key.dynamicEmpty]: "아직 동적 데이터가 없습니다.",
+	[Key.dynamicOtherDescription]: "Bilibili 스페이스 업데이트 보기",
+	[Key.dynamicStatForward]: "공유",
+	[Key.dynamicStatComment]: "댓글",
+	[Key.dynamicStatLike]: "좋아요",
+
 	[Key.friendGithubDescription]:
 		"오픈 소스 및 비공개 소프트웨어 프로젝트 호스팅 플랫폼",
 	[Key.friendOpenAIDescription]: "AI 연구 및 제품 플랫폼",
