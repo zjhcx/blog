@@ -182,6 +182,16 @@ export const profileConfig: ProfileConfig = {
 	bio: "114514",
 	links: [
 		{
+			name: "哔哩哔哩",
+			icon: "fa6-brands:bilibili",
+			url: "https://space.bilibili.com/3546871542843760",
+		},
+		{
+			name: "GitHub",
+			icon: "fa6-brands:github",
+			url: "https://github.com/zjhcx",
+		},
+		{
 			name: "X",
 			icon: "fa6-brands:x-twitter", // Visit https://icones.js.org/ for icon codes
 			// You will need to install the corresponding icon set if it's not already included
@@ -194,14 +204,34 @@ export const profileConfig: ProfileConfig = {
 			url: "https://discord.com/users/1498586217070202910",
 		},
 		{
-			name: "哔哩哔哩",
-			icon: "fa6-brands:bilibili",
-			url: "https://space.bilibili.com/3546871542843760",
+			name: "Reddit",
+			icon: "fa6-brands:reddit",
+			url: "https://www.reddit.com/user/zjhcx/",
 		},
 		{
-			name: "GitHub",
-			icon: "fa6-brands:github",
-			url: "https://github.com/zjhcx",
+			name: "YouTube",
+			icon: "fa6-brands:youtube",
+			url: "https://www.youtube.com/@zjhcx",
+		},
+		{
+			name: "TikTok",
+			icon: "fa6-brands:tiktok",
+			url: "https://www.tiktok.com/@zjhcx12",
+		},
+		{
+			name: "Facebook",
+			icon: "fa6-brands:facebook",
+			url: "https://www.facebook.com/profile.php?id=61589201685052",
+		},
+		{
+			name: "Instagram",
+			icon: "fa6-brands:instagram",
+			url: "https://www.instagram.com/zjhcx12/",
+		},
+		{
+			name: "Threads",
+			icon: "fa6-brands:threads",
+			url: "https://www.threads.com/@zjhcx12",
 		},
 	],
 };
