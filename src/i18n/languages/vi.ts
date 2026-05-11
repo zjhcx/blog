@@ -59,6 +59,16 @@ export const vi: Translation = {
 	[Key.fansEmpty]: "Chưa có dữ liệu fan.",
 	[Key.fansOtherDescription]: "Xem danh sách người theo dõi Bilibili",
 
+	[Key.dynamic]: "Dynamic Bilibili",
+	[Key.dynamicDescription]: "Cập nhật không gian từ Bilibili",
+	[Key.dynamicDisabled]: "Trang dynamic Bilibili đã bị tắt.",
+	[Key.dynamicLoadFailed]: "Không thể tải dữ liệu dynamic Bilibili: ",
+	[Key.dynamicEmpty]: "Chưa có dữ liệu dynamic.",
+	[Key.dynamicOtherDescription]: "Xem cập nhật không gian Bilibili",
+	[Key.dynamicStatForward]: "Chia sẻ",
+	[Key.dynamicStatComment]: "Bình luận",
+	[Key.dynamicStatLike]: "Thích",
+
 	[Key.friendGithubDescription]:
 		"Nền tảng lưu trữ dự án phần mềm nguồn mở và riêng tư",
 	[Key.friendOpenAIDescription]: "Nền tảng nghiên cứu và sản phẩm AI",

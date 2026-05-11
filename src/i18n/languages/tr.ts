@@ -59,6 +59,16 @@ export const tr: Translation = {
 	[Key.fansEmpty]: "Henüz hayran verisi yok.",
 	[Key.fansOtherDescription]: "Bilibili takipçilerini görüntüle",
 
+	[Key.dynamic]: "Bilibili Dinamik",
+	[Key.dynamicDescription]: "Bilibili alan güncellemeleri",
+	[Key.dynamicDisabled]: "Bilibili dinamik sayfası devre dışı.",
+	[Key.dynamicLoadFailed]: "Bilibili dinamik verileri yüklenemedi: ",
+	[Key.dynamicEmpty]: "Henüz dinamik verisi yok.",
+	[Key.dynamicOtherDescription]: "Bilibili alan güncellemelerini görüntüle",
+	[Key.dynamicStatForward]: "Paylaşım",
+	[Key.dynamicStatComment]: "Yorum",
+	[Key.dynamicStatLike]: "Beğeni",
+
 	[Key.friendGithubDescription]:
 		"Açık kaynak ve özel yazılım projeleri için barındırma platformu",
 	[Key.friendOpenAIDescription]: "AI araştırma ve ürün platformu",

@@ -54,6 +54,7 @@ export enum LinkPreset {
 	Moments = 5,
 	Follows = 6,
 	Fans = 7,
+	Dynamic = 8,
 }
 
 export type NavBarLink = {
@@ -119,6 +120,15 @@ export type FansConfig = {
 	uid: string | number;
 	pn: number;
 	ps: number;
+	jsonPath: string;
+	pageSize: number;
+	hidePaginationWhenSinglePage: boolean;
+};
+
+export type DynamicConfig = {
+	enable: boolean;
+	source: "json" | "api";
+	uid: string | number;
 	jsonPath: string;
 	pageSize: number;
 	hidePaginationWhenSinglePage: boolean;

@@ -59,6 +59,16 @@ export const id: Translation = {
 	[Key.fansEmpty]: "Belum ada data fans.",
 	[Key.fansOtherDescription]: "Lihat daftar pengikut Bilibili",
 
+	[Key.dynamic]: "Dynamic Bilibili",
+	[Key.dynamicDescription]: "Pembaruan ruang dari Bilibili",
+	[Key.dynamicDisabled]: "Halaman dynamic Bilibili dinonaktifkan.",
+	[Key.dynamicLoadFailed]: "Gagal memuat data dynamic Bilibili: ",
+	[Key.dynamicEmpty]: "Belum ada data dynamic.",
+	[Key.dynamicOtherDescription]: "Lihat pembaruan ruang Bilibili",
+	[Key.dynamicStatForward]: "Bagikan",
+	[Key.dynamicStatComment]: "Komentar",
+	[Key.dynamicStatLike]: "Suka",
+
 	[Key.friendGithubDescription]:
 		"Platform hosting untuk proyek perangkat lunak terbuka dan privat",
 	[Key.friendOpenAIDescription]: "Platform riset dan produk AI",

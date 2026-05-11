@@ -60,6 +60,16 @@ export const es: Translation = {
 	[Key.fansEmpty]: "Aun no hay datos de fans.",
 	[Key.fansOtherDescription]: "Ver seguidores de Bilibili",
 
+	[Key.dynamic]: "Dinamica de Bilibili",
+	[Key.dynamicDescription]: "Actualizaciones de espacio en Bilibili",
+	[Key.dynamicDisabled]: "La pagina de dinamica de Bilibili esta desactivada.",
+	[Key.dynamicLoadFailed]: "Error al cargar dinamicas de Bilibili: ",
+	[Key.dynamicEmpty]: "Aun no hay datos de dinamicas.",
+	[Key.dynamicOtherDescription]: "Ver actualizaciones de Bilibili",
+	[Key.dynamicStatForward]: "Reenvios",
+	[Key.dynamicStatComment]: "Comentarios",
+	[Key.dynamicStatLike]: "Me gusta",
+
 	[Key.friendGithubDescription]:
 		"Plataforma de alojamiento para proyectos de software abiertos y privados",
 	[Key.friendOpenAIDescription]:

@@ -59,6 +59,16 @@ export const th: Translation = {
 	[Key.fansEmpty]: "ยังไม่มีข้อมูลผู้ติดตาม",
 	[Key.fansOtherDescription]: "ดูรายชื่อผู้ติดตาม Bilibili",
 
+	[Key.dynamic]: "ไดนามิก Bilibili",
+	[Key.dynamicDescription]: "อัปเดตจากพื้นที่ Bilibili",
+	[Key.dynamicDisabled]: "หน้าไดนามิก Bilibili ถูกปิดใช้งาน",
+	[Key.dynamicLoadFailed]: "โหลดข้อมูลไดนามิก Bilibili ไม่สำเร็จ: ",
+	[Key.dynamicEmpty]: "ยังไม่มีข้อมูลไดนามิก",
+	[Key.dynamicOtherDescription]: "ดูอัปเดตพื้นที่ Bilibili",
+	[Key.dynamicStatForward]: "แชร์",
+	[Key.dynamicStatComment]: "ความคิดเห็น",
+	[Key.dynamicStatLike]: "ถูกใจ",
+
 	[Key.friendGithubDescription]: "แพลตฟอร์มโฮสต์โปรเจกต์ซอฟต์แวร์โอเพนซอร์สและส่วนตัว",
 	[Key.friendOpenAIDescription]: "แพลตฟอร์มวิจัยและผลิตภัณฑ์ AI",
 	[Key.friendBilibiliDescription]: "ชุมชนวิดีโอและแพลตฟอร์มสร้างสรรค์",

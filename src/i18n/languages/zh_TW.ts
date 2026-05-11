@@ -58,6 +58,16 @@ export const zh_TW: Translation = {
 	[Key.fansEmpty]: "暫無粉絲資料。",
 	[Key.fansOtherDescription]: "查看 Bilibili 粉絲列表",
 
+	[Key.dynamic]: "B站動態",
+	[Key.dynamicDescription]: "來自嗶哩嗶哩的空間動態",
+	[Key.dynamicDisabled]: "B站動態頁已關閉。",
+	[Key.dynamicLoadFailed]: "載入嗶哩嗶哩動態資料失敗：",
+	[Key.dynamicEmpty]: "暫無動態資料。",
+	[Key.dynamicOtherDescription]: "查看 Bilibili 空間動態",
+	[Key.dynamicStatForward]: "轉發",
+	[Key.dynamicStatComment]: "評論",
+	[Key.dynamicStatLike]: "按讚",
+
 	[Key.friendGithubDescription]: "面向開源及私有軟體專案的託管平台",
 	[Key.friendOpenAIDescription]: "AI 研究與產品平台",
 	[Key.friendBilibiliDescription]: "影音社群與創作平台",

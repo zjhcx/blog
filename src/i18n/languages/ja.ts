@@ -58,6 +58,16 @@ export const ja: Translation = {
 	[Key.fansEmpty]: "ファンデータはまだありません。",
 	[Key.fansOtherDescription]: "Bilibili のフォロワー一覧を見る",
 
+	[Key.dynamic]: "Bilibili 動態",
+	[Key.dynamicDescription]: "Bilibili スペースの更新",
+	[Key.dynamicDisabled]: "Bilibili 動態ページは無効です。",
+	[Key.dynamicLoadFailed]: "Bilibili 動態データの読み込みに失敗しました：",
+	[Key.dynamicEmpty]: "動態データはまだありません。",
+	[Key.dynamicOtherDescription]: "Bilibili スペースの更新を見る",
+	[Key.dynamicStatForward]: "転送",
+	[Key.dynamicStatComment]: "コメント",
+	[Key.dynamicStatLike]: "いいね",
+
 	[Key.friendGithubDescription]:
 		"オープンソースと非公開ソフトウェアプロジェクトのホスティングプラットフォーム",
 	[Key.friendOpenAIDescription]: "AI の研究とプロダクトのプラットフォーム",
