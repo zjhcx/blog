@@ -52,6 +52,13 @@ export const vi: Translation = {
 	[Key.followsVip]: "VIP",
 	[Key.followsOtherDescription]: "Xem danh sách theo dõi Bilibili",
 
+	[Key.fans]: "Fan Bilibili",
+	[Key.fansDescription]: "Danh sách người theo dõi từ Bilibili",
+	[Key.fansDisabled]: "Trang fan Bilibili đã bị tắt.",
+	[Key.fansLoadFailed]: "Không thể tải dữ liệu fan Bilibili: ",
+	[Key.fansEmpty]: "Chưa có dữ liệu fan.",
+	[Key.fansOtherDescription]: "Xem danh sách người theo dõi Bilibili",
+
 	[Key.friendGithubDescription]:
 		"Nền tảng lưu trữ dự án phần mềm nguồn mở và riêng tư",
 	[Key.friendOpenAIDescription]: "Nền tảng nghiên cứu và sản phẩm AI",

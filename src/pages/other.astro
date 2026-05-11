@@ -1,6 +1,11 @@
 ---
 import { Icon } from "astro-icon/components";
-import { BangumiConfig, FollowsConfig, MomentsConfig } from "@/config";
+import {
+	BangumiConfig,
+	FansConfig,
+	FollowsConfig,
+	MomentsConfig,
+} from "@/config";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
 import { url } from "@/utils/url-utils";
@@ -81,6 +86,26 @@ const bangumiDescription =
 							<h2 data-i18n-key={I18nKey.follows}>{i18n(I18nKey.follows)}</h2>
 							<p class="text-50" data-i18n-key={I18nKey.followsOtherDescription}>
 								{i18n(I18nKey.followsOtherDescription)}
+							</p>
+						</div>
+						<Icon
+							class="other-card-enter"
+							name="material-symbols:chevron-right-rounded"
+						/>
+					</a>
+				)
+			}
+
+			{
+				FansConfig.enable && (
+					<a class="other-card card-base text-90" href={url("/fans/")}>
+						<div class="other-card-icon">
+							<Icon name="fa6-brands:bilibili" />
+						</div>
+						<div class="other-card-content">
+							<h2 data-i18n-key={I18nKey.fans}>{i18n(I18nKey.fans)}</h2>
+							<p class="text-50" data-i18n-key={I18nKey.fansOtherDescription}>
+								{i18n(I18nKey.fansOtherDescription)}
 							</p>
 						</div>
 						<Icon

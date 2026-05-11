@@ -51,6 +51,13 @@ export const zh_CN: Translation = {
 	[Key.followsVip]: "大会员",
 	[Key.followsOtherDescription]: "查看 Bilibili 关注列表",
 
+	[Key.fans]: "B站粉丝",
+	[Key.fansDescription]: "来自哔哩哔哩的粉丝列表",
+	[Key.fansDisabled]: "B站粉丝页已关闭。",
+	[Key.fansLoadFailed]: "加载哔哩哔哩粉丝数据失败：",
+	[Key.fansEmpty]: "暂无粉丝数据。",
+	[Key.fansOtherDescription]: "查看 Bilibili 粉丝列表",
+
 	[Key.friendGithubDescription]: "面向开源及私有软件项目的托管平台",
 	[Key.friendOpenAIDescription]: "AI 研究与产品平台",
 	[Key.friendBilibiliDescription]: "视频社区与创作平台",

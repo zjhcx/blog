@@ -52,6 +52,13 @@ export const ko: Translation = {
 	[Key.followsVip]: "VIP",
 	[Key.followsOtherDescription]: "Bilibili 팔로우 목록 보기",
 
+	[Key.fans]: "Bilibili 팬",
+	[Key.fansDescription]: "Bilibili 팔로워 목록",
+	[Key.fansDisabled]: "Bilibili 팬 페이지가 비활성화되었습니다.",
+	[Key.fansLoadFailed]: "Bilibili 팬 데이터를 불러오지 못했습니다: ",
+	[Key.fansEmpty]: "아직 팬 데이터가 없습니다.",
+	[Key.fansOtherDescription]: "Bilibili 팔로워 목록 보기",
+
 	[Key.friendGithubDescription]:
 		"오픈 소스 및 비공개 소프트웨어 프로젝트 호스팅 플랫폼",
 	[Key.friendOpenAIDescription]: "AI 연구 및 제품 플랫폼",

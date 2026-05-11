@@ -51,6 +51,13 @@ export const ja: Translation = {
 	[Key.followsVip]: "VIP",
 	[Key.followsOtherDescription]: "Bilibili のフォロー一覧を見る",
 
+	[Key.fans]: "Bilibili ファン",
+	[Key.fansDescription]: "Bilibili のフォロワー一覧",
+	[Key.fansDisabled]: "Bilibili ファンページは無効です。",
+	[Key.fansLoadFailed]: "Bilibili ファン情報の読み込みに失敗しました：",
+	[Key.fansEmpty]: "ファンデータはまだありません。",
+	[Key.fansOtherDescription]: "Bilibili のフォロワー一覧を見る",
+
 	[Key.friendGithubDescription]:
 		"オープンソースと非公開ソフトウェアプロジェクトのホスティングプラットフォーム",
 	[Key.friendOpenAIDescription]: "AI の研究とプロダクトのプラットフォーム",

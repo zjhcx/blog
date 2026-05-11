@@ -52,6 +52,13 @@ export const tr: Translation = {
 	[Key.followsVip]: "VIP",
 	[Key.followsOtherDescription]: "Bilibili takiplerini görüntüle",
 
+	[Key.fans]: "Bilibili Hayranları",
+	[Key.fansDescription]: "Bilibili takipçileri",
+	[Key.fansDisabled]: "Bilibili hayranları sayfası devre dışı.",
+	[Key.fansLoadFailed]: "Bilibili hayran verileri yüklenemedi: ",
+	[Key.fansEmpty]: "Henüz hayran verisi yok.",
+	[Key.fansOtherDescription]: "Bilibili takipçilerini görüntüle",
+
 	[Key.friendGithubDescription]:
 		"Açık kaynak ve özel yazılım projeleri için barındırma platformu",
 	[Key.friendOpenAIDescription]: "AI araştırma ve ürün platformu",

@@ -51,6 +51,13 @@ export const zh_TW: Translation = {
 	[Key.followsVip]: "大會員",
 	[Key.followsOtherDescription]: "查看 Bilibili 關注列表",
 
+	[Key.fans]: "B站粉絲",
+	[Key.fansDescription]: "來自嗶哩嗶哩的粉絲列表",
+	[Key.fansDisabled]: "B站粉絲頁已關閉。",
+	[Key.fansLoadFailed]: "載入嗶哩嗶哩粉絲資料失敗：",
+	[Key.fansEmpty]: "暫無粉絲資料。",
+	[Key.fansOtherDescription]: "查看 Bilibili 粉絲列表",
+
 	[Key.friendGithubDescription]: "面向開源及私有軟體專案的託管平台",
 	[Key.friendOpenAIDescription]: "AI 研究與產品平台",
 	[Key.friendBilibiliDescription]: "影音社群與創作平台",

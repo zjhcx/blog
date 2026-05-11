@@ -53,6 +53,7 @@ export enum LinkPreset {
 	Bangumi = 4,
 	Moments = 5,
 	Follows = 6,
+	Fans = 7,
 }
 
 export type NavBarLink = {
@@ -76,10 +77,12 @@ export type FriendLink = {
 
 export type BangumiConfig = {
 	enable: boolean;
+	source: "json" | "api";
 	uid: string | number;
 	type: 1 | 2;
 	pn: number;
 	ps: number;
+	jsonPath: string;
 	pageSize: number;
 	hidePaginationWhenSinglePage: boolean;
 };
@@ -100,6 +103,17 @@ export type MomentsConfig = {
 };
 
 export type FollowsConfig = {
+	enable: boolean;
+	source: "json" | "api";
+	uid: string | number;
+	pn: number;
+	ps: number;
+	jsonPath: string;
+	pageSize: number;
+	hidePaginationWhenSinglePage: boolean;
+};
+
+export type FansConfig = {
 	enable: boolean;
 	source: "json" | "api";
 	uid: string | number;
