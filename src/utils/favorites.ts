@@ -143,6 +143,45 @@ function parseFavoriteResourcesPayload(payload: FavoriteResourcesJsonPayload): {
 	return { folder: null, items: [] };
 }
 
+async function enrichFavoriteFoldersWithDetailJson(
+	folders: FavoriteFolder[],
+): Promise<FavoriteFolder[]> {
+	return Promise.all(
+		folders.map(async (folder) => {
+			if (folder.cover) {
+				return folder;
+			}
+
+			try {
+				const file = await readFile(
+					path.resolve(
+						process.cwd(),
+						FavoritesConfig.detailJsonDir,
+						`${folder.id}.json`,
+					),
+					{
+						encoding: "utf-8",
+					},
+				);
+				const payload = JSON.parse(file) as FavoriteResourcesJsonPayload;
+				const detail = parseFavoriteResourcesPayload(payload).folder;
+				if (!detail) {
+					return folder;
+				}
+
+				return {
+					...folder,
+					cover: folder.cover || detail.cover,
+					intro: folder.intro || detail.intro,
+					upper: folder.upper || detail.upper,
+				};
+			} catch {
+				return folder;
+			}
+		}),
+	);
+}
+
 async function getFavoriteFoldersFromJson(): Promise<FavoriteFoldersResult> {
 	try {
 		const file = await readFile(
@@ -152,7 +191,12 @@ async function getFavoriteFoldersFromJson(): Promise<FavoriteFoldersResult> {
 			},
 		);
 		const payload = JSON.parse(file) as FavoriteFoldersJsonPayload;
-		return { items: parseFavoriteFoldersPayload(payload), errorMessage: "" };
+		return {
+			items: await enrichFavoriteFoldersWithDetailJson(
+				parseFavoriteFoldersPayload(payload),
+			),
+			errorMessage: "",
+		};
 	} catch (error) {
 		return {
 			items: [],
@@ -182,7 +226,12 @@ async function getFavoriteFoldersFromApi(): Promise<FavoriteFoldersResult> {
 		}
 
 		const payload = (await response.json()) as FavoriteFoldersJsonPayload;
-		return { items: parseFavoriteFoldersPayload(payload), errorMessage: "" };
+		return {
+			items: await enrichFavoriteFoldersWithDetailJson(
+				parseFavoriteFoldersPayload(payload),
+			),
+			errorMessage: "",
+		};
 	} catch (error) {
 		return {
 			items: [],
