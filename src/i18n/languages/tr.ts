@@ -69,6 +69,19 @@ export const tr: Translation = {
 	[Key.dynamicStatComment]: "Yorum",
 	[Key.dynamicStatLike]: "Beğeni",
 
+	[Key.favs]: "Bilibili Favorileri",
+	[Key.favsDescription]: "Bilibili favori klasorleri",
+	[Key.favsDisabled]: "Bilibili favorileri sayfasi devre disi.",
+	[Key.favsLoadFailed]: "Bilibili favori verileri yuklenemedi: ",
+	[Key.favsEmpty]: "Henuz favori verisi yok.",
+	[Key.favsOtherDescription]: "Bilibili favori klasorlerini goruntule",
+	[Key.favsMediaCount]: "video",
+	[Key.favsOwner]: "Olusturan",
+	[Key.favResourcesEmpty]: "Bu favori klasorunde henuz video yok.",
+	[Key.favStatPlay]: "Oynatma",
+	[Key.favStatCollect]: "Favori",
+	[Key.favStatDanmaku]: "Danmaku",
+
 	[Key.friendGithubDescription]:
 		"Açık kaynak ve özel yazılım projeleri için barındırma platformu",
 	[Key.friendOpenAIDescription]: "AI araştırma ve ürün platformu",

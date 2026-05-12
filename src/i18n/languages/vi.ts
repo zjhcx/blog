@@ -69,6 +69,19 @@ export const vi: Translation = {
 	[Key.dynamicStatComment]: "Bình luận",
 	[Key.dynamicStatLike]: "Thích",
 
+	[Key.favs]: "Yeu thich Bilibili",
+	[Key.favsDescription]: "Danh sach thu muc yeu thich tu Bilibili",
+	[Key.favsDisabled]: "Trang yeu thich Bilibili da bi tat.",
+	[Key.favsLoadFailed]: "Khong the tai du lieu yeu thich Bilibili: ",
+	[Key.favsEmpty]: "Chua co du lieu yeu thich.",
+	[Key.favsOtherDescription]: "Xem thu muc yeu thich Bilibili",
+	[Key.favsMediaCount]: "video",
+	[Key.favsOwner]: "Nguoi tao",
+	[Key.favResourcesEmpty]: "Thu muc nay chua co video.",
+	[Key.favStatPlay]: "Luot xem",
+	[Key.favStatCollect]: "Yeu thich",
+	[Key.favStatDanmaku]: "Danmaku",
+
 	[Key.friendGithubDescription]:
 		"Nền tảng lưu trữ dự án phần mềm nguồn mở và riêng tư",
 	[Key.friendOpenAIDescription]: "Nền tảng nghiên cứu và sản phẩm AI",
