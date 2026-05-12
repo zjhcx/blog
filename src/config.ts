@@ -4,6 +4,7 @@ import type {
 	DynamicConfig as DynamicConfigType,
 	ExpressiveCodeConfig,
 	FansConfig as FansConfigType,
+	FavoritesConfig as FavoritesConfigType,
 	FollowsConfig as FollowsConfigType,
 	FriendLink,
 	LicenseConfig,
@@ -110,6 +111,19 @@ export const DynamicConfig: DynamicConfigType = {
 	hidePaginationWhenSinglePage: true, // 只有一页时隐藏底部分页
 };
 
+export const FavoritesConfig: FavoritesConfigType = {
+	enable: true,
+	uid: 3546871542843760, // 即 B 站 up_mid
+	listSource: "api", // json: 读取 src/data/favorites.json；api: 构建时请求收藏夹列表
+	listJsonPath: "src/data/favorites.json",
+	detailSource: "api", // json: 读取 src/data/favs/{mediaId}.json；api: 构建时请求收藏夹视频列表
+	detailJsonDir: "src/data/favs",
+	foldersPageSize: 12,
+	resourcesPageSize: 12,
+	apiPageSize: 40,
+	hidePaginationWhenSinglePage: true,
+};
+
 export const navBarConfig: NavBarConfig = {
 	links: [
 		LinkPreset.Home,
@@ -121,6 +135,7 @@ export const navBarConfig: NavBarConfig = {
 		/* ...(FollowsConfig.enable ? [LinkPreset.Follows] : []), */ // B 站关注不建议放在导航栏
 		/* ...(FansConfig.enable ? [LinkPreset.Fans] : []), */ // B 站粉丝不建议放在导航栏
 		/* ...(DynamicConfig.enable ? [LinkPreset.Dynamic] : []), */ // B 站动态不建议放在导航栏
+		/* ...(FavoritesConfig.enable ? [LinkPreset.Favorites] : []), */ // B 站收藏夹不建议放在导航栏
 		{
 			name: "其他",
 			url: "/other/", // Internal links should not include the base path, as it is automatically added

@@ -68,6 +68,19 @@ export const ja: Translation = {
 	[Key.dynamicStatComment]: "コメント",
 	[Key.dynamicStatLike]: "いいね",
 
+	[Key.favs]: "Bilibili お気に入り",
+	[Key.favsDescription]: "Bilibili のお気に入りフォルダ一覧",
+	[Key.favsDisabled]: "Bilibili お気に入りページは無効です。",
+	[Key.favsLoadFailed]: "Bilibili お気に入りデータの読み込みに失敗しました：",
+	[Key.favsEmpty]: "お気に入りデータはまだありません。",
+	[Key.favsOtherDescription]: "Bilibili お気に入り一覧を見る",
+	[Key.favsMediaCount]: "本の動画",
+	[Key.favsOwner]: "作成者",
+	[Key.favResourcesEmpty]: "このお気に入りにはまだ動画がありません。",
+	[Key.favStatPlay]: "再生",
+	[Key.favStatCollect]: "お気に入り",
+	[Key.favStatDanmaku]: "弾幕",
+
 	[Key.friendGithubDescription]:
 		"オープンソースと非公開ソフトウェアプロジェクトのホスティングプラットフォーム",
 	[Key.friendOpenAIDescription]: "AI の研究とプロダクトのプラットフォーム",

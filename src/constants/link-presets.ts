@@ -51,4 +51,9 @@ export const LinkPresets: { [key in LinkPreset]: NavBarLink } = {
 		url: "/dynamic/",
 		i18nKey: I18nKey.dynamic,
 	},
+	[LinkPreset.Favorites]: {
+		name: i18n(I18nKey.favs),
+		url: "/favs/",
+		i18nKey: I18nKey.favs,
+	},
 };

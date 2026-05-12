@@ -69,6 +69,19 @@ export const id: Translation = {
 	[Key.dynamicStatComment]: "Komentar",
 	[Key.dynamicStatLike]: "Suka",
 
+	[Key.favs]: "Favorit Bilibili",
+	[Key.favsDescription]: "Daftar folder favorit dari Bilibili",
+	[Key.favsDisabled]: "Halaman favorit Bilibili dinonaktifkan.",
+	[Key.favsLoadFailed]: "Gagal memuat data favorit Bilibili: ",
+	[Key.favsEmpty]: "Belum ada data favorit.",
+	[Key.favsOtherDescription]: "Lihat folder favorit Bilibili",
+	[Key.favsMediaCount]: "video",
+	[Key.favsOwner]: "Pemilik",
+	[Key.favResourcesEmpty]: "Folder favorit ini belum memiliki video.",
+	[Key.favStatPlay]: "Putar",
+	[Key.favStatCollect]: "Favorit",
+	[Key.favStatDanmaku]: "Danmaku",
+
 	[Key.friendGithubDescription]:
 		"Platform hosting untuk proyek perangkat lunak terbuka dan privat",
 	[Key.friendOpenAIDescription]: "Platform riset dan produk AI",

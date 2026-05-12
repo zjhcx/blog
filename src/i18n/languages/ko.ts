@@ -69,6 +69,19 @@ export const ko: Translation = {
 	[Key.dynamicStatComment]: "댓글",
 	[Key.dynamicStatLike]: "좋아요",
 
+	[Key.favs]: "Bilibili 즐겨찾기",
+	[Key.favsDescription]: "Bilibili 즐겨찾기 폴더 목록",
+	[Key.favsDisabled]: "Bilibili 즐겨찾기 페이지가 비활성화되었습니다.",
+	[Key.favsLoadFailed]: "Bilibili 즐겨찾기 데이터를 불러오지 못했습니다: ",
+	[Key.favsEmpty]: "아직 즐겨찾기 데이터가 없습니다.",
+	[Key.favsOtherDescription]: "Bilibili 즐겨찾기 목록 보기",
+	[Key.favsMediaCount]: "개 영상",
+	[Key.favsOwner]: "작성자",
+	[Key.favResourcesEmpty]: "이 즐겨찾기에는 아직 영상이 없습니다.",
+	[Key.favStatPlay]: "재생",
+	[Key.favStatCollect]: "즐겨찾기",
+	[Key.favStatDanmaku]: "탄막",
+
 	[Key.friendGithubDescription]:
 		"오픈 소스 및 비공개 소프트웨어 프로젝트 호스팅 플랫폼",
 	[Key.friendOpenAIDescription]: "AI 연구 및 제품 플랫폼",

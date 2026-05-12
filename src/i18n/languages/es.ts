@@ -70,6 +70,19 @@ export const es: Translation = {
 	[Key.dynamicStatComment]: "Comentarios",
 	[Key.dynamicStatLike]: "Me gusta",
 
+	[Key.favs]: "Favoritos de Bilibili",
+	[Key.favsDescription]: "Lista de carpetas de favoritos de Bilibili",
+	[Key.favsDisabled]: "La pagina de favoritos de Bilibili esta desactivada.",
+	[Key.favsLoadFailed]: "Error al cargar favoritos de Bilibili: ",
+	[Key.favsEmpty]: "Aun no hay datos de favoritos.",
+	[Key.favsOtherDescription]: "Ver carpetas de favoritos de Bilibili",
+	[Key.favsMediaCount]: "videos",
+	[Key.favsOwner]: "Creador",
+	[Key.favResourcesEmpty]: "Esta carpeta de favoritos aun no tiene videos.",
+	[Key.favStatPlay]: "Reproducciones",
+	[Key.favStatCollect]: "Favoritos",
+	[Key.favStatDanmaku]: "Danmaku",
+
 	[Key.friendGithubDescription]:
 		"Plataforma de alojamiento para proyectos de software abiertos y privados",
 	[Key.friendOpenAIDescription]:

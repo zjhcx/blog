@@ -69,6 +69,19 @@ export const en: Translation = {
 	[Key.dynamicStatComment]: "Comments",
 	[Key.dynamicStatLike]: "Likes",
 
+	[Key.favs]: "Bilibili Favorites",
+	[Key.favsDescription]: "Favorite folders from Bilibili",
+	[Key.favsDisabled]: "Bilibili favorites page is disabled.",
+	[Key.favsLoadFailed]: "Failed to load Bilibili favorites data: ",
+	[Key.favsEmpty]: "No favorite folder data yet.",
+	[Key.favsOtherDescription]: "View Bilibili favorite folders",
+	[Key.favsMediaCount]: "videos",
+	[Key.favsOwner]: "Owner",
+	[Key.favResourcesEmpty]: "This favorite folder has no videos yet.",
+	[Key.favStatPlay]: "Plays",
+	[Key.favStatCollect]: "Favorites",
+	[Key.favStatDanmaku]: "Danmaku",
+
 	[Key.friendGithubDescription]:
 		"A hosting platform for open-source and private software projects",
 	[Key.friendOpenAIDescription]: "AI research and product platform",
