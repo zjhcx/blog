@@ -80,9 +80,6 @@ importers:
       mdast-util-to-string:
         specifier: ^4.0.0
         version: 4.0.0
-      overlayscrollbars:
-        specifier: ^2.12.0
-        version: 2.12.0
       pagefind:
         specifier: ^1.4.0
         version: 1.4.0
