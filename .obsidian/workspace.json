@@ -11,10 +11,14 @@
             "id": "6aeddc332a64c3ce",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "src/content/posts/稻香.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "稻香"
             }
           }
         ]
@@ -90,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "src/content/posts/稻香.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "反向链接"
+              "title": "稻香 的反向链接列表"
             }
           },
           {
@@ -108,11 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "src/content/posts/稻香.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "出链"
+              "title": "稻香 的出链列表"
             }
           },
           {
@@ -150,12 +156,25 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "src/content/posts/稻香.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "大纲"
+              "title": "稻香 的大纲"
+            }
+          },
+          {
+            "id": "879e3f19ddffbad2",
+            "type": "leaf",
+            "state": {
+              "type": "footnotes",
+              "state": {
+                "file": "src/content/posts/稻香.md"
+              },
+              "icon": "lucide-file-signature",
+              "title": "脚注"
             }
           }
         ]
@@ -173,22 +192,24 @@
       "daily-notes:打开/创建今天的日记": false,
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
-      "bases:新建数据库": false
+      "bases:新建数据库": false,
+      "publish:发布更改": false,
+      "workspaces:管理工作区布局": false
     }
   },
   "active": "6aeddc332a64c3ce",
   "lastOpenFiles": [
-    "src/data/favs/3974342660.json",
+    "dist/pagefind/fragment/zh-cn_4d2ee83.pf_fragment",
     "dist/pagefind/index/zh-cn_b92cf0d.pf_index",
     "dist/pagefind/fragment/zh-cn_51913cf.pf_fragment",
-    "dist/pagefind/fragment/zh-cn_4d2ee83.pf_fragment",
-    "dist/pagefind/pagefind-modular-ui.css",
     "dist/pagefind/wasm.unknown.pagefind",
     "dist/pagefind/pagefind.zh-cn_98171c107bd1a.pf_meta",
     "dist/pagefind/pagefind.js",
     "dist/pagefind/pagefind-ui.js",
     "dist/pagefind/pagefind-ui.css",
     "dist/pagefind/pagefind-modular-ui.js",
+    "dist/pagefind/pagefind-modular-ui.css",
+    "dist/pagefind/pagefind-highlight.js",
     "dist/_astro/auth-icon.DDlHkiA5.svg",
     "dist/favicon/favicon-light-32.png",
     "dist/favicon/favicon-light-192.png",
