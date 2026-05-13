@@ -6,6 +6,7 @@ import {
 	FansConfig,
 	FavoritesConfig,
 	FollowsConfig,
+	MusicConfig,
 	MomentsConfig,
 } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
@@ -68,6 +69,26 @@ const bangumiDescription =
 							<h2 data-i18n-key={bangumiTitleKey}>{bangumiTitle}</h2>
 							<p class="text-50" data-i18n-key={bangumiDescriptionKey}>
 								{bangumiDescription}
+							</p>
+						</div>
+						<Icon
+							class="other-card-enter"
+							name="material-symbols:chevron-right-rounded"
+						/>
+					</a>
+				)
+			}
+
+			{
+				MusicConfig.enable && (
+					<a class="other-card card-base text-90" href={url("/music/")}>
+						<div class="other-card-icon">
+							<Icon name="material-symbols:music-note-rounded" />
+						</div>
+						<div class="other-card-content">
+							<h2 data-i18n-key={I18nKey.music}>{i18n(I18nKey.music)}</h2>
+							<p class="text-50" data-i18n-key={I18nKey.musicOtherDescription}>
+								{i18n(I18nKey.musicOtherDescription)}
 							</p>
 						</div>
 						<Icon

@@ -199,7 +199,8 @@
   },
   "active": "6aeddc332a64c3ce",
   "lastOpenFiles": [
-    "error.log",
+    "src/components/widget/MusicPlayer.astro",
+    "src/components/widget/MusicPlayer.svelte",
     "dist/pagefind/index/zh-cn_b92cf0d.pf_index",
     "dist/pagefind/fragment/zh-cn_51913cf.pf_fragment",
     "dist/pagefind/fragment/zh-cn_4d2ee83.pf_fragment",
@@ -209,7 +210,6 @@
     "dist/pagefind/pagefind-ui.js",
     "dist/pagefind/pagefind-ui.css",
     "dist/pagefind/pagefind-modular-ui.js",
-    "dist/pagefind/pagefind-modular-ui.css",
     "dist/_astro/auth-icon.DDlHkiA5.svg",
     "dist/favicon/favicon-light-32.png",
     "dist/favicon/favicon-light-192.png",
@@ -220,6 +220,7 @@
     "dist/favicon/favicon-dark-180.png",
     "dist/favicon/favicon-dark-128.png",
     "dist/bg.jpg",
+    "AGENTS.md",
     "src/content/posts/稻香.md",
     "src/content/posts/【再见2024】【AI天禄&辟邪】稻香.md"
   ]

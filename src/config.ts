@@ -8,6 +8,7 @@ import type {
 	FollowsConfig as FollowsConfigType,
 	FriendLink,
 	LicenseConfig,
+	MusicConfig as MusicConfigType,
 	MomentsConfig as MomentsConfigType,
 	NavBarConfig,
 	ProfileConfig,
@@ -57,6 +58,14 @@ export const BangumiConfig: BangumiConfigType = {
 	jsonPath: "src/data/bangumi.json", // B 站 API 原始返回格式，用于对抗风控
 	pageSize: 8, // 每页展示数量
 	hidePaginationWhenSinglePage: true, // 只有一页时隐藏底部分页
+};
+
+export const MusicConfig: MusicConfigType = {
+	enable: true,
+	source: "json", // json: 读取 src/data/music.json；api: 请求 MusicConfig.apiUrl
+	jsonPath: "src/data/music.json",
+	apiUrl: "",
+	defaultVolume: 0.72,
 };
 
 export const MomentsConfig: MomentsConfigType = {

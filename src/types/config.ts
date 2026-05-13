@@ -51,11 +51,12 @@ export enum LinkPreset {
 	About = 2,
 	Links = 3,
 	Bangumi = 4,
-	Moments = 5,
-	Follows = 6,
-	Fans = 7,
-	Dynamic = 8,
-	Favorites = 9,
+	Music = 5,
+	Moments = 6,
+	Follows = 7,
+	Fans = 8,
+	Dynamic = 9,
+	Favorites = 10,
 }
 
 export type NavBarLink = {
@@ -87,6 +88,14 @@ export type BangumiConfig = {
 	jsonPath: string;
 	pageSize: number;
 	hidePaginationWhenSinglePage: boolean;
+};
+
+export type MusicConfig = {
+	enable: boolean;
+	source: "json" | "api";
+	jsonPath: string;
+	apiUrl?: string;
+	defaultVolume: number;
 };
 
 export type MomentsFeedSource = {
