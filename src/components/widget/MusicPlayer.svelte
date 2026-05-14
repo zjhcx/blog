@@ -26,6 +26,7 @@
 	let lyricsLoading = false;
 	let lyricTrackId = "";
 	let lastScrolledLyricIndex = -2;
+	let lastLyricsVisibility = false;
 	const coverSize = 32;
 
 	$: currentTrack = tracks[currentIndex] ?? null;
@@ -197,13 +198,19 @@
 	async function scrollActiveLyricIntoView(index: number): Promise<void> {
 		if (!showLyrics || !lyricContainer || index < 0) return;
 		await tick();
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 		const activeLine = lyricContainer.querySelector<HTMLElement>(
 			`[data-lyric-index="${index}"]`,
 		);
 		if (!activeLine) return;
 
+		const containerRect = lyricContainer.getBoundingClientRect();
+		const activeRect = activeLine.getBoundingClientRect();
 		const targetTop =
-			activeLine.offsetTop - lyricContainer.clientHeight / 2 + activeLine.clientHeight / 2;
+			lyricContainer.scrollTop +
+			(activeRect.top - containerRect.top) -
+			lyricContainer.clientHeight / 2 +
+			activeLine.clientHeight / 2;
 		const maxScrollTop = Math.max(
 			0,
 			lyricContainer.scrollHeight - lyricContainer.clientHeight,
@@ -221,6 +228,13 @@
 	$: if (activeLyricIndex !== lastScrolledLyricIndex) {
 		lastScrolledLyricIndex = activeLyricIndex;
 		void scrollActiveLyricIntoView(activeLyricIndex);
+	}
+	$: if (showLyrics && !lastLyricsVisibility) {
+		lastLyricsVisibility = true;
+		void scrollActiveLyricIntoView(activeLyricIndex);
+	}
+	$: if (!showLyrics && lastLyricsVisibility) {
+		lastLyricsVisibility = false;
 	}
 </script>
 
