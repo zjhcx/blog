@@ -4,9 +4,9 @@
 	import Key from "@/i18n/i18nKey";
 	import { loadLrcLines, type MusicLyricLine } from "@/utils/music-lrc";
 	import type { MusicTrack } from "@/utils/music";
-	import { cubicOut } from "svelte/easing";
 	import { tick } from "svelte";
-	import { scale } from "svelte/transition";
+	import { cubicOut } from "svelte/easing";
+	import { slide } from "svelte/transition";
 
 	export let tracks: MusicTrack[] = [];
 	export let musicPageUrl = "/music/";
@@ -418,7 +418,7 @@
 			<div class="mt-3 px-1">
 				<div
 					class="border-t border-black/8 px-0 pt-3 dark:border-white/10"
-					transition:scale={{ duration: 180, start: 0.92, opacity: 0, easing: cubicOut }}
+					transition:slide={{ duration: 220, axis: "y", easing: cubicOut }}
 				>
 					<div class="mb-2 flex items-center justify-end gap-2 px-1">
 						{#if activeLyricIndex >= 0 && lyricLines[activeLyricIndex]}
