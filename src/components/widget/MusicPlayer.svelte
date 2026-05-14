@@ -276,7 +276,13 @@
 							style={showLyrics ? "color: rgb(var(--primary)); background: rgba(var(--primary), 0.12);" : ""}
 							on:click={toggleLyrics}
 						>
-							<Icon icon="material-symbols:subtitles-outline-rounded" aria-hidden="true" class="text-2xl" />
+							<Icon
+								icon={showLyrics
+									? "material-symbols:subtitles-off-outline-rounded"
+									: "material-symbols:subtitles-outline-rounded"}
+								aria-hidden="true"
+								class="text-2xl"
+							/>
 						</button>
 					</div>
 				</div>
