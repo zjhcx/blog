@@ -458,46 +458,53 @@
 			</div>
 		{/if}
 
-		<div class:hidden={!showPlaylist} class="mt-3 px-1">
-			<div class="max-h-48 overflow-y-auto rounded-xl border border-white/10 bg-white/20 p-2 dark:bg-white/5">
-				{#each tracks as track, index}
-					<button
-						type="button"
-						class:active={index === currentIndex}
-						class="mb-1 flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left transition-colors hover:bg-neutral-50 dark:hover:bg-white/5"
-						style={
-							index === currentIndex
-								? "background: rgba(var(--primary), 0.1); border: 1px solid rgba(var(--primary), 0.18);"
-								: "border: 1px solid transparent;"
-						}
-						on:click={() => playTrack(index)}
-					>
-						<div class="h-8 w-8 shrink-0 overflow-hidden rounded-md bg-[rgba(var(--primary),0.1)]">
-							{#if track.cover}
-								<img
-									src={track.cover}
-									alt={track.title}
-									loading="lazy"
-									referrerpolicy="no-referrer"
-									class="h-full w-full object-cover"
-								/>
-							{:else}
-								<div class="flex h-full w-full items-center justify-center text-[rgb(var(--primary))]">
-									<Icon icon="mdi:music-note" aria-hidden="true" class="h-4 w-4" />
+		{#if showPlaylist}
+			<div class="mt-3 px-1">
+				<div
+					class="border-t border-black/8 px-0 pt-3 dark:border-white/10"
+					transition:slide={{ duration: 220, axis: "y", easing: cubicOut }}
+				>
+					<div class="max-h-48 overflow-y-auto pr-1">
+						{#each tracks as track, index}
+							<button
+								type="button"
+								class:active={index === currentIndex}
+								class="flex w-full items-center gap-2 px-1 py-2 text-left transition-colors"
+								style={
+									index === currentIndex
+										? "color: rgb(var(--primary)); background: rgba(var(--primary), 0.08); font-weight: 600;"
+										: "background: transparent;"
+								}
+								on:click={() => playTrack(index)}
+							>
+								<div class="h-8 w-8 shrink-0 overflow-hidden rounded-md bg-[rgba(var(--primary),0.1)]">
+									{#if track.cover}
+										<img
+											src={track.cover}
+											alt={track.title}
+											loading="lazy"
+											referrerpolicy="no-referrer"
+											class="h-full w-full object-cover"
+										/>
+									{:else}
+										<div class="flex h-full w-full items-center justify-center text-[rgb(var(--primary))]">
+											<Icon icon="mdi:music-note" aria-hidden="true" class="h-4 w-4" />
+										</div>
+									{/if}
 								</div>
-							{/if}
-						</div>
-						<div class="min-w-0 flex-1">
-							<div class="truncate text-xs font-bold">{track.title}</div>
-							<div class="truncate text-[10px] text-50">
-								{track.artist || translate(Key.musicUnknownArtist, $language)}
-							</div>
-						</div>
-						<div class="text-[10px] text-50">{track.duration || "--:--"}</div>
-					</button>
-				{/each}
+								<div class="min-w-0 flex-1">
+									<div class="truncate text-xs font-bold">{track.title}</div>
+									<div class="truncate text-[10px] text-50">
+										{track.artist || translate(Key.musicUnknownArtist, $language)}
+									</div>
+								</div>
+								<div class="text-[10px] text-50">{track.duration || "--:--"}</div>
+							</button>
+						{/each}
+					</div>
+				</div>
 			</div>
-		</div>
+		{/if}
 
 		<audio
 			bind:this={audio}
