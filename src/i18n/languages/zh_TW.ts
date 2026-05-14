@@ -53,6 +53,9 @@ export const zh_TW: Translation = {
 	[Key.musicModeRandom]: "隨機",
 	[Key.musicVolume]: "音量",
 	[Key.musicSpeed]: "倍速",
+	[Key.musicLyrics]: "歌詞",
+	[Key.musicLyricsLoading]: "歌詞載入中...",
+	[Key.musicLyricsUnavailable]: "目前歌曲暫無歌詞。",
 	[Key.musicNoMatch]: "沒有符合的歌曲。",
 	[Key.musicTrackCount]: "首歌曲",
 

@@ -50,6 +50,9 @@ enum I18nKey {
 	musicModeRandom = "musicModeRandom",
 	musicVolume = "musicVolume",
 	musicSpeed = "musicSpeed",
+	musicLyrics = "musicLyrics",
+	musicLyricsLoading = "musicLyricsLoading",
+	musicLyricsUnavailable = "musicLyricsUnavailable",
 	musicNoMatch = "musicNoMatch",
 	musicTrackCount = "musicTrackCount",
 

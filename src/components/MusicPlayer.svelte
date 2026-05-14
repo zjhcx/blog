@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { language, translate } from "@/i18n/client";
 	import Key from "@/i18n/i18nKey";
+	import { loadLrcLines, type MusicLyricLine } from "@/utils/music-lrc";
 	import type { MusicTrack } from "@/utils/music";
+	import { tick } from "svelte";
 
 	type PlayMode = "order" | "loop" | "random";
 
@@ -20,6 +22,11 @@
 	let speed = 1;
 	let speedValue = "1";
 	let volume = Math.max(0, Math.min(initialVolume, 1));
+	let lyricContainer: HTMLElement | null = null;
+	let lyricLines: MusicLyricLine[] = [];
+	let lyricsLoading = false;
+	let lyricTrackId = "";
+	let lastScrolledLyricIndex = -2;
 
 	$: query = search.trim().toLowerCase();
 	$: filteredTracks = tracks.filter((track) => {
@@ -59,6 +66,18 @@
 
 	function getTrackIndex(trackId: string): number {
 		return tracks.findIndex((track) => track.id === trackId);
+	}
+
+	function getActiveLyricIndex(
+		playbackTime: number,
+		lines: MusicLyricLine[],
+	): number {
+		for (let index = lines.length - 1; index >= 0; index -= 1) {
+			if (playbackTime >= lines[index].time) {
+				return index;
+			}
+		}
+		return -1;
 	}
 
 	function playCurrentTrack(): void {
@@ -176,6 +195,62 @@
 		duration = audioElement.duration || 0;
 	}
 
+	async function loadLyrics(track: MusicTrack | null): Promise<void> {
+		const nextTrackId = track?.id ?? "";
+		lyricTrackId = nextTrackId;
+		lastScrolledLyricIndex = -2;
+
+		if (!track?.lyricUrl) {
+			lyricLines = [];
+			lyricsLoading = false;
+			return;
+		}
+
+		lyricsLoading = true;
+		try {
+			const lines = await loadLrcLines(track.lyricUrl);
+			if (lyricTrackId !== nextTrackId) return;
+			lyricLines = lines;
+		} catch {
+			if (lyricTrackId !== nextTrackId) return;
+			lyricLines = [];
+		} finally {
+			if (lyricTrackId === nextTrackId) {
+				lyricsLoading = false;
+			}
+		}
+	}
+
+	function seekToLyric(time: number): void {
+		if (!audioElement) return;
+		audioElement.currentTime = time;
+		updateTime();
+		if (!isPlaying) {
+			playCurrentTrack();
+		}
+	}
+
+	async function scrollActiveLyricIntoView(index: number): Promise<void> {
+		if (!lyricContainer || index < 0) return;
+		await tick();
+		const activeLine = lyricContainer.querySelector<HTMLElement>(
+			`[data-lyric-index="${index}"]`,
+		);
+		if (!activeLine) return;
+
+		const targetTop =
+			activeLine.offsetTop - lyricContainer.clientHeight / 2 + activeLine.clientHeight / 2;
+		const maxScrollTop = Math.max(
+			0,
+			lyricContainer.scrollHeight - lyricContainer.clientHeight,
+		);
+
+		lyricContainer.scrollTo({
+			top: Math.min(maxScrollTop, Math.max(0, targetTop)),
+			behavior: "smooth",
+		});
+	}
+
 	function syncPauseState(): void {
 		isPlaying = false;
 	}
@@ -185,9 +260,17 @@
 	}
 
 	$: progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+	$: activeLyricIndex = getActiveLyricIndex(currentTime, lyricLines);
 	$: stageStyle = currentTrack?.cover
 		? `--music-stage-cover: url('${currentTrack.cover}');`
 		: "";
+	$: if ((currentTrack?.id ?? "") !== lyricTrackId) {
+		void loadLyrics(currentTrack);
+	}
+	$: if (activeLyricIndex !== lastScrolledLyricIndex) {
+		lastScrolledLyricIndex = activeLyricIndex;
+		void scrollActiveLyricIntoView(activeLyricIndex);
+	}
 
 	const icons = {
 		next:
@@ -349,6 +432,35 @@
 							{/if}
 						</div>
 					</div>
+				</div>
+
+				<div class="music-lyrics">
+					<div class="music-lyrics__header">
+						<h3>{translate(Key.musicLyrics, $language)}</h3>
+					</div>
+					{#if lyricsLoading}
+						<p class="music-lyrics__state text-50">
+							{translate(Key.musicLyricsLoading, $language)}
+						</p>
+					{:else if lyricLines.length === 0}
+						<p class="music-lyrics__state text-50">
+							{translate(Key.musicLyricsUnavailable, $language)}
+						</p>
+					{:else}
+						<div bind:this={lyricContainer} class="music-lyrics__list">
+							{#each lyricLines as line, index}
+								<button
+									type="button"
+									class:active={index === activeLyricIndex}
+									class="music-lyrics__line text-50"
+									data-lyric-index={index}
+									on:click={() => seekToLyric(line.time)}
+								>
+									{line.text || "♪"}
+								</button>
+							{/each}
+						</div>
+					{/if}
 				</div>
 
 				<div class="music-progress">
@@ -804,6 +916,64 @@
 		box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
 	}
 
+	.music-lyrics {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		gap: 0.75rem;
+		padding: 1rem 1.1rem;
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		border-radius: 1rem;
+		background: rgba(255, 255, 255, 0.08);
+		backdrop-filter: blur(18px);
+	}
+
+	.music-lyrics__header h3 {
+		margin: 0;
+		font-size: 0.92rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+	}
+
+	.music-lyrics__state {
+		margin: 0;
+		font-size: 0.92rem;
+		line-height: 1.7;
+	}
+
+	.music-lyrics__list {
+		display: grid;
+		gap: 0.35rem;
+		max-height: 16rem;
+		overflow-y: auto;
+		padding-right: 0.2rem;
+		scrollbar-width: thin;
+	}
+
+	.music-lyrics__line {
+		padding: 0.5rem 0.65rem;
+		border: none;
+		border-radius: 0.8rem;
+		background: transparent;
+		text-align: left;
+		line-height: 1.7;
+		transition:
+			color 0.2s ease,
+			background-color 0.2s ease,
+			transform 0.2s ease;
+	}
+
+	.music-lyrics__line:hover,
+	.music-lyrics__line.active {
+		color: rgba(var(--primary), 0.98);
+		background: rgba(var(--primary), 0.12);
+	}
+
+	.music-lyrics__line.active {
+		transform: translateX(0.2rem);
+		font-weight: 600;
+	}
+
 	.music-progress {
 		position: relative;
 		z-index: 1;
@@ -976,6 +1146,10 @@
 		.music-controls__secondary {
 			flex-direction: column;
 			align-items: stretch;
+		}
+
+		.music-lyrics {
+			padding: 0.9rem;
 		}
 
 		.music-range,

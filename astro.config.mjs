@@ -110,7 +110,13 @@ export default defineConfig({
 				showCopyToClipboardButton: false,
 			},
 		}),
-		svelte(),
+		svelte({
+			compilerOptions: {
+				experimental: {
+					async: true,
+				},
+			},
+		}),
 		sitemap(),
 	],
 	markdown: {

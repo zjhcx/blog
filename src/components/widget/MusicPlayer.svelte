@@ -1,7 +1,12 @@
 <script lang="ts">
+	import Icon from "@iconify/svelte";
 	import { language, translate } from "@/i18n/client";
 	import Key from "@/i18n/i18nKey";
+	import { loadLrcLines, type MusicLyricLine } from "@/utils/music-lrc";
 	import type { MusicTrack } from "@/utils/music";
+	import { cubicOut } from "svelte/easing";
+	import { tick } from "svelte";
+	import { scale } from "svelte/transition";
 
 	export let tracks: MusicTrack[] = [];
 	export let musicPageUrl = "/music/";
@@ -13,10 +18,20 @@
 	let isPlaying = false;
 	let volume = 0.7;
 	let isMuted = false;
+	let isRandom = false;
+	let showPlaylist = false;
+	let showLyrics = false;
+	let lyricContainer: HTMLElement | null = null;
+	let lyricLines: MusicLyricLine[] = [];
+	let lyricsLoading = false;
+	let lyricTrackId = "";
+	let lastScrolledLyricIndex = -2;
+	const coverSize = 32;
 
 	$: currentTrack = tracks[currentIndex] ?? null;
 	$: progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 	$: volumeProgress = (isMuted ? 0 : volume) * 100;
+	$: activeLyricIndex = getActiveLyricIndex(currentTime, lyricLines);
 
 	function formatTime(seconds: number): string {
 		if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
@@ -27,6 +42,18 @@
 
 	function updatePlayState(next: boolean): void {
 		isPlaying = next;
+	}
+
+	function getActiveLyricIndex(
+		playbackTime: number,
+		lines: MusicLyricLine[],
+	): number {
+		for (let index = lines.length - 1; index >= 0; index -= 1) {
+			if (playbackTime >= lines[index].time) {
+				return index;
+			}
+		}
+		return -1;
 	}
 
 	function loadTrack(index: number, autoplay = false): void {
@@ -62,12 +89,41 @@
 		audio.muted = isMuted;
 	}
 
+	function pickRandomIndex(): number {
+		if (tracks.length <= 1) return currentIndex;
+		let nextIndex = currentIndex;
+		while (nextIndex === currentIndex) {
+			nextIndex = Math.floor(Math.random() * tracks.length);
+		}
+		return nextIndex;
+	}
+
 	function playNext(): void {
-		loadTrack(currentIndex + 1, true);
+		loadTrack(isRandom ? pickRandomIndex() : currentIndex + 1, true);
 	}
 
 	function playPrevious(): void {
-		loadTrack(currentIndex - 1, true);
+		loadTrack(isRandom ? pickRandomIndex() : currentIndex - 1, true);
+	}
+
+	function toggleRandom(): void {
+		isRandom = !isRandom;
+	}
+
+	function togglePlaylist(): void {
+		showPlaylist = !showPlaylist;
+	}
+
+	function toggleLyrics(): void {
+		showLyrics = !showLyrics;
+	}
+
+	function playTrack(index: number): void {
+		if (index === currentIndex && !audio?.paused) {
+			togglePlay();
+			return;
+		}
+		loadTrack(index, true);
 	}
 
 	function seek(event: MouseEvent): void {
@@ -102,6 +158,70 @@
 		audio.muted = isMuted;
 		onTimeUpdate();
 	}
+
+	async function loadLyrics(track: MusicTrack | null): Promise<void> {
+		const nextTrackId = track?.id ?? "";
+		lyricTrackId = nextTrackId;
+		lastScrolledLyricIndex = -2;
+
+		if (!track?.lyricUrl) {
+			lyricLines = [];
+			lyricsLoading = false;
+			return;
+		}
+
+		lyricsLoading = true;
+		try {
+			const lines = await loadLrcLines(track.lyricUrl);
+			if (lyricTrackId !== nextTrackId) return;
+			lyricLines = lines;
+		} catch {
+			if (lyricTrackId !== nextTrackId) return;
+			lyricLines = [];
+		} finally {
+			if (lyricTrackId === nextTrackId) {
+				lyricsLoading = false;
+			}
+		}
+	}
+
+	function seekToLyric(time: number): void {
+		if (!audio) return;
+		audio.currentTime = time;
+		onTimeUpdate();
+		if (audio.paused) {
+			audio.play().then(() => updatePlayState(true)).catch(() => updatePlayState(false));
+		}
+	}
+
+	async function scrollActiveLyricIntoView(index: number): Promise<void> {
+		if (!showLyrics || !lyricContainer || index < 0) return;
+		await tick();
+		const activeLine = lyricContainer.querySelector<HTMLElement>(
+			`[data-lyric-index="${index}"]`,
+		);
+		if (!activeLine) return;
+
+		const targetTop =
+			activeLine.offsetTop - lyricContainer.clientHeight / 2 + activeLine.clientHeight / 2;
+		const maxScrollTop = Math.max(
+			0,
+			lyricContainer.scrollHeight - lyricContainer.clientHeight,
+		);
+
+		lyricContainer.scrollTo({
+			top: Math.min(maxScrollTop, Math.max(0, targetTop)),
+			behavior: "smooth",
+		});
+	}
+
+	$: if ((currentTrack?.id ?? "") !== lyricTrackId) {
+		void loadLyrics(currentTrack);
+	}
+	$: if (activeLyricIndex !== lastScrolledLyricIndex) {
+		lastScrolledLyricIndex = activeLyricIndex;
+		void scrollActiveLyricIntoView(activeLyricIndex);
+	}
 </script>
 
 {#if tracks.length === 0}
@@ -111,45 +231,53 @@
 {:else}
 	<div class="firefly-music-player relative w-full transition-all duration-300 text-90">
 		<div class="mb-2 flex items-center gap-2 px-1">
-			<div class="group relative h-11 w-11 shrink-0">
+			<div class="group relative shrink-0" style={`width: ${coverSize}px; height: ${coverSize}px; min-width: ${coverSize}px; min-height: ${coverSize}px;`}>
 				<a
 					href={musicPageUrl}
 					class="relative z-10 flex h-full w-full items-center justify-center overflow-hidden rounded-full border-2 border-white bg-[rgba(var(--primary),0.1)] shadow-lg dark:border-neutral-700"
 					aria-label={translate(Key.music, $language)}
 				>
-					<svg
-						viewBox="0 0 24 24"
-						aria-hidden="true"
-						class:hidden={!!currentTrack?.cover}
-						class="absolute text-xl text-[rgb(var(--primary))] opacity-40"
-					>
-						<path
-							d="M10 21q-1.65 0-2.825-1.175T6 17t1.175-2.825T10 13q.575 0 1.063.138t.937.412V4q0-.425.288-.712T13 3h4q.425 0 .713.288T18 4v2q0 .425-.288.713T17 7h-3v10q0 1.65-1.175 2.825T10 21"
-							fill="currentColor"
-						/>
-					</svg>
-					{#if currentTrack?.cover}
-						<img
-							class:animate-spin-slow={isPlaying}
-							class="music-cover relative z-10 h-full w-full object-cover transition-opacity duration-300"
-							src={currentTrack.cover}
-							alt={currentTrack.title}
-							loading="lazy"
-							referrerpolicy="no-referrer"
-							style={`animation-play-state: ${isPlaying ? "running" : "paused"};`}
+					{#if !currentTrack?.cover}
+						<Icon
+							icon="mdi:music-note"
+							aria-hidden="true"
+							class="absolute text-lg text-[rgb(var(--primary))] opacity-40"
 						/>
 					{/if}
+						{#if currentTrack?.cover}
+							<img
+								class:animate-spin-slow={isPlaying}
+								class="music-cover relative z-10 block h-full w-full object-cover transition-opacity duration-300"
+								src={currentTrack.cover}
+								alt={currentTrack.title}
+								loading="lazy"
+								referrerpolicy="no-referrer"
+								width={coverSize}
+								height={coverSize}
+								style={`animation-play-state: ${isPlaying ? "running" : "paused"};`}
+							/>
+						{/if}
 				</a>
 			</div>
 
 			<div class="flex min-w-0 flex-1 flex-col overflow-hidden">
 				<div class="flex items-center justify-between gap-2 overflow-hidden">
-					<div class="relative min-w-0 flex-1 overflow-hidden">
-						<a href={musicPageUrl} class="block min-w-0">
-							<h3 class="music-title truncate text-base font-bold leading-tight text-90">
+					<div class="flex min-w-0 flex-1 items-center gap-2 overflow-hidden">
+						<a href={musicPageUrl} class="block min-w-0 flex-1 overflow-hidden">
+							<h3 class="music-title truncate text-lg font-bold leading-tight text-70">
 								{currentTrack?.title}
 							</h3>
 						</a>
+						<button
+							type="button"
+							class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-neutral-400 transition-colors duration-200 hover:text-[rgb(var(--primary))] active:scale-95"
+							aria-label={translate(Key.musicLyrics, $language)}
+							aria-pressed={showLyrics}
+							style={showLyrics ? "color: rgb(var(--primary)); background: rgba(var(--primary), 0.12);" : ""}
+							on:click={toggleLyrics}
+						>
+							<Icon icon="material-symbols:subtitles-outline-rounded" aria-hidden="true" class="text-2xl" />
+						</button>
 					</div>
 				</div>
 
@@ -176,25 +304,15 @@
 							on:click={toggleMute}
 						>
 							{#if isMuted || volume === 0}
-								<svg viewBox="0 0 24 24" aria-hidden="true" class="text-lg">
-									<path
-										d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71 0 1.2-.31 2.33-.86 3.32l1.46 1.46A8.94 8.94 0 0 0 21 12c0-4.29-3-7.89-7-8.77zm5 18.77L4 7l-1.41 1.41 5.08 5.08L7 14H3v-4h4l5-5v6.17l5.59 5.59c-.45.37-.95.69-1.5.94V21zM16.5 12c0-.83-.23-1.61-.63-2.28l1.51 1.51c.07.25.12.5.12.77 0 .42-.08.82-.2 1.2l-1.45-1.45c.08-.24.15-.49.15-.75zM12 3 9.91 5.09 12 7.18z"
-										fill="currentColor"
-									></path>
-								</svg>
+								<Icon icon="mdi:volume-off" aria-hidden="true" class="text-lg" />
 							{:else}
-								<svg viewBox="0 0 24 24" aria-hidden="true" class="text-lg">
-									<path
-										d="M3 10v4h4l5 5V5L7 10zm12.5 2a4.5 4.5 0 0 0-2.5-4.03v8.05A4.5 4.5 0 0 0 15.5 12M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77"
-										fill="currentColor"
-									></path>
-								</svg>
+								<Icon icon="mdi:volume-high" aria-hidden="true" class="text-lg" />
 							{/if}
 						</button>
 						<div class="flex w-16 items-center transition-all duration-300 ease-out">
 							<button
 								type="button"
-								class="vol-container relative ml-1 h-1 w-16 cursor-pointer rounded-full bg-neutral-200 dark:bg-neutral-600"
+								class="vol-container relative ml-1 h-1.5 w-16 cursor-pointer rounded-full bg-neutral-200/90 dark:bg-neutral-600/90"
 								role="slider"
 								aria-label="Volume"
 								aria-valuemin="0"
@@ -203,8 +321,12 @@
 								on:click={changeVolume}
 							>
 								<span
-									class="vol-bar absolute left-0 top-0 h-full rounded-full bg-[rgb(var(--primary))]"
+									class="vol-bar absolute left-0 top-0 h-full rounded-full bg-[var(--primary)] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]"
 									style={`width: ${volumeProgress}%`}
+								></span>
+								<span
+									class="absolute top-1/2 h-2.5 w-2.5 rounded-full bg-[var(--primary)] shadow-sm transition-transform"
+									style={`left: calc(${volumeProgress}% - 5px); transform: translateY(-50%);`}
 								></span>
 							</button>
 						</div>
@@ -225,11 +347,11 @@
 				on:click={seek}
 			>
 				<span
-					class="progress-bar absolute left-0 top-0 h-full rounded-full bg-[rgb(var(--primary))] transition-[width] duration-100"
+					class="progress-bar absolute left-0 top-0 h-full rounded-full bg-[var(--primary)] shadow-[0_0_0_1px_rgba(255,255,255,0.12)] transition-[width] duration-100"
 					style={`width: ${progress}%`}
 				></span>
 				<span
-					class="progress-thumb absolute top-1/2 h-3 w-3 rounded-full bg-[rgb(var(--primary))] shadow-sm ring-2 ring-white transition-transform duration-200 group-hover:scale-100 dark:ring-neutral-800"
+					class="progress-thumb absolute top-1/2 h-3 w-3 rounded-full bg-[var(--primary)] shadow-md ring-2 ring-white transition-transform duration-200 group-hover:scale-100 dark:ring-neutral-800"
 					style={`left: ${progress}%; transform: translate(-50%, -50%) scale(1);`}
 				></span>
 			</button>
@@ -237,17 +359,23 @@
 
 		<div class="flex select-none items-center justify-between px-1">
 			<button
-				class="btn-prev p-2 text-neutral-600 transition-colors hover:text-[rgb(var(--primary))] active:scale-95 dark:text-neutral-300"
+				class="btn-random p-2 text-neutral-600 transition-colors hover:text-[var(--primary)] active:scale-95 dark:text-neutral-300"
+				type="button"
+				aria-label="Random"
+				aria-pressed={isRandom}
+				style={isRandom ? "color: rgb(var(--primary));" : ""}
+				on:click={toggleRandom}
+			>
+				<Icon icon="mdi:shuffle-variant" aria-hidden="true" class="text-2xl" />
+			</button>
+
+			<button
+				class="btn-prev p-2 text-neutral-600 transition-colors hover:text-[var(--primary)] active:scale-95 dark:text-neutral-300"
 				type="button"
 				aria-label={translate(Key.musicPrevious, $language)}
 				on:click={playPrevious}
 			>
-				<svg viewBox="0 0 24 24" aria-hidden="true" class="text-3xl">
-					<path
-						d="M16.7 5.4a1 1 0 0 0-1.6-.8l-8.4 6.4a1 1 0 0 0 0 1.6l8.4 6.4a1 1 0 0 0 1.6-.8zm-10.8-.2H4.1v13.6h1.8z"
-						fill="currentColor"
-					/>
-				</svg>
+				<Icon icon="material-symbols:skip-previous-rounded" aria-hidden="true" class="text-3xl" />
 			</button>
 
 			<button
@@ -259,16 +387,9 @@
 				on:click={togglePlay}
 			>
 				{#if isPlaying}
-					<svg viewBox="0 0 24 24" aria-hidden="true" class="text-3xl">
-						<path d="M7 5.2h3.2v13.6H7zm6.8 0H17v13.6h-3.2z" fill="currentColor"></path>
-					</svg>
+					<Icon icon="material-symbols:pause-rounded" aria-hidden="true" class="text-3xl" />
 				{:else}
-					<svg viewBox="0 0 24 24" aria-hidden="true" class="ml-0.5 text-3xl">
-						<path
-							d="M8 5.8a1 1 0 0 1 1.5-.9l8 5.1a1 1 0 0 1 0 1.7l-8 5.1A1 1 0 0 1 8 16z"
-							fill="currentColor"
-						></path>
-					</svg>
+					<Icon icon="material-symbols:play-arrow-rounded" aria-hidden="true" class="ml-0.5 text-3xl" />
 				{/if}
 			</button>
 
@@ -278,13 +399,104 @@
 				aria-label={translate(Key.musicNext, $language)}
 				on:click={playNext}
 			>
-				<svg viewBox="0 0 24 24" aria-hidden="true" class="text-3xl">
-					<path
-						d="M7.3 5.4a1 1 0 0 1 1.6-.8l8.4 6.4a1 1 0 0 1 0 1.6l-8.4 6.4a1 1 0 0 1-1.6-.8zm10.8-.2h1.8v13.6h-1.8z"
-						fill="currentColor"
-					/>
-				</svg>
+				<Icon icon="material-symbols:skip-next-rounded" aria-hidden="true" class="text-3xl" />
 			</button>
+
+			<button
+				class="btn-list p-2 text-neutral-600 transition-colors hover:text-[rgb(var(--primary))] active:scale-95 dark:text-neutral-300"
+				type="button"
+				aria-label={translate(Key.musicPlaylist, $language)}
+				aria-pressed={showPlaylist}
+				style={showPlaylist ? "color: rgb(var(--primary));" : ""}
+				on:click={togglePlaylist}
+			>
+				<Icon icon="mdi:playlist-music" aria-hidden="true" class="text-2xl" />
+			</button>
+		</div>
+
+		{#if showLyrics}
+			<div class="mt-3 px-1">
+				<div
+					class="border-t border-black/8 px-0 pt-3 dark:border-white/10"
+					transition:scale={{ duration: 180, start: 0.92, opacity: 0, easing: cubicOut }}
+				>
+					<div class="mb-2 flex items-center justify-end gap-2 px-1">
+						{#if activeLyricIndex >= 0 && lyricLines[activeLyricIndex]}
+							<span class="text-[10px] text-50">{formatTime(lyricLines[activeLyricIndex].time)}</span>
+						{/if}
+					</div>
+
+					{#if lyricsLoading}
+						<p class="px-1 text-xs leading-6 text-50">{translate(Key.musicLyricsLoading, $language)}</p>
+					{:else if lyricLines.length === 0}
+						<p class="px-1 text-xs leading-6 text-50">{translate(Key.musicLyricsUnavailable, $language)}</p>
+					{:else}
+						<div
+							bind:this={lyricContainer}
+							class="max-h-28 overflow-y-auto pr-1"
+						>
+							{#each lyricLines as line, index}
+								<button
+									type="button"
+									class="block w-full rounded-none px-2 py-2 text-left text-xs leading-5 transition-colors first:pt-1 last:pb-1"
+									class:text-90={index === activeLyricIndex}
+									class:text-50={index !== activeLyricIndex}
+									data-lyric-index={index}
+									style={
+										index === activeLyricIndex
+											? "background: rgba(var(--primary), 0.08); color: rgb(var(--primary)); font-weight: 600;"
+											: "background: transparent;"
+									}
+									on:click={() => seekToLyric(line.time)}
+								>
+									{line.text || "♪"}
+								</button>
+							{/each}
+						</div>
+					{/if}
+				</div>
+			</div>
+		{/if}
+
+		<div class:hidden={!showPlaylist} class="mt-3 px-1">
+			<div class="max-h-48 overflow-y-auto rounded-xl border border-white/10 bg-white/20 p-2 dark:bg-white/5">
+				{#each tracks as track, index}
+					<button
+						type="button"
+						class:active={index === currentIndex}
+						class="mb-1 flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left transition-colors hover:bg-neutral-50 dark:hover:bg-white/5"
+						style={
+							index === currentIndex
+								? "background: rgba(var(--primary), 0.1); border: 1px solid rgba(var(--primary), 0.18);"
+								: "border: 1px solid transparent;"
+						}
+						on:click={() => playTrack(index)}
+					>
+						<div class="h-8 w-8 shrink-0 overflow-hidden rounded-md bg-[rgba(var(--primary),0.1)]">
+							{#if track.cover}
+								<img
+									src={track.cover}
+									alt={track.title}
+									loading="lazy"
+									referrerpolicy="no-referrer"
+									class="h-full w-full object-cover"
+								/>
+							{:else}
+								<div class="flex h-full w-full items-center justify-center text-[rgb(var(--primary))]">
+									<Icon icon="mdi:music-note" aria-hidden="true" class="h-4 w-4" />
+								</div>
+							{/if}
+						</div>
+						<div class="min-w-0 flex-1">
+							<div class="truncate text-xs font-bold">{track.title}</div>
+							<div class="truncate text-[10px] text-50">
+								{track.artist || translate(Key.musicUnknownArtist, $language)}
+							</div>
+						</div>
+						<div class="text-[10px] text-50">{track.duration || "--:--"}</div>
+					</button>
+				{/each}
+			</div>
 		</div>
 
 		<audio
