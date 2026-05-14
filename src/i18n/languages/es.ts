@@ -54,6 +54,9 @@ export const es: Translation = {
 	[Key.musicModeRandom]: "Random",
 	[Key.musicVolume]: "Volume",
 	[Key.musicSpeed]: "Speed",
+	[Key.musicLyrics]: "Lyrics",
+	[Key.musicLyricsLoading]: "Loading lyrics...",
+	[Key.musicLyricsUnavailable]: "Lyrics are unavailable for this track.",
 	[Key.musicNoMatch]: "No matching tracks.",
 	[Key.musicTrackCount]: "tracks",
 

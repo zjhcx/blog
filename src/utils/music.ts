@@ -11,6 +11,7 @@ export type MusicTrack = {
 	duration?: string;
 	cover?: string;
 	sourceUrl: string;
+	lyricUrl?: string;
 	videoUrl?: string;
 	uploader?: string;
 	artistHome?: string;
@@ -26,6 +27,7 @@ type MusicTrackInput = {
 	cover?: string;
 	v_url?: string;
 	url?: string;
+	lrc?: string;
 };
 
 type MusicPayload = {
@@ -62,6 +64,7 @@ function normalizeTrack(item: MusicTrackInput, index: number): MusicTrack | null
 		duration: item.time?.trim() || "",
 		cover: normalizeAssetUrl(item.cover),
 		sourceUrl,
+		lyricUrl: normalizeAssetUrl(item.lrc),
 		videoUrl: item.v_url?.trim() || "",
 		uploader: item.up_name?.trim() || "",
 		artistHome: item.artist_home?.trim() || "",
