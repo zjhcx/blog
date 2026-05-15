@@ -370,12 +370,8 @@
 								on:click={changeVolume}
 							>
 								<span
-									class="vol-bar absolute left-0 top-0 h-full rounded-full bg-[var(--primary)] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]"
+									class="vol-bar absolute left-0 top-0 h-full rounded-full bg-[var(--primary)] shadow-[0_0_0_1px_rgba(255,255,255,0.12)] transition-[width]"
 									style={`width: ${volumeProgress}%`}
-								></span>
-								<span
-									class="absolute top-1/2 h-2.5 w-2.5 rounded-full bg-[var(--primary)] shadow-sm transition-transform"
-									style={`left: calc(${volumeProgress}% - 5px); transform: translateY(-50%);`}
 								></span>
 							</button>
 						</div>
@@ -387,7 +383,7 @@
 		<div class="px-1">
 			<button
 				type="button"
-				class="progress-container group relative mb-2 mt-2 h-1 w-full cursor-pointer touch-none rounded-full bg-neutral-100 dark:bg-neutral-700/50"
+				class="progress-container group relative mb-2 mt-2 h-1.5 w-full cursor-pointer touch-none rounded-full bg-neutral-100 dark:bg-neutral-700/50"
 				role="slider"
 				aria-label={translate(Key.musicNowPlaying, $language)}
 				aria-valuemin="0"
@@ -398,10 +394,6 @@
 				<span
 					class="progress-bar absolute left-0 top-0 h-full rounded-full bg-[var(--primary)] shadow-[0_0_0_1px_rgba(255,255,255,0.12)] transition-[width] duration-100"
 					style={`width: ${progress}%`}
-				></span>
-				<span
-					class="progress-thumb absolute top-1/2 h-3 w-3 rounded-full bg-[var(--primary)] shadow-md ring-2 ring-white transition-transform duration-200 group-hover:scale-100 dark:ring-neutral-800"
-					style={`left: ${progress}%; transform: translate(-50%, -50%) scale(1);`}
 				></span>
 			</button>
 		</div>
@@ -486,14 +478,14 @@
 							{#each lyricLines as line, index}
 								<button
 									type="button"
-									class="block w-full rounded-none px-2 py-2 leading-5 transition-colors first:pt-1 last:pb-1"
+									class="block w-full rounded-none px-2 py-2 leading-5 transition-colors first:pt-1 last:pb-1 hover:text-(--primary)"
 									class:text-90={index === activeLyricIndex}
-									class:text-xs={index !== activeLyricIndex}
+									class:text-sm={index !== activeLyricIndex}
 									class:text-50={index !== activeLyricIndex}
 									data-lyric-index={index}
 									style={
 										index === activeLyricIndex
-											? "background: rgba(var(--primary), 0.08); color: rgb(var(--primary)); font-weight: 600;"
+											? "background: rgba(var(--primary), 0.08); color: var(--primary); font-weight: 600;"
 											: "background: transparent;"
 									}
 									on:click={() => seekToLyric(line.time)}
