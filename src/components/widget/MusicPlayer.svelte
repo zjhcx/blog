@@ -11,6 +11,8 @@
 	export let tracks: MusicTrack[] = [];
 	export let musicPageUrl = "/music/";
 
+	type PlayMode = "order" | "loop" | "random";
+
 	let audio: HTMLAudioElement | null = null;
 	let currentIndex = 0;
 	let currentTime = 0;
@@ -18,7 +20,7 @@
 	let isPlaying = false;
 	let volume = 0.7;
 	let isMuted = false;
-	let isRandom = false;
+	let playMode: PlayMode = "order";
 	let showPlaylist = false;
 	let showLyrics = false;
 	let lyricContainer: HTMLElement | null = null;
@@ -27,7 +29,7 @@
 	let lyricTrackId = "";
 	let lastScrolledLyricIndex = -2;
 	let lastLyricsVisibility = false;
-	const coverSize = 32;
+	const coverSize = 52;
 
 	$: currentTrack = tracks[currentIndex] ?? null;
 	$: progress = duration > 0 ? (currentTime / duration) * 100 : 0;
@@ -100,15 +102,42 @@
 	}
 
 	function playNext(): void {
-		loadTrack(isRandom ? pickRandomIndex() : currentIndex + 1, true);
+		loadTrack(playMode === "random" ? pickRandomIndex() : currentIndex + 1, true);
 	}
 
 	function playPrevious(): void {
-		loadTrack(isRandom ? pickRandomIndex() : currentIndex - 1, true);
+		loadTrack(playMode === "random" ? pickRandomIndex() : currentIndex - 1, true);
 	}
 
-	function toggleRandom(): void {
-		isRandom = !isRandom;
+	function cyclePlayMode(): void {
+		playMode =
+			playMode === "order"
+				? "loop"
+				: playMode === "loop"
+					? "random"
+					: "order";
+	}
+
+	function getPlayModeIcon(mode: PlayMode): string {
+		if (mode === "loop") return "material-symbols:repeat-one-rounded";
+		if (mode === "random") return "material-symbols:shuffle-rounded";
+		return "material-symbols:repeat-rounded";
+	}
+
+	function getPlayModeLabel(mode: PlayMode): string {
+		if (mode === "loop") return translate(Key.musicModeLoop, $language);
+		if (mode === "random") return translate(Key.musicModeRandom, $language);
+		return translate(Key.musicModeOrder, $language);
+	}
+
+	function handleEnded(): void {
+		if (playMode === "loop") {
+			if (!audio) return;
+			audio.currentTime = 0;
+			audio.play().then(() => updatePlayState(true)).catch(() => updatePlayState(false));
+			return;
+		}
+		playNext();
 	}
 
 	function togglePlaylist(): void {
@@ -381,12 +410,11 @@
 			<button
 				class="btn-random p-2 text-neutral-600 transition-colors hover:text-[var(--primary)] active:scale-95 dark:text-neutral-300"
 				type="button"
-				aria-label="Random"
-				aria-pressed={isRandom}
-				style={isRandom ? "color: rgb(var(--primary));" : ""}
-				on:click={toggleRandom}
+				aria-label={`${translate(Key.musicPlayMode, $language)}: ${getPlayModeLabel(playMode)}`}
+				style={playMode !== "order" ? "color: rgb(var(--primary));" : ""}
+				on:click={cyclePlayMode}
 			>
-				<Icon icon="mdi:shuffle-variant" aria-hidden="true" class="text-2xl" />
+				<Icon icon={getPlayModeIcon(playMode)} aria-hidden="true" class="text-2xl" />
 			</button>
 
 			<button
@@ -458,8 +486,9 @@
 							{#each lyricLines as line, index}
 								<button
 									type="button"
-									class="block w-full rounded-none px-2 py-2 text-left text-xs leading-5 transition-colors first:pt-1 last:pb-1"
+									class="block w-full rounded-none px-2 py-2 leading-5 transition-colors first:pt-1 last:pb-1"
 									class:text-90={index === activeLyricIndex}
+									class:text-xs={index !== activeLyricIndex}
 									class:text-50={index !== activeLyricIndex}
 									data-lyric-index={index}
 									style={
@@ -526,16 +555,16 @@
 			</div>
 		{/if}
 
-		<audio
-			bind:this={audio}
-			src={currentTrack?.sourceUrl}
-			preload="metadata"
-			referrerpolicy="no-referrer"
-			on:loadedmetadata={onAudioReady}
-			on:timeupdate={onTimeUpdate}
-			on:play={() => updatePlayState(true)}
-			on:pause={() => updatePlayState(false)}
-			on:ended={playNext}
-		></audio>
+			<audio
+				bind:this={audio}
+				src={currentTrack?.sourceUrl}
+				preload="metadata"
+				referrerpolicy="no-referrer"
+				on:loadedmetadata={onAudioReady}
+				on:timeupdate={onTimeUpdate}
+				on:play={() => updatePlayState(true)}
+				on:pause={() => updatePlayState(false)}
+				on:ended={handleEnded}
+			></audio>
 	</div>
 {/if}
