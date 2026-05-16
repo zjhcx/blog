@@ -1,3 +1,5 @@
+@reference "./tailwind-reference.css";
+
 .custom-md {
     h1 {
         @apply text-3xl;
@@ -5,16 +7,20 @@
 
     h1, h2, h3, h4, h5, h6 {
         .anchor {
-            @apply transition -m-0.5 ml-[0.2ch] p-0.5 select-none opacity-0 no-underline !important;
+            @apply transition -m-0.5 ml-[0.2ch] p-0.5 select-none opacity-0 no-underline;
+            text-decoration: none !important;
 
             .anchor-icon {
-                @apply mx-[0.45ch] !important;
+                @apply mx-[0.45ch];
+                margin-left: 0.45ch !important;
+                margin-right: 0.45ch !important;
             }
         }
 
         &:hover {
             .anchor {
-                @apply opacity-100 !important;
+                @apply opacity-100;
+                opacity: 1 !important;
             }
         }
     }

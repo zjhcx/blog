@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { FollowsConfig } from "@/config";
+import { fetchWithTimeout } from "@/utils/request-utils";
 
 export type FollowItem = {
 	mid: number;
@@ -38,6 +39,8 @@ export type FollowsResult = {
 	errorMessage: string;
 };
 
+let followItemsPromise: Promise<FollowsResult> | null = null;
+
 async function getFollowsFromJson(): Promise<FollowsResult> {
 	try {
 		const file = await readFile(
@@ -69,7 +72,7 @@ async function getFollowsFromApi(): Promise<FollowsResult> {
 	const requestUrl = `https://api.bilibili.com/x/relation/followings?${params}`;
 
 	try {
-		const response = await fetch(requestUrl, {
+		const response = await fetchWithTimeout(requestUrl, {
 			headers: {
 				"User-Agent":
 					"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
@@ -100,11 +103,11 @@ export async function getFollowItems(): Promise<FollowsResult> {
 		return { items: [], errorMessage: "" };
 	}
 
-	if (FollowsConfig.source === "api") {
-		return getFollowsFromApi();
+	if (!followItemsPromise) {
+		followItemsPromise =
+			FollowsConfig.source === "api" ? getFollowsFromApi() : getFollowsFromJson();
 	}
-
-	return getFollowsFromJson();
+	return followItemsPromise;
 }
 
 export function getFollowUrl(item: FollowItem): string {

@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { BangumiConfig } from "@/config";
+import { fetchWithTimeout } from "@/utils/request-utils";
 
 export type BangumiItem = {
 	season_id: number;
@@ -44,6 +45,8 @@ export type BangumiResult = {
 	errorMessage: string;
 };
 
+let bangumiItemsPromise: Promise<BangumiResult> | null = null;
+
 async function getBangumiFromJson(): Promise<BangumiResult> {
 	try {
 		const file = await readFile(
@@ -82,7 +85,7 @@ async function getBangumiFromApi(): Promise<BangumiResult> {
 	};
 
 	try {
-		const response = await fetch(requestUrl, {
+		const response = await fetchWithTimeout(requestUrl, {
 			headers: requestHeaders,
 		});
 
@@ -110,9 +113,9 @@ export async function getBangumiItems(): Promise<BangumiResult> {
 		return { items: [], errorMessage: "" };
 	}
 
-	if (BangumiConfig.source === "api") {
-		return getBangumiFromApi();
+	if (!bangumiItemsPromise) {
+		bangumiItemsPromise =
+			BangumiConfig.source === "api" ? getBangumiFromApi() : getBangumiFromJson();
 	}
-
-	return getBangumiFromJson();
+	return bangumiItemsPromise;
 }

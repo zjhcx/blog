@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { DynamicConfig } from "@/config";
+import { fetchWithTimeout } from "@/utils/request-utils";
 
 type DynamicRichTextNode = {
 	text?: string;
@@ -106,6 +107,8 @@ export type DynamicResult = {
 	errorMessage: string;
 };
 
+let dynamicItemsPromise: Promise<DynamicResult> | null = null;
+
 function isRecord(value: unknown): value is Record<string, unknown> {
 	return typeof value === "object" && value !== null;
 }
@@ -169,7 +172,7 @@ async function getDynamicFromApi(): Promise<DynamicResult> {
 	const requestUrl = `https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/space?${params}`;
 
 	try {
-		const response = await fetch(requestUrl, {
+		const response = await fetchWithTimeout(requestUrl, {
 			headers: {
 				"User-Agent":
 					"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
@@ -197,11 +200,11 @@ export async function getDynamicItems(): Promise<DynamicResult> {
 		return { items: [], errorMessage: "" };
 	}
 
-	if (DynamicConfig.source === "api") {
-		return getDynamicFromApi();
+	if (!dynamicItemsPromise) {
+		dynamicItemsPromise =
+			DynamicConfig.source === "api" ? getDynamicFromApi() : getDynamicFromJson();
 	}
-
-	return getDynamicFromJson();
+	return dynamicItemsPromise;
 }
 
 export function normalizeBilibiliUrl(url: string | undefined): string {
