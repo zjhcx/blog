@@ -20,8 +20,19 @@
               "icon": "lucide-file",
               "title": "稻香"
             }
+          },
+          {
+            "id": "a4dd72fa148b3505",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -94,7 +105,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "src/content/posts/稻香.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +114,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "稻香 的反向链接列表"
+              "title": "反向链接"
             }
           },
           {
@@ -113,12 +123,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "src/content/posts/稻香.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "稻香 的出链列表"
+              "title": "出链"
             }
           },
           {
@@ -156,13 +165,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "src/content/posts/稻香.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "稻香 的大纲"
+              "title": "大纲"
             }
           },
           {
@@ -170,9 +178,7 @@
             "type": "leaf",
             "state": {
               "type": "footnotes",
-              "state": {
-                "file": "src/content/posts/稻香.md"
-              },
+              "state": {},
               "icon": "lucide-file-signature",
               "title": "脚注"
             }
@@ -197,7 +203,7 @@
       "workspaces:管理工作区布局": false
     }
   },
-  "active": "6aeddc332a64c3ce",
+  "active": "a4dd72fa148b3505",
   "lastOpenFiles": [
     "dist/pagefind/index/zh-cn_b92cf0d.pf_index",
     "dist/pagefind/fragment/zh-cn_51913cf.pf_fragment",
@@ -214,14 +220,14 @@
     "dist/favicon/favicon-light-32.png",
     "dist/favicon/favicon-light-192.png",
     "dist/favicon/favicon-light-180.png",
-    "dist/favicon/favicon-dark-192.png",
     "dist/favicon/favicon-light-128.png",
     "dist/favicon/favicon-dark-32.png",
+    "dist/favicon/favicon-dark-192.png",
     "dist/favicon/favicon-dark-180.png",
     "dist/favicon/favicon-dark-128.png",
     "dist/bg.jpg",
-    "AGENTS.md",
     "src/content/posts/稻香.md",
+    "AGENTS.md",
     "src/content/posts/【再见2024】【AI天禄&辟邪】稻香.md"
   ]
 }

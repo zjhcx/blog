@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { MusicConfig } from "@/config";
+import { fetchWithTimeout } from "@/utils/request-utils";
 import { url } from "@/utils/url-utils";
 
 export type MusicTrack = {
@@ -38,6 +39,8 @@ export type MusicResult = {
 	items: MusicTrack[];
 	errorMessage: string;
 };
+
+let musicItemsPromise: Promise<MusicResult> | null = null;
 
 function isExternalUrl(value: string): boolean {
 	return /^https?:\/\//i.test(value);
@@ -109,7 +112,7 @@ async function getMusicFromApi(): Promise<MusicResult> {
 	}
 
 	try {
-		const response = await fetch(MusicConfig.apiUrl);
+		const response = await fetchWithTimeout(MusicConfig.apiUrl);
 		if (!response.ok) {
 			throw new Error(`HTTP ${response.status} ${response.statusText}`);
 		}
@@ -133,9 +136,9 @@ export async function getMusicItems(): Promise<MusicResult> {
 		return { items: [], errorMessage: "" };
 	}
 
-	if (MusicConfig.source === "api") {
-		return getMusicFromApi();
+	if (!musicItemsPromise) {
+		musicItemsPromise =
+			MusicConfig.source === "api" ? getMusicFromApi() : getMusicFromJson();
 	}
-
-	return getMusicFromJson();
+	return musicItemsPromise;
 }

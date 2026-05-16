@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { FansConfig } from "@/config";
+import { fetchWithTimeout } from "@/utils/request-utils";
 
 export type FanItem = {
 	mid: number;
@@ -47,6 +48,8 @@ export type FansResult = {
 	items: FanItem[];
 	errorMessage: string;
 };
+
+let fanItemsPromise: Promise<FansResult> | null = null;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
 	return typeof value === "object" && value !== null;
@@ -113,7 +116,7 @@ async function getFansFromApi(): Promise<FansResult> {
 	const requestUrl = `https://api.bilibili.com/x/relation/followers?${params}`;
 
 	try {
-		const response = await fetch(requestUrl, {
+		const response = await fetchWithTimeout(requestUrl, {
 			headers: {
 				"User-Agent":
 					"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
@@ -141,11 +144,11 @@ export async function getFanItems(): Promise<FansResult> {
 		return { items: [], errorMessage: "" };
 	}
 
-	if (FansConfig.source === "api") {
-		return getFansFromApi();
+	if (!fanItemsPromise) {
+		fanItemsPromise =
+			FansConfig.source === "api" ? getFansFromApi() : getFansFromJson();
 	}
-
-	return getFansFromJson();
+	return fanItemsPromise;
 }
 
 export function getFanUrl(item: FanItem): string {

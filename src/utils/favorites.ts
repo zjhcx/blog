@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { FavoritesConfig } from "@/config";
+import { fetchWithTimeout } from "@/utils/request-utils";
 
 export type FavoriteFolder = {
 	id: number;
@@ -71,6 +72,12 @@ export type FavoriteResourcesResult = {
 	items: FavoriteMedia[];
 	errorMessage: string;
 };
+
+let favoriteFoldersPromise: Promise<FavoriteFoldersResult> | null = null;
+const favoriteResourcesPromiseMap = new Map<
+	string,
+	Promise<FavoriteResourcesResult>
+>();
 
 function isRecord(value: unknown): value is Record<string, unknown> {
 	return typeof value === "object" && value !== null;
@@ -146,40 +153,44 @@ function parseFavoriteResourcesPayload(payload: FavoriteResourcesJsonPayload): {
 async function enrichFavoriteFoldersWithDetailJson(
 	folders: FavoriteFolder[],
 ): Promise<FavoriteFolder[]> {
-	return Promise.all(
-		folders.map(async (folder) => {
-			if (folder.cover) {
-				return folder;
+	const enriched: FavoriteFolder[] = [];
+
+	for (const folder of folders) {
+		if (folder.cover) {
+			enriched.push(folder);
+			continue;
+		}
+
+		try {
+			const file = await readFile(
+				path.resolve(
+					process.cwd(),
+					FavoritesConfig.detailJsonDir,
+					`${folder.id}.json`,
+				),
+				{
+					encoding: "utf-8",
+				},
+			);
+			const payload = JSON.parse(file) as FavoriteResourcesJsonPayload;
+			const detail = parseFavoriteResourcesPayload(payload).folder;
+			if (!detail) {
+				enriched.push(folder);
+				continue;
 			}
 
-			try {
-				const file = await readFile(
-					path.resolve(
-						process.cwd(),
-						FavoritesConfig.detailJsonDir,
-						`${folder.id}.json`,
-					),
-					{
-						encoding: "utf-8",
-					},
-				);
-				const payload = JSON.parse(file) as FavoriteResourcesJsonPayload;
-				const detail = parseFavoriteResourcesPayload(payload).folder;
-				if (!detail) {
-					return folder;
-				}
+			enriched.push({
+				...folder,
+				cover: folder.cover || detail.cover,
+				intro: folder.intro || detail.intro,
+				upper: folder.upper || detail.upper,
+			});
+		} catch {
+			enriched.push(folder);
+		}
+	}
 
-				return {
-					...folder,
-					cover: folder.cover || detail.cover,
-					intro: folder.intro || detail.intro,
-					upper: folder.upper || detail.upper,
-				};
-			} catch {
-				return folder;
-			}
-		}),
-	);
+	return enriched;
 }
 
 async function getFavoriteFoldersFromJson(): Promise<FavoriteFoldersResult> {
@@ -213,7 +224,7 @@ async function getFavoriteFoldersFromApi(): Promise<FavoriteFoldersResult> {
 	const requestUrl = `https://api.bilibili.com/x/v3/fav/folder/created/list-all?${params}`;
 
 	try {
-		const response = await fetch(requestUrl, {
+		const response = await fetchWithTimeout(requestUrl, {
 			headers: {
 				"User-Agent":
 					"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
@@ -291,7 +302,7 @@ async function getFavoriteResourcesFromApi(
 	const requestUrl = `https://api.bilibili.com/x/v3/fav/resource/list?${params}`;
 
 	try {
-		const response = await fetch(requestUrl, {
+		const response = await fetchWithTimeout(requestUrl, {
 			headers: {
 				"User-Agent":
 					"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
@@ -325,11 +336,13 @@ export async function getFavoriteFolders(): Promise<FavoriteFoldersResult> {
 		return { items: [], errorMessage: "" };
 	}
 
-	if (FavoritesConfig.listSource === "api") {
-		return getFavoriteFoldersFromApi();
+	if (!favoriteFoldersPromise) {
+		favoriteFoldersPromise =
+			FavoritesConfig.listSource === "api"
+				? getFavoriteFoldersFromApi()
+				: getFavoriteFoldersFromJson();
 	}
-
-	return getFavoriteFoldersFromJson();
+	return favoriteFoldersPromise;
 }
 
 export async function getFavoriteResources(
@@ -339,11 +352,15 @@ export async function getFavoriteResources(
 		return { folder: null, items: [], errorMessage: "" };
 	}
 
-	if (FavoritesConfig.detailSource === "api") {
-		return getFavoriteResourcesFromApi(mediaId);
+	if (!favoriteResourcesPromiseMap.has(mediaId)) {
+		favoriteResourcesPromiseMap.set(
+			mediaId,
+			FavoritesConfig.detailSource === "api"
+				? getFavoriteResourcesFromApi(mediaId)
+				: getFavoriteResourcesFromJson(mediaId),
+		);
 	}
-
-	return getFavoriteResourcesFromJson(mediaId);
+	return favoriteResourcesPromiseMap.get(mediaId)!;
 }
 
 export function getFavoriteFolderUrl(folder: FavoriteFolder): string {

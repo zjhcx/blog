@@ -2,6 +2,7 @@ import sanitizeHtml from "sanitize-html";
 import { MomentsConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
+import { fetchWithTimeout } from "@/utils/request-utils";
 import type { MomentsFeedSource } from "@/types/config";
 
 export type MomentItem = {
@@ -17,6 +18,8 @@ export type FeedResult = {
 	items: MomentItem[];
 	error?: string;
 };
+
+let momentsFeedResultsPromise: Promise<FeedResult[]> | null = null;
 
 const decodeXml = (value: string) =>
 	value
@@ -93,7 +96,7 @@ const parseFeedItems = (xml: string, source: MomentsFeedSource) => {
 
 const fetchFeed = async (source: MomentsFeedSource): Promise<FeedResult> => {
 	try {
-		const response = await fetch(source.url, {
+		const response = await fetchWithTimeout(source.url, {
 			headers: {
 				Accept:
 					"application/rss+xml, application/atom+xml, application/xml, text/xml",
@@ -124,9 +127,17 @@ const fetchFeed = async (source: MomentsFeedSource): Promise<FeedResult> => {
 };
 
 export async function getMomentsFeedResults(): Promise<FeedResult[]> {
-	return MomentsConfig.enable
-		? Promise.all(MomentsConfig.sources.map(fetchFeed))
-		: [];
+	if (!MomentsConfig.enable) {
+		return [];
+	}
+
+	if (!momentsFeedResultsPromise) {
+		momentsFeedResultsPromise = Promise.all(
+			MomentsConfig.sources.map(fetchFeed),
+		);
+	}
+
+	return momentsFeedResultsPromise;
 }
 
 export function getSortedMoments(feedResults: FeedResult[]): MomentItem[] {
