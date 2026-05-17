@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "check": "astro check",
-    "build": "sh -c 'ulimit -n 1048575 2>/dev/null || true; astro build && pagefind --site dist'",
+    "build": "astro build && pagefind --site dist'",
     "preview": "astro preview",
     "astro": "astro",
     "type-check": "tsc --noEmit --isolatedDeclarations",
