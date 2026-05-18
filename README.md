@@ -30,6 +30,16 @@ A static blog template built with [Astro](https://astro.build).
 - [x] [Markdown extended features](https://github.com/saicaca/fuwari?tab=readme-ov-file#-markdown-extended-syntax)
 - [x] Table of contents
 - [x] RSS feed
+- [x] Friend link
+- [x] Bilibili bangumi page
+- [x] Bilibili follow page
+- [x] Bilibili fans page
+- [x] Bilibili dynamic page
+- [x] Bilibili favorite page
+- [x] Moments page
+- [x] Music page
+- [x] Sidebar music player
+- [x] I18n support (English, Japanese, Chinese, Korean, Spanish, Thai, Vietnamese, Indonesian) 
 
 ## 🚀 Getting Started
 
