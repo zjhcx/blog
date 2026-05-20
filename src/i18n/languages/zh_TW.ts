@@ -122,6 +122,8 @@ export const zh_TW: Translation = {
 	[Key.recentPosts]: "最新文章",
 
 	[Key.comments]: "評論",
+	[Key.commentsNotConfigured]:
+		"評論功能已啟用，但尚未設定 CommentConfig.serverURL。",
 
 	[Key.untitled]: "無標題",
 	[Key.uncategorized]: "未分類",

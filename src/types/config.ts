@@ -78,6 +78,11 @@ export type FriendLink = {
 	descI18nKey?: I18nKey;
 };
 
+export type LinksPageConfig = {
+	pageSize: number;
+	hidePaginationWhenSinglePage: boolean;
+};
+
 export type BangumiConfig = {
 	enable: boolean;
 	source: "json" | "api";
@@ -172,6 +177,11 @@ export type LicenseConfig = {
 	enable: boolean;
 	name: string;
 	url: string;
+};
+
+export type CommentConfig = {
+	enable: boolean;
+	serverURL: string;
 };
 
 export type LIGHT_DARK_MODE =

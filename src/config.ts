@@ -7,7 +7,9 @@ import type {
 	FavoritesConfig as FavoritesConfigType,
 	FollowsConfig as FollowsConfigType,
 	FriendLink,
+	CommentConfig as CommentConfigType,
 	LicenseConfig,
+	LinksPageConfig as LinksPageConfigType,
 	MusicConfig as MusicConfigType,
 	MomentsConfig as MomentsConfigType,
 	NavBarConfig,
@@ -200,6 +202,11 @@ export const linksConfig: FriendLink[] = [
 	},
 ];
 
+export const LinksPageConfig: LinksPageConfigType = {
+	pageSize: 12,
+	hidePaginationWhenSinglePage: true,
+};
+
 export const profileConfig: ProfileConfig = {
 	avatar: "/avatar.jpg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 	name: "Chenxi",
@@ -258,6 +265,11 @@ export const profileConfig: ProfileConfig = {
 			url: "https://www.threads.com/@zjhcx12",
 		},
 	],
+};
+
+export const CommentConfig: CommentConfigType = {
+	enable: true,
+	serverURL: "https://api.zcservice.houlang.cloud/comment/e206fc02ce77d248f35f27fad11b32a1", // Waline 服务端地址，例如 https://your-waline-server.example.com
 };
 
 export const licenseConfig: LicenseConfig = {

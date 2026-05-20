@@ -124,6 +124,8 @@ export const tr: Translation = {
 	[Key.recentPosts]: "Son Yazılar",
 
 	[Key.comments]: "Yorumlar",
+	[Key.commentsNotConfigured]:
+		"Yorumlar etkin, ancak CommentConfig.serverURL henüz yapılandırılmadı.",
 
 	[Key.untitled]: "Başlıksız",
 	[Key.uncategorized]: "Kategorisiz",

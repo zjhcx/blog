@@ -124,6 +124,8 @@ export const vi: Translation = {
 	[Key.recentPosts]: "Bài viết mới nhất",
 
 	[Key.comments]: "Bình luận",
+	[Key.commentsNotConfigured]:
+		"Đã bật bình luận nhưng CommentConfig.serverURL vẫn chưa được cấu hình.",
 
 	[Key.untitled]: "Không tiêu đề",
 	[Key.uncategorized]: "Chưa phân loại",
