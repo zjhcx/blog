@@ -1,4 +1,5 @@
 import svelte from "@astrojs/svelte";
+import sitemap from "@astrojs/sitemap";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import swup from "@swup/astro";
@@ -39,6 +40,7 @@ export default defineConfig({
 	base,
 	trailingSlash: "always",
 	integrations: [
+		sitemap(),
 		swup({
 			theme: false,
 			animationClass: "transition-swup-", // see https://swup.js.org/options/#animationselector
