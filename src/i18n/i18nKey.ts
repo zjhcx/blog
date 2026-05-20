@@ -118,6 +118,7 @@ enum I18nKey {
 	recentPosts = "recentPosts",
 
 	comments = "comments",
+	commentsNotConfigured = "commentsNotConfigured",
 
 	untitled = "untitled",
 	uncategorized = "uncategorized",

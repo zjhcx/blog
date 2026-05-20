@@ -123,6 +123,8 @@ export const th: Translation = {
 	[Key.recentPosts]: "โพสต์ล่าสุด",
 
 	[Key.comments]: "ความคิดเห็น",
+	[Key.commentsNotConfigured]:
+		"เปิดใช้ความคิดเห็นแล้ว แต่ยังไม่ได้ตั้งค่า CommentConfig.serverURL",
 
 	[Key.untitled]: "ไม่ได้ตั้งชื่อ",
 	[Key.uncategorized]: "ไม่ได้จัดหมวดหมู่",

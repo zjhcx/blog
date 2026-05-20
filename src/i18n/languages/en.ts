@@ -124,6 +124,8 @@ export const en: Translation = {
 	[Key.recentPosts]: "Recent Posts",
 
 	[Key.comments]: "Comments",
+	[Key.commentsNotConfigured]:
+		"Comments are enabled, but CommentConfig.serverURL is not configured yet.",
 
 	[Key.untitled]: "Untitled",
 	[Key.uncategorized]: "Uncategorized",

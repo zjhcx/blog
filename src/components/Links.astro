@@ -1,8 +1,14 @@
 ---
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
-import { linksConfig } from "@/config";
+import type { FriendLink } from "@/types/config";
 import "../styles/links.css";
+
+interface Props {
+	items: FriendLink[];
+}
+
+const { items } = Astro.props;
 ---
 
 <div class="links-page links-page-root">
@@ -17,7 +23,7 @@ import "../styles/links.css";
 
 	<section class="links-page-grid links-grid">
 		{
-			linksConfig.map((friend) => (
+			items.map((friend) => (
 				<a
 					class="friend-card friend-link-card card-base text-90"
 					href={friend.url}

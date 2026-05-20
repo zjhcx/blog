@@ -126,6 +126,8 @@ export const ja: Translation = {
 	[Key.recentPosts]: "最近の投稿",
 
 	[Key.comments]: "コメント",
+	[Key.commentsNotConfigured]:
+		"コメントは有効ですが、CommentConfig.serverURL がまだ設定されていません。",
 
 	[Key.untitled]: "タイトルなし",
 	[Key.uncategorized]: "カテゴリなし",

@@ -124,6 +124,8 @@ export const ko: Translation = {
 	[Key.recentPosts]: "최근 게시물",
 
 	[Key.comments]: "댓글",
+	[Key.commentsNotConfigured]:
+		"댓글 기능은 활성화되어 있지만 CommentConfig.serverURL 이 아직 설정되지 않았습니다.",
 
 	[Key.untitled]: "제목 없음",
 	[Key.uncategorized]: "분류되지 않음",

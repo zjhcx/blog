@@ -3,6 +3,7 @@ import path from "node:path";
 import License from "@components/misc/License.astro";
 import Markdown from "@components/misc/Markdown.astro";
 import MarkdownEnhancements from "@components/misc/MarkdownEnhancements.astro";
+import WalineComments from "@components/WalineComments.astro";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
@@ -111,6 +112,8 @@ const jsonLd = {
 
         </div>
     </div>
+
+    <WalineComments path={Astro.url.pathname} />
 
     <div class="flex flex-col md:flex-row justify-between mb-4 gap-4 overflow-hidden w-full">
         <a href={entry.data.nextSlug ? getPostUrlBySlug(entry.data.nextSlug) : "#"}

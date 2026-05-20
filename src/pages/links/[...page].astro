@@ -1,0 +1,38 @@
+---
+import LinksComponent from "@components/Links.astro";
+import WalineComments from "@components/WalineComments.astro";
+import Pagination from "@components/control/Pagination.astro";
+import { LinksPageConfig, linksConfig } from "@/config";
+import I18nKey from "@i18n/i18nKey";
+import { i18n } from "@i18n/translation";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+	return paginate(linksConfig, {
+		pageSize: Math.max(LinksPageConfig.pageSize, 1),
+		params: { page: undefined },
+	});
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const showPagination =
+	!LinksPageConfig.hidePaginationWhenSinglePage || page.lastPage > 1;
+---
+
+<MainGridLayout title={i18n(I18nKey.links)} description={i18n(I18nKey.linksDescription)}>
+	<LinksComponent items={page.data} />
+	{
+		showPagination && (
+			<Pagination
+				class="mx-auto mt-4 onload-animation"
+				page={page}
+				basePath="/links/"
+				style={`animation-delay: calc(var(--content-delay) + ${page.data.length * 50}ms)`}
+			/>
+		)
+	}
+	<div class="mt-4">
+		<WalineComments path="/links/" />
+	</div>
+</MainGridLayout>

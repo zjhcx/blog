@@ -124,6 +124,8 @@ export const id: Translation = {
 	[Key.recentPosts]: "Postingan Terbaru",
 
 	[Key.comments]: "Komentar",
+	[Key.commentsNotConfigured]:
+		"Komentar sudah diaktifkan, tetapi CommentConfig.serverURL belum dikonfigurasi.",
 
 	[Key.untitled]: "Tanpa Judul",
 	[Key.uncategorized]: "Tanpa Kategori",

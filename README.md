@@ -37,6 +37,7 @@ A static blog template built with [Astro](https://astro.build).
 - [x] Light / dark mode
 - [x] Customizable theme colors & banner
 - [x] Responsive design
+- [x] Comments for posts and the about page via Waline
 - [x] Search functionality with [Pagefind](https://pagefind.app/)
 - [x] [Markdown extended features](https://github.com/saicaca/fuwari?tab=readme-ov-file#-markdown-extended-syntax)
 - [x] Table of contents
