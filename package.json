@@ -34,7 +34,6 @@
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.14",
     "astro": "^6.3.3",
-    "astro-expressive-code": "^0.41.4",
     "astro-icon": "^1.1.5",
     "hastscript": "^9.0.1",
     "katex": "^0.16.27",
@@ -45,6 +44,7 @@
     "reading-time": "^1.5.0",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-components": "^0.3.0",
+    "rehype-expressive-code": "^0.41.4",
     "rehype-katex": "^7.0.1",
     "rehype-slug": "^6.0.0",
     "remark-directive": "^3.0.1",
@@ -69,5 +69,9 @@
     "@types/sanitize-html": "^2.16.0",
     "@waline/client": "^3.13.0",
     "rollup": "^4.53.3"
+  },
+  "allowScripts": {
+    "esbuild@0.27.7": true,
+    "sharp@0.34.5": true
   }
 }
