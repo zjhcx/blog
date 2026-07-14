@@ -36,6 +36,8 @@ interface FileResponse {
 	file: FileItem;
 }
 
+export let apiBaseUrl = "/api/files";
+
 interface BrowserEntry {
 	key: string;
 	name: string;
@@ -87,6 +89,14 @@ let requestController: AbortController | null = null;
 
 function getText(key: I18nKey): string {
 	return translate(key, $language);
+}
+
+function buildApiUrl(path = "", params?: URLSearchParams): string {
+	const base = apiBaseUrl.replace(/\/+$/g, "") || "/api/files";
+	const cleanPath = path.replace(/^\/+/g, "");
+	const url = cleanPath ? `${base}/${cleanPath}` : base;
+	const queryString = params?.toString();
+	return queryString ? `${url}?${queryString}` : url;
 }
 
 function getFilePath(file: FileItem): string {
@@ -206,7 +216,7 @@ async function fetchFiles(nextOffset = offset): Promise<void> {
 	if (type) params.set("type", type);
 
 	try {
-		const response = await fetch(`/api/files?${params.toString()}`, {
+		const response = await fetch(buildApiUrl("", params), {
 			signal: controller.signal,
 		});
 		if (!response.ok) {
@@ -242,7 +252,7 @@ async function selectFile(file: FileItem): Promise<void> {
 	detailError = "";
 
 	try {
-		const response = await fetch(`/api/files/${file.id}`);
+		const response = await fetch(buildApiUrl(String(file.id)));
 		if (!response.ok) {
 			throw new Error(`${response.status} ${response.statusText}`);
 		}

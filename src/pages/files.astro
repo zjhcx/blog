@@ -1,10 +1,11 @@
 ---
 import FileBrowser from "@components/FileBrowser.svelte";
+import { FilesConfig } from "@/config";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 ---
 
 <MainGridLayout title={i18n(I18nKey.files)} description={i18n(I18nKey.filesDescription)}>
-    <FileBrowser client:load />
+    <FileBrowser client:load apiBaseUrl={FilesConfig.apiBaseUrl} />
 </MainGridLayout>

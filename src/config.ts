@@ -4,6 +4,7 @@ import type {
 	DynamicConfig as DynamicConfigType,
 	ExpressiveCodeConfig,
 	FansConfig as FansConfigType,
+	FilesConfig as FilesConfigType,
 	FavoritesConfig as FavoritesConfigType,
 	FollowsConfig as FollowsConfigType,
 	FriendLink,
@@ -135,6 +136,10 @@ export const FavoritesConfig: FavoritesConfigType = {
 	hidePaginationWhenSinglePage: true,
 };
 
+export const FilesConfig: FilesConfigType = {
+	apiBaseUrl: "https://cf-files.zjh.li/api/files", // 文件 API 基础地址，如 https://example.com/api/files
+};
+
 export const navBarConfig: NavBarConfig = {
 	links: [
 		LinkPreset.Home,
@@ -203,9 +208,10 @@ export const linksConfig: FriendLink[] = [
 	{
 		name: "電籽的灵质空间 | 小小电子xxdz 主站",
 		url: "https://xxdz-official.github.io/x/",
-		avatar: "https://i1.hdslb.com/bfs/face/87e609940c74ed2e7dcf6b2b19b3029f8e1566e1.jpg",
+		avatar:
+			"https://i1.hdslb.com/bfs/face/87e609940c74ed2e7dcf6b2b19b3029f8e1566e1.jpg",
 		desc: "小小电子xxdz（電籽）的个人官网，分享原创项目、B站视频、术力口音乐、编程作品等",
-	}
+	},
 ];
 
 export const LinksPageConfig: LinksPageConfigType = {
@@ -275,7 +281,8 @@ export const profileConfig: ProfileConfig = {
 
 export const CommentConfig: CommentConfigType = {
 	enable: true,
-	serverURL: "https://api.zcservice.houlang.cloud/comment/e206fc02ce77d248f35f27fad11b32a1", // Waline 服务端地址，例如 https://your-waline-server.example.com
+	serverURL:
+		"https://api.zcservice.houlang.cloud/comment/e206fc02ce77d248f35f27fad11b32a1", // Waline 服务端地址，例如 https://your-waline-server.example.com
 };
 
 export const licenseConfig: LicenseConfig = {
