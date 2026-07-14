@@ -4,6 +4,7 @@ import {
 	BangumiConfig,
 	DynamicConfig,
 	FansConfig,
+	FilesConfig,
 	FavoritesConfig,
 	FollowsConfig,
 	MusicConfig,
@@ -149,6 +150,26 @@ const bangumiDescription =
 							<h2 data-i18n-key={I18nKey.dynamic}>{i18n(I18nKey.dynamic)}</h2>
 							<p class="text-50" data-i18n-key={I18nKey.dynamicOtherDescription}>
 								{i18n(I18nKey.dynamicOtherDescription)}
+							</p>
+						</div>
+						<Icon
+							class="other-card-enter"
+							name="material-symbols:chevron-right-rounded"
+						/>
+					</a>
+				)
+			}
+
+			{
+				FilesConfig.enable && (
+					<a class="other-card card-base text-90" href={url("/files/")}>
+						<div class="other-card-icon">
+							<Icon name="material-symbols:folder-open-rounded" />
+						</div>
+						<div class="other-card-content">
+							<h2 data-i18n-key={I18nKey.files}>{i18n(I18nKey.files)}</h2>
+							<p class="text-50" data-i18n-key={I18nKey.filesDescription}>
+								{i18n(I18nKey.filesDescription)}
 							</p>
 						</div>
 						<Icon
