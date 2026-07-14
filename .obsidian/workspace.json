@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "4e8bbe97d5854bbc",
+        "id": "8eeeda6e54955b49",
         "type": "tabs",
         "children": [
           {
-            "id": "786bfca9735895aa",
+            "id": "a0cffe85436ddfb6",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "新标签页"
+              "type": "webviewer",
+              "state": {
+                "url": "https://docs.astro.build/en/install-and-setup/",
+                "title": "Install Astro | Docs",
+                "mode": "webview"
+              },
+              "icon": "globe-2",
+              "title": "Install Astro | Docs"
             }
           }
         ]
@@ -185,23 +189,26 @@
       "command-palette:打开命令面板": false,
       "bases:新建数据库": false,
       "publish:发布更改": false,
-      "workspaces:管理工作区布局": false
+      "workspaces:管理工作区布局": false,
+      "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "786bfca9735895aa",
+  "active": "a0cffe85436ddfb6",
   "lastOpenFiles": [
-    "AGENTS.md",
-    "src/content/posts/稻香.md",
-    "dist/pagefind/index/zh-cn_b92cf0d.pf_index",
-    "dist/pagefind/fragment/zh-cn_51913cf.pf_fragment",
-    "dist/pagefind/fragment/zh-cn_4d2ee83.pf_fragment",
+    "dist/pagefind/index/zh-cn_d6745e3.pf_index",
+    "dist/pagefind/fragment/zh-cn_b3ba7dd.pf_fragment",
+    "dist/pagefind/fragment/zh-cn_285d148.pf_fragment",
     "dist/pagefind/wasm.unknown.pagefind",
-    "dist/pagefind/pagefind.zh-cn_98171c107bd1a.pf_meta",
+    "dist/pagefind/pagefind.zh-cn_20336c59d9e1e.pf_meta",
     "dist/pagefind/pagefind.js",
+    "dist/pagefind/pagefind-worker.js",
     "dist/pagefind/pagefind-ui.js",
     "dist/pagefind/pagefind-ui.css",
     "dist/pagefind/pagefind-modular-ui.js",
     "dist/pagefind/pagefind-modular-ui.css",
+    "src/content/spec/about.md",
+    "src/content/posts/未命名.md",
+    "src/content/posts/稻香.md",
     "dist/_astro/auth-icon.DDlHkiA5.svg",
     "dist/favicon/favicon-light-32.png",
     "dist/favicon/favicon-light-192.png",
@@ -212,6 +219,7 @@
     "dist/favicon/favicon-dark-180.png",
     "dist/favicon/favicon-dark-128.png",
     "dist/bg.jpg",
+    "AGENTS.md",
     "src/content/posts/【再见2024】【AI天禄&辟邪】稻香.md"
   ]
 }
