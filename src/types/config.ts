@@ -162,6 +162,10 @@ export type FavoritesConfig = {
 	hidePaginationWhenSinglePage: boolean;
 };
 
+export type FilesConfig = {
+	apiBaseUrl: string;
+};
+
 export type ProfileConfig = {
 	avatar?: string;
 	name: string;
