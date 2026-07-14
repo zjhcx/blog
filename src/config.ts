@@ -200,6 +200,12 @@ export const linksConfig: FriendLink[] = [
 		desc: "赛博活佛",
 		descI18nKey: I18nKey.friendCloudflareDescription,
 	},
+	{
+		name: "電籽的灵质空间 | 小小电子xxdz 主站",
+		url: "https://xxdz-official.github.io/x/",
+		avatar: "https://i1.hdslb.com/bfs/face/87e609940c74ed2e7dcf6b2b19b3029f8e1566e1.jpg",
+		desc: "小小电子xxdz（電籽）的个人官网，分享原创项目、B站视频、术力口音乐、编程作品等",
+	}
 ];
 
 export const LinksPageConfig: LinksPageConfigType = {
