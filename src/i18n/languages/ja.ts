@@ -112,6 +112,7 @@ export const ja: Translation = {
 
 	[Key.files]: "Files",
 	[Key.filesDescription]: "Browse files, folders, and directories from the API",
+	[Key.filesDisabled]: "Files page is disabled.",
 	[Key.filesSearch]: "Search files",
 	[Key.filesAllTypes]: "All types",
 	[Key.filesLoading]: "Loading files...",

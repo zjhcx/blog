@@ -112,6 +112,7 @@ export const zh_CN: Translation = {
 
 	[Key.files]: "文件",
 	[Key.filesDescription]: "通过 API 浏览文件、文件夹和目录",
+	[Key.filesDisabled]: "文件页已关闭。",
 	[Key.filesSearch]: "搜索文件",
 	[Key.filesAllTypes]: "全部类型",
 	[Key.filesLoading]: "正在加载文件...",

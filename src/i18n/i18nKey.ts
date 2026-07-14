@@ -108,6 +108,7 @@ enum I18nKey {
 
 	files = "files",
 	filesDescription = "filesDescription",
+	filesDisabled = "filesDisabled",
 	filesSearch = "filesSearch",
 	filesAllTypes = "filesAllTypes",
 	filesLoading = "filesLoading",

@@ -163,6 +163,7 @@ export type FavoritesConfig = {
 };
 
 export type FilesConfig = {
+	enable: boolean;
 	apiBaseUrl: string;
 };
 

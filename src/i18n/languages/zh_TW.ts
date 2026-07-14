@@ -112,6 +112,7 @@ export const zh_TW: Translation = {
 
 	[Key.files]: "檔案",
 	[Key.filesDescription]: "透過 API 瀏覽檔案、資料夾和目錄",
+	[Key.filesDisabled]: "檔案頁已關閉。",
 	[Key.filesSearch]: "搜尋檔案",
 	[Key.filesAllTypes]: "全部類型",
 	[Key.filesLoading]: "正在載入檔案...",

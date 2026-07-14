@@ -137,6 +137,7 @@ export const FavoritesConfig: FavoritesConfigType = {
 };
 
 export const FilesConfig: FilesConfigType = {
+	enable: true,
 	apiBaseUrl: "https://cf-files.zjh.li/api/files", // 文件 API 基础地址，如 https://example.com/api/files
 };
 

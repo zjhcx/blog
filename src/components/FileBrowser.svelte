@@ -36,6 +36,7 @@ interface FileResponse {
 	file: FileItem;
 }
 
+export let enabled = true;
 export let apiBaseUrl = "/api/files";
 
 interface BrowserEntry {
@@ -267,7 +268,7 @@ async function selectFile(file: FileItem): Promise<void> {
 }
 
 function scheduleSearch(): void {
-	if (!initialized) return;
+	if (!initialized || !enabled) return;
 	if (searchTimer) clearTimeout(searchTimer);
 	searchTimer = setTimeout(() => fetchFiles(0), 250);
 }
@@ -341,6 +342,10 @@ function shouldPreviewImage(file: FileItem): boolean {
 
 onMount(() => {
 	initialized = true;
+	if (!enabled) {
+		isLoading = false;
+		return;
+	}
 	fetchFiles(0);
 });
 
@@ -400,7 +405,9 @@ $: pageEnd = Math.min(offset + limit, total);
 		{/each}
 	</section>
 
-	{#if errorMessage}
+	{#if !enabled}
+		<section class="files-state card-base text-50">{getText(I18nKey.filesDisabled)}</section>
+	{:else if errorMessage}
 		<section class="files-state card-base text-50">
 			{getText(I18nKey.filesLoadFailed)}{errorMessage}
 		</section>
