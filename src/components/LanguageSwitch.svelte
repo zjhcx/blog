@@ -60,7 +60,7 @@ function chooseLanguage(lang: SupportedLanguage) {
 		aria-label={translate(I18nKey.language, $language)}
 		data-i18n-aria-key={I18nKey.language}
 		role="menuitem"
-		class="relative btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90"
+		class="relative btn-plain scale-animation rounded-xl h-11 w-11 active:scale-90"
 		id="language-switch"
 		onclick={togglePanel}
 	>
@@ -74,7 +74,7 @@ function chooseLanguage(lang: SupportedLanguage) {
 		<div class="card-base float-panel p-2 min-w-36">
 			{#each supportedLanguages as item}
 				<button
-					class="flex transition whitespace-nowrap items-center !justify-start w-full btn-plain scale-animation rounded-lg h-9 px-3 font-medium active:scale-95 mb-0.5"
+					class="flex transition whitespace-nowrap items-center !justify-start w-full btn-plain scale-animation rounded-xl h-9 px-3 font-medium active:scale-95 mb-0.5"
 					class:current-theme-btn={$language === item.code}
 					onclick={() => chooseLanguage(item.code)}
 				>

@@ -313,7 +313,7 @@
 						</a>
 						<button
 							type="button"
-							class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-neutral-400 transition-colors duration-200 hover:text-[rgb(var(--primary))] active:scale-95"
+							class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-neutral-400 transition-colors duration-200 hover:text-[rgb(var(--primary))] active:scale-95"
 							aria-label={translate(Key.musicLyrics, $language)}
 							aria-pressed={showLyrics}
 							style={showLyrics ? "color: rgb(var(--primary)); background: rgba(var(--primary), 0.12);" : ""}
