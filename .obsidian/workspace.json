@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "8eeeda6e54955b49",
+        "id": "c24a968f4b54b2f5",
         "type": "tabs",
         "children": [
           {
-            "id": "a0cffe85436ddfb6",
+            "id": "071cf14660402c0e",
             "type": "leaf",
             "state": {
-              "type": "webviewer",
-              "state": {
-                "url": "https://docs.astro.build/en/install-and-setup/",
-                "title": "Install Astro | Docs",
-                "mode": "webview"
-              },
-              "icon": "globe-2",
-              "title": "Install Astro | Docs"
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
             }
           }
         ]
@@ -193,7 +189,7 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "a0cffe85436ddfb6",
+  "active": "071cf14660402c0e",
   "lastOpenFiles": [
     "dist/pagefind/index/zh-cn_d6745e3.pf_index",
     "dist/pagefind/fragment/zh-cn_b3ba7dd.pf_fragment",
