@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "ff66b33059a597d0",
+        "id": "4db96e0dc02aa28b",
         "type": "tabs",
         "children": [
           {
-            "id": "0d5812c971860330",
+            "id": "df921f95d34718f9",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "src/content/posts/联系方式.md",
+                "file": "src/content/posts/service.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "联系方式"
+              "title": "service"
             }
           }
         ]
@@ -205,23 +205,19 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "0d5812c971860330",
+  "active": "df921f95d34718f9",
   "lastOpenFiles": [
-    "src/content/posts/联系方式.md",
-    "src/content/POST.md",
-    "AGENTS.md",
-    "src/content/spec/about.md",
-    "dist/pagefind/index/zh-cn_d6745e3.pf_index",
-    "dist/pagefind/fragment/zh-cn_b3ba7dd.pf_fragment",
-    "dist/pagefind/fragment/zh-cn_285d148.pf_fragment",
-    "dist/pagefind/wasm.unknown.pagefind",
-    "dist/pagefind/pagefind.zh-cn_20336c59d9e1e.pf_meta",
-    "dist/pagefind/pagefind.js",
-    "dist/pagefind/pagefind-worker.js",
-    "dist/pagefind/pagefind-ui.js",
-    "dist/pagefind/pagefind-ui.css",
-    "dist/pagefind/pagefind-modular-ui.js",
-    "src/content/posts/稻香.md",
+    "dist/sitemap-0.xml",
+    "dist/sitemap-index.xml",
+    "dist/index.html",
+    "dist/sitemap.xml",
+    "dist/rss.xsl",
+    "dist/rss.xml",
+    "dist/robots.txt",
+    "dist/posts/联系方式/index.html",
+    "dist/posts/service/index.html",
+    "dist/posts/联系方式",
+    "dist/posts/service",
     "dist/_astro/auth-icon.DDlHkiA5.svg",
     "dist/favicon/favicon-light-32.png",
     "dist/favicon/favicon-light-192.png",
@@ -232,6 +228,14 @@
     "dist/favicon/favicon-dark-180.png",
     "dist/favicon/favicon-dark-128.png",
     "dist/bg.jpg",
+    "src/content/posts/service.md",
+    "src/content/posts/2026-07-18.md",
+    "src/content/spec/service.md",
+    "src/content/posts/联系方式.md",
+    "src/content/POST.md",
+    "AGENTS.md",
+    "src/content/spec/about.md",
+    "src/content/posts/稻香.md",
     "src/content/posts/【再见2024】【AI天禄&辟邪】稻香.md"
   ]
 }
