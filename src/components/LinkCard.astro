@@ -1,0 +1,121 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	/** 网站封面图片地址。 */
+	cover: string;
+	/** 链接标题。 */
+	title: string;
+	/** 目标链接。 */
+	href: string;
+	/** 链接描述。 */
+	description: string;
+	/** 封面的替代文本，默认使用标题。 */
+	coverAlt?: string;
+	/** 是否在新标签页打开，默认为 true。 */
+	newTab?: boolean;
+	class?: string;
+}
+
+const {
+	cover,
+	title,
+	href,
+	description,
+	coverAlt = title,
+	newTab = true,
+} = Astro.props;
+const className = Astro.props.class;
+
+let hostname = href;
+try {
+	hostname = new URL(href, Astro.url).hostname || href;
+} catch {
+	// 相对地址或非标准协议无法解析时，直接展示原链接。
+}
+---
+
+<a
+	class:list={[
+		"group card-base hyperlink-card relative flex w-full overflow-hidden rounded-[var(--radius-large)] text-90 transition-all",
+		className,
+	]}
+	href={href}
+	target={newTab ? "_blank" : undefined}
+	rel={newTab ? "noopener noreferrer" : undefined}
+	aria-label={title}
+>
+	<div class="hyperlink-card__cover-wrap shrink-0 overflow-hidden">
+		<img
+			class="hyperlink-card__cover h-full w-full object-cover transition duration-300 group-hover:scale-105"
+			src={cover}
+			alt={coverAlt}
+			loading="lazy"
+			decoding="async"
+			referrerpolicy="no-referrer"
+		/>
+	</div>
+
+	<div class="flex min-w-0 flex-1 flex-col justify-center px-5 py-4">
+		<div class="flex items-start gap-3">
+			<h2 class="min-w-0 flex-1 truncate text-lg font-bold transition-colors group-hover:text-[var(--primary)]">
+				{title}
+			</h2>
+			<Icon
+				name="material-symbols:arrow-outward-rounded"
+				class="mt-0.5 shrink-0 text-xl text-[var(--primary)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+			/>
+		</div>
+
+		<p class="mt-1 line-clamp-2 text-sm leading-6 text-50">{description}</p>
+		<span class="mt-2 truncate text-xs text-50" aria-hidden="true">{hostname}</span>
+	</div>
+</a>
+
+<style>
+	.hyperlink-card {
+		min-height: 8.5rem;
+		border: 1px solid var(--card-border);
+	}
+
+	.hyperlink-card:hover {
+		transform: translateY(-2px);
+		box-shadow: var(--card-shadow);
+	}
+
+	.hyperlink-card:active {
+		transform: translateY(0) scale(0.99);
+	}
+
+	.hyperlink-card:focus-visible {
+		outline: 2px solid var(--primary);
+		outline-offset: 3px;
+	}
+
+	.hyperlink-card__cover-wrap {
+		width: 36%;
+		max-width: 14rem;
+		min-height: 8.5rem;
+		background: var(--btn-regular-bg);
+	}
+
+	@media (max-width: 40rem) {
+		.hyperlink-card {
+			flex-direction: column;
+		}
+
+		.hyperlink-card__cover-wrap {
+			width: 100%;
+			max-width: none;
+			min-height: 0;
+			aspect-ratio: 16 / 9;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.hyperlink-card,
+		.hyperlink-card__cover {
+			transition: none;
+		}
+	}
+</style>
