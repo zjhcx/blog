@@ -7,7 +7,7 @@ import "../styles/variables.css";
 import "../styles/markdown-extend.css";
 
 import ConfigCarrier from "@components/ConfigCarrier.astro";
-import { profileConfig, siteConfig } from "@/config";
+import { customHtmlConfig, profileConfig, siteConfig } from "@/config";
 import {
 	AUTO_MODE,
 	BANNER_HEIGHT,
@@ -151,11 +151,13 @@ const pageBgImage = `url("${url("/bg.jpg")}")`;
 
 	</head>
 	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}>
+		{customHtmlConfig.top && <Fragment set:html={customHtmlConfig.top} />}
 		<ConfigCarrier></ConfigCarrier>
 		<slot />
 
 		<!-- increase the page height during page transition to prevent the scrolling animation from jumping -->
 		<div id="page-height-extend" class="hidden h-[300vh]"></div>
+		{customHtmlConfig.bottom && <Fragment set:html={customHtmlConfig.bottom} />}
 	</body>
 </html>
 
