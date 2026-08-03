@@ -39,6 +39,15 @@ export type SiteConfig = {
 	favicon: Favicon[];
 };
 
+export type CustomHtmlConfig = {
+	/** Inserted immediately after the opening body tag. */
+	top: string;
+	/** Appended to the built-in footer content. */
+	footer: string;
+	/** Inserted immediately before the closing body tag. */
+	bottom: string;
+};
+
 export type Favicon = {
 	src: string;
 	theme?: "light" | "dark";

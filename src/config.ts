@@ -9,6 +9,7 @@ import type {
 	FollowsConfig as FollowsConfigType,
 	FriendLink,
 	CommentConfig as CommentConfigType,
+	CustomHtmlConfig as CustomHtmlConfigType,
 	LicenseConfig,
 	LinksPageConfig as LinksPageConfigType,
 	MusicConfig as MusicConfigType,
@@ -49,6 +50,13 @@ export const siteConfig: SiteConfig = {
 		//   sizes: '32x32',              // (Optional) Size of the favicon, set only if you have favicons of different sizes
 		// }
 	],
+};
+
+// Trusted HTML only. The strings are rendered as-is and are not sanitized.
+export const customHtmlConfig: CustomHtmlConfigType = {
+	top: "", // Inserted immediately after <body>
+	footer: "", // Appended below the built-in footer content
+	bottom: "<a href=\"https://icp.gov.moe/?keyword=20267892\" target=\"_blank\">萌ICP备20267892号</a>", // Inserted immediately before </body>
 };
 
 export const BangumiConfig: BangumiConfigType = {

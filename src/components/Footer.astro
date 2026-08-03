@@ -1,6 +1,6 @@
 ---
 
-import { profileConfig } from "../config";
+import { customHtmlConfig, profileConfig } from "../config";
 import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
 import { url } from "../utils/url-utils";
@@ -21,5 +21,8 @@ const currentYear = new Date().getFullYear();
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/saicaca/fuwari">Fuwari</a><br>
         <span data-i18n-key={I18nKey.siteSource}>{i18n(I18nKey.siteSource)}</span>
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/zjhcx/blog">GitHub</a>
+		{customHtmlConfig.footer && (
+			<div class="mt-2" set:html={customHtmlConfig.footer}></div>
+		)}
     </div>
 </div>
