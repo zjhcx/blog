@@ -55,8 +55,8 @@ export const siteConfig: SiteConfig = {
 // Trusted HTML only. The strings are rendered as-is and are not sanitized.
 export const customHtmlConfig: CustomHtmlConfigType = {
 	top: "", // Inserted immediately after <body>
-	footer: "", // Appended below the built-in footer content
-	bottom: "<a href=\"https://icp.gov.moe/?keyword=20267892\" target=\"_blank\">萌ICP备20267892号</a>", // Inserted immediately before </body>
+	footer: "<a href=\"https://icp.gov.moe/?keyword=20267892\" target=\"_blank\">萌ICP备20267892号</a>", // Appended below the built-in footer content
+	bottom: "", // Inserted immediately before </body>
 };
 
 export const BangumiConfig: BangumiConfigType = {
