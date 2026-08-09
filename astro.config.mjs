@@ -26,15 +26,8 @@ import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
 import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 
-const site =
-	process.env.SITE ||
-	(process.env.GITHUB_ACTIONS === "true"
-		? "https://zjhcx.github.io"
-		: "https://cx12.pages.dev");
-const base =
-	process.env.SITE_BASE ||
-	process.env.BASE_PATH ||
-	(process.env.GITHUB_ACTIONS === "true" ? "/blog" : "/");
+const site = process.env.SITE || "https://zjh.li";
+const base = process.env.SITE_BASE || process.env.BASE_PATH || "/";
 
 // https://astro.build/config
 export default defineConfig({
