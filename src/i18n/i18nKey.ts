@@ -92,6 +92,13 @@ enum I18nKey {
 	dynamicStatForward = "dynamicStatForward",
 	dynamicStatComment = "dynamicStatComment",
 	dynamicStatLike = "dynamicStatLike",
+	timeline = "timeline",
+	timelineDescription = "timelineDescription",
+	timelineOtherDescription = "timelineOtherDescription",
+	timelineLoadFailed = "timelineLoadFailed",
+	timelineEmpty = "timelineEmpty",
+	timelineLoading = "timelineLoading",
+	timelineLoadMore = "timelineLoadMore",
 
 	favs = "favs",
 	favsDescription = "favsDescription",

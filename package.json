@@ -11,6 +11,7 @@
     "astro": "astro",
     "type-check": "tsc --noEmit --isolatedDeclarations",
     "new-post": "node scripts/new-post.js",
+    "timeline:generate": "node scripts/generate-timeline.mjs",
     "format": "biome format --write ./src",
     "lint": "biome check --write ./src"
   },

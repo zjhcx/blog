@@ -96,6 +96,13 @@ export const zh_CN: Translation = {
 	[Key.dynamicStatForward]: "转发",
 	[Key.dynamicStatComment]: "评论",
 	[Key.dynamicStatLike]: "点赞",
+	[Key.timeline]: "时间线",
+	[Key.timelineDescription]: "来自 Telegram 频道的时间线内容",
+	[Key.timelineOtherDescription]: "查看 Telegram 频道时间线",
+	[Key.timelineLoadFailed]: "加载时间线失败：",
+	[Key.timelineEmpty]: "暂无时间线内容。",
+	[Key.timelineLoading]: "加载中...",
+	[Key.timelineLoadMore]: "加载更多",
 
 	[Key.favs]: "B站收藏夹",
 	[Key.favsDescription]: "来自哔哩哔哩的收藏夹列表",

@@ -97,6 +97,13 @@ export const ko: Translation = {
 	[Key.dynamicStatForward]: "공유",
 	[Key.dynamicStatComment]: "댓글",
 	[Key.dynamicStatLike]: "좋아요",
+	[Key.timeline]: "Timeline",
+	[Key.timelineDescription]: "Updates from the Telegram channel",
+	[Key.timelineOtherDescription]: "View the Telegram channel timeline",
+	[Key.timelineLoadFailed]: "Failed to load timeline: ",
+	[Key.timelineEmpty]: "No timeline entries yet.",
+	[Key.timelineLoading]: "Loading...",
+	[Key.timelineLoadMore]: "Load more",
 
 	[Key.favs]: "Bilibili 즐겨찾기",
 	[Key.favsDescription]: "Bilibili 즐겨찾기 폴더 목록",

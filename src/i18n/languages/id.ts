@@ -97,6 +97,13 @@ export const id: Translation = {
 	[Key.dynamicStatForward]: "Bagikan",
 	[Key.dynamicStatComment]: "Komentar",
 	[Key.dynamicStatLike]: "Suka",
+	[Key.timeline]: "Timeline",
+	[Key.timelineDescription]: "Updates from the Telegram channel",
+	[Key.timelineOtherDescription]: "View the Telegram channel timeline",
+	[Key.timelineLoadFailed]: "Failed to load timeline: ",
+	[Key.timelineEmpty]: "No timeline entries yet.",
+	[Key.timelineLoading]: "Loading...",
+	[Key.timelineLoadMore]: "Load more",
 
 	[Key.favs]: "Favorit Bilibili",
 	[Key.favsDescription]: "Daftar folder favorit dari Bilibili",
