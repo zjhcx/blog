@@ -281,9 +281,9 @@ export const profileConfig: ProfileConfig = {
 			url: "https://www.instagram.com/zjhcx12/",
 		},
 		{
-			name: "Threads",
-			icon: "fa6-brands:threads",
-			url: "https://www.threads.com/@zjhcx12",
+			name: "Telegram",
+			icon: "fa6-brands:telegram",
+			url: "https://t.me/zjhcx12",
 		},
 	],
 };
