@@ -19,6 +19,7 @@ A static blog template built with [Astro](https://astro.build).
 > - Added Bilibili bangumi / follow / fans / dynamic / favorite pages
 > - Added moments page
 > - Added music page and sidebar music player
+> - Added an incrementally generated Telegram channel timeline
 > - Added broader i18n support and related localization improvements
 
 🌏 README in
@@ -51,6 +52,7 @@ A static blog template built with [Astro](https://astro.build).
 - [x] Moments page
 - [x] Music page
 - [x] Sidebar music player
+- [x] Telegram channel timeline with static JSON chunks and incremental generation
 - [x] I18n support (English, Japanese, Chinese, Korean, Spanish, Thai, Vietnamese, Indonesian) 
 
 ## 🚀 Getting Started
@@ -72,6 +74,56 @@ A static blog template built with [Astro](https://astro.build).
    - `customHtmlConfig.footer` appends trusted HTML to the built-in footer.
 4. Run `pnpm new-post <filename>` to create a new post and edit it in `src/content/posts/`.
 5. Deploy your blog to Vercel, Netlify, GitHub Pages, etc. following [the guides](https://docs.astro.build/en/guides/deploy/). You need to edit the site configuration in `astro.config.mjs` before deployment.
+
+## 🕒 Telegram Timeline
+
+The `/timeline/` page renders Telegram channel messages from static JSON. The browser first loads `public/timeline/manifest.json`, then requests immutable message chunks as the visitor clicks **Load more**. It never connects to Telegram directly.
+
+### Input format
+
+The Telegram collector writes `/home/chenxi/tg_timeline/messages.json` as either a JSON array or an object containing a `messages` array:
+
+```json
+[
+  {
+    "id": "123456",
+    "time": "2026-08-13T12:34:56+08:00",
+    "content": "A channel message"
+  }
+]
+```
+
+- `id` must be a stable, unique and monotonically increasing Telegram message ID represented as a string.
+- `time` must be an ISO 8601 timestamp with a timezone.
+- `content` is plain text and may contain line breaks. Empty service messages are skipped while still advancing the incremental cursor.
+
+### Generate static chunks
+
+Run the generator before building the site:
+
+```sh
+npm run timeline:generate -- \
+  --input /home/chenxi/tg_timeline/messages.json \
+  --chunk-size 30
+npm run build
+```
+
+The generator writes:
+
+```text
+public/timeline/
+├── manifest.json
+├── generation-state.json
+└── chunk-<oldest-id>-<newest-id>.json
+```
+
+- `manifest.json` lists chunks in newest-first order for dynamic loading.
+- Chunk files are immutable and can use long-lived HTTP caching.
+- `generation-state.json` records `lastMessageId` and `lastMessageTime`. The collector must use this file as the next synchronization cursor and return only newer messages.
+- A repeated run with the same input is idempotent and produces no duplicate chunks.
+- If there are no new messages, the generator only refreshes metadata and keeps the existing chunks.
+
+The backend contract is documented separately in `/home/chenxi/tg_timeline/REQUEST.md` on the deployment host.
 
 ## 📝 Frontmatter of Posts
 
@@ -109,6 +161,7 @@ All commands are run from the root of the project, from a terminal:
 | `pnpm check`               | Run checks for errors in your code                  |
 | `pnpm format`              | Format your code using Biome                        |
 | `pnpm new-post <filename>` | Create a new post                                   |
+| `pnpm timeline:generate -- --input <file> --chunk-size 30` | Generate new Telegram timeline chunks |
 | `pnpm astro ...`           | Run CLI commands like `astro add`, `astro check`    |
 | `pnpm astro --help`        | Get help using the Astro CLI                        |
 
