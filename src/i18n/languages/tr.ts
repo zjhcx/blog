@@ -97,6 +97,13 @@ export const tr: Translation = {
 	[Key.dynamicStatForward]: "Paylaşım",
 	[Key.dynamicStatComment]: "Yorum",
 	[Key.dynamicStatLike]: "Beğeni",
+	[Key.timeline]: "Timeline",
+	[Key.timelineDescription]: "Updates from the Telegram channel",
+	[Key.timelineOtherDescription]: "View the Telegram channel timeline",
+	[Key.timelineLoadFailed]: "Failed to load timeline: ",
+	[Key.timelineEmpty]: "No timeline entries yet.",
+	[Key.timelineLoading]: "Loading...",
+	[Key.timelineLoadMore]: "Load more",
 
 	[Key.favs]: "Bilibili Favorileri",
 	[Key.favsDescription]: "Bilibili favori klasorleri",

@@ -1,0 +1,9 @@
+---
+import TimelineView from "@components/Timeline.svelte";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
+---
+<MainGridLayout title={i18n(I18nKey.timeline)} description={i18n(I18nKey.timelineDescription)}>
+	<TimelineView client:load />
+</MainGridLayout>

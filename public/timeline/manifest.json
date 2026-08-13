@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "generatedAt": "2026-08-13T12:58:29.385Z",
+  "total": 1,
+  "chunks": [
+    {
+      "file": "chunk-2-2.json",
+      "count": 1,
+      "newestTime": "2026-08-13T12:56:14.000Z",
+      "oldestTime": "2026-08-13T12:56:14.000Z"
+    }
+  ]
+}

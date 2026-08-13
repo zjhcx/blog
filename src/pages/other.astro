@@ -40,6 +40,14 @@ const bangumiDescription =
 		</section>
 
 		<section class="other-list">
+			<a class="other-card card-base text-90" href={url("/timeline/")}>
+				<div class="other-card-icon"><Icon name="material-symbols:view-timeline-rounded" /></div>
+				<div class="other-card-content">
+					<h2 data-i18n-key={I18nKey.timeline}>{i18n(I18nKey.timeline)}</h2>
+					<p class="text-50" data-i18n-key={I18nKey.timelineOtherDescription}>{i18n(I18nKey.timelineOtherDescription)}</p>
+				</div>
+				<Icon class="other-card-enter" name="material-symbols:chevron-right-rounded" />
+			</a>
 			{
 				MomentsConfig.enable && (
 					<a class="other-card card-base text-90" href={url("/moments/")}>

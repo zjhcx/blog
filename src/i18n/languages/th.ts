@@ -97,6 +97,13 @@ export const th: Translation = {
 	[Key.dynamicStatForward]: "แชร์",
 	[Key.dynamicStatComment]: "ความคิดเห็น",
 	[Key.dynamicStatLike]: "ถูกใจ",
+	[Key.timeline]: "Timeline",
+	[Key.timelineDescription]: "Updates from the Telegram channel",
+	[Key.timelineOtherDescription]: "View the Telegram channel timeline",
+	[Key.timelineLoadFailed]: "Failed to load timeline: ",
+	[Key.timelineEmpty]: "No timeline entries yet.",
+	[Key.timelineLoading]: "Loading...",
+	[Key.timelineLoadMore]: "Load more",
 
 	[Key.favs]: "รายการโปรด Bilibili",
 	[Key.favsDescription]: "รายการโฟลเดอร์โปรดจาก Bilibili",

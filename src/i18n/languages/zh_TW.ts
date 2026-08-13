@@ -96,6 +96,13 @@ export const zh_TW: Translation = {
 	[Key.dynamicStatForward]: "轉發",
 	[Key.dynamicStatComment]: "評論",
 	[Key.dynamicStatLike]: "按讚",
+	[Key.timeline]: "時間線",
+	[Key.timelineDescription]: "來自 Telegram 頻道的時間線內容",
+	[Key.timelineOtherDescription]: "查看 Telegram 頻道時間線",
+	[Key.timelineLoadFailed]: "載入時間線失敗：",
+	[Key.timelineEmpty]: "暫無時間線內容。",
+	[Key.timelineLoading]: "載入中...",
+	[Key.timelineLoadMore]: "載入更多",
 
 	[Key.favs]: "B站收藏夾",
 	[Key.favsDescription]: "來自嗶哩嗶哩的收藏夾列表",

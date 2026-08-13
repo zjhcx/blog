@@ -98,6 +98,13 @@ export const es: Translation = {
 	[Key.dynamicStatForward]: "Reenvios",
 	[Key.dynamicStatComment]: "Comentarios",
 	[Key.dynamicStatLike]: "Me gusta",
+	[Key.timeline]: "Timeline",
+	[Key.timelineDescription]: "Updates from the Telegram channel",
+	[Key.timelineOtherDescription]: "View the Telegram channel timeline",
+	[Key.timelineLoadFailed]: "Failed to load timeline: ",
+	[Key.timelineEmpty]: "No timeline entries yet.",
+	[Key.timelineLoading]: "Loading...",
+	[Key.timelineLoadMore]: "Load more",
 
 	[Key.favs]: "Favoritos de Bilibili",
 	[Key.favsDescription]: "Lista de carpetas de favoritos de Bilibili",

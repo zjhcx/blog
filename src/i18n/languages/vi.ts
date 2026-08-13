@@ -97,6 +97,13 @@ export const vi: Translation = {
 	[Key.dynamicStatForward]: "Chia sẻ",
 	[Key.dynamicStatComment]: "Bình luận",
 	[Key.dynamicStatLike]: "Thích",
+	[Key.timeline]: "Timeline",
+	[Key.timelineDescription]: "Updates from the Telegram channel",
+	[Key.timelineOtherDescription]: "View the Telegram channel timeline",
+	[Key.timelineLoadFailed]: "Failed to load timeline: ",
+	[Key.timelineEmpty]: "No timeline entries yet.",
+	[Key.timelineLoading]: "Loading...",
+	[Key.timelineLoadMore]: "Load more",
 
 	[Key.favs]: "Yeu thich Bilibili",
 	[Key.favsDescription]: "Danh sach thu muc yeu thich tu Bilibili",
