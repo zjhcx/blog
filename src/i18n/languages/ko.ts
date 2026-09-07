@@ -169,6 +169,7 @@ export const ko: Translation = {
 	[Key.minutesCount]: "분",
 	[Key.postCount]: "게시물",
 	[Key.postsCount]: "게시물",
+	[Key.viewsCount]: "조회",
 
 	[Key.themeColor]: "테마 색상",
 

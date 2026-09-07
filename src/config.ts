@@ -1,22 +1,23 @@
 import I18nKey from "./i18n/i18nKey";
 import type {
 	BangumiConfig as BangumiConfigType,
+	CommentConfig as CommentConfigType,
+	CustomHtmlConfig as CustomHtmlConfigType,
 	DynamicConfig as DynamicConfigType,
 	ExpressiveCodeConfig,
 	FansConfig as FansConfigType,
-	FilesConfig as FilesConfigType,
 	FavoritesConfig as FavoritesConfigType,
+	FilesConfig as FilesConfigType,
 	FollowsConfig as FollowsConfigType,
 	FriendLink,
-	CommentConfig as CommentConfigType,
-	CustomHtmlConfig as CustomHtmlConfigType,
 	LicenseConfig,
 	LinksPageConfig as LinksPageConfigType,
-	MusicConfig as MusicConfigType,
 	MomentsConfig as MomentsConfigType,
+	MusicConfig as MusicConfigType,
 	NavBarConfig,
 	ProfileConfig,
 	SiteConfig,
+	ViewCountConfig,
 } from "./types/config";
 import { LinkPreset } from "./types/config";
 
@@ -52,10 +53,16 @@ export const siteConfig: SiteConfig = {
 	],
 };
 
+export const viewCountConfig: ViewCountConfig = {
+	source: "json",
+	apiUrl: "",
+};
+
 // Trusted HTML only. The strings are rendered as-is and are not sanitized.
 export const customHtmlConfig: CustomHtmlConfigType = {
 	top: "", // Inserted immediately after <body>
-	footer: "<a href=\"https://icp.gov.moe/?keyword=20267892\" target=\"_blank\">萌ICP备20267892号</a>", // Appended below the built-in footer content
+	footer:
+		'<a href="https://icp.gov.moe/?keyword=20267892" target="_blank">萌ICP备20267892号</a>', // Appended below the built-in footer content
 	bottom: "", // Inserted immediately before </body>
 };
 

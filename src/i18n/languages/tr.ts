@@ -169,6 +169,7 @@ export const tr: Translation = {
 	[Key.minutesCount]: "dakika",
 	[Key.postCount]: "gönderi",
 	[Key.postsCount]: "gönderiler",
+	[Key.viewsCount]: "görüntülenme",
 
 	[Key.themeColor]: "Tema Rengi",
 

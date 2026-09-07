@@ -198,6 +198,11 @@ export type CommentConfig = {
 	serverURL: string;
 };
 
+export type ViewCountConfig = {
+	source: "json" | "api";
+	apiUrl: string;
+};
+
 export type LIGHT_DARK_MODE =
 	| typeof LIGHT_MODE
 	| typeof DARK_MODE

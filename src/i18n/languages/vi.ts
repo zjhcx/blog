@@ -169,6 +169,7 @@ export const vi: Translation = {
 	[Key.minutesCount]: "phút đọc",
 	[Key.postCount]: "bài viết",
 	[Key.postsCount]: "bài viết",
+	[Key.viewsCount]: "lượt xem",
 
 	[Key.themeColor]: "Màu giao diện",
 
