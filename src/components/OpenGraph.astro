@@ -1,0 +1,123 @@
+---
+import { getImage } from "astro:assets";
+import path from "node:path";
+import { absoluteUrl } from "@utils/url-utils";
+import { siteConfig } from "@/config";
+
+export interface OpenGraphArticle {
+	publishedTime: Date;
+	modifiedTime?: Date;
+	section?: string | null;
+	tags?: string[];
+}
+
+interface Props {
+	title: string;
+	description: string;
+	canonicalUrl: URL;
+	locale: string;
+	image?: string;
+	imageAlt?: string;
+	imageBasePath?: string;
+	article?: OpenGraphArticle;
+	isArticle?: boolean;
+}
+
+const {
+	title,
+	description,
+	canonicalUrl,
+	locale,
+	image = "/bg.jpg",
+	imageAlt = title,
+	imageBasePath = "/",
+	article,
+	isArticle = false,
+} = Astro.props;
+
+const localeDefaults: Record<string, string> = {
+	en: "en_US",
+	ja: "ja_JP",
+	ko: "ko_KR",
+	es: "es_ES",
+	th: "th_TH",
+	vi: "vi_VN",
+	tr: "tr_TR",
+	id: "id_ID",
+};
+const normalizedLocale = locale.includes("_")
+	? locale
+	: (localeDefaults[locale] ?? locale.replace("-", "_"));
+
+const isRemoteImage = /^https?:\/\//i.test(image);
+const isPublicImage = image.startsWith("/");
+let imageUrl = isRemoteImage
+	? image
+	: absoluteUrl(image, Astro.site ?? canonicalUrl.origin);
+let imageWidth: number | undefined;
+let imageHeight: number | undefined;
+let imageType: string | undefined;
+
+if (!isRemoteImage && !isPublicImage) {
+	const files = import.meta.glob<ImageMetadata>("../**", { import: "default" });
+	const normalizedPath = path
+		.normalize(path.join("../", imageBasePath, image))
+		.replace(/\\/g, "/");
+	const loadImage = files[normalizedPath];
+	if (loadImage) {
+		const optimized = await getImage({ src: await loadImage() });
+		imageUrl = new URL(optimized.src, Astro.site ?? canonicalUrl.origin).href;
+		imageWidth = optimized.attributes.width;
+		imageHeight = optimized.attributes.height;
+		imageType = `image/${optimized.options.format === "jpg" ? "jpeg" : optimized.options.format}`;
+	}
+} else if (image === "/bg.jpg") {
+	imageWidth = 2048;
+	imageHeight = 1152;
+	imageType = "image/jpeg";
+} else {
+	const extension = new URL(imageUrl).pathname.split(".").pop()?.toLowerCase();
+	const mimeTypes: Record<string, string> = {
+		avif: "image/avif",
+		gif: "image/gif",
+		jpeg: "image/jpeg",
+		jpg: "image/jpeg",
+		png: "image/png",
+		svg: "image/svg+xml",
+		webp: "image/webp",
+	};
+	imageType = extension ? mimeTypes[extension] : undefined;
+}
+
+const authorUrl = new URL("/", Astro.site ?? canonicalUrl.origin).href;
+---
+
+<meta property="og:title" content={title} />
+<meta property="og:type" content={article || isArticle ? "article" : "website"} />
+<meta property="og:image" content={imageUrl} />
+{imageUrl.startsWith("https://") && <meta property="og:image:secure_url" content={imageUrl} />}
+{imageType && <meta property="og:image:type" content={imageType} />}
+{imageWidth && <meta property="og:image:width" content={imageWidth.toString()} />}
+{imageHeight && <meta property="og:image:height" content={imageHeight.toString()} />}
+<meta property="og:image:alt" content={imageAlt} />
+<meta property="og:url" content={canonicalUrl.href} />
+<meta property="og:description" content={description} />
+<meta property="og:locale" content={normalizedLocale} />
+<meta property="og:site_name" content={siteConfig.title} />
+
+{article && (
+	<>
+		<meta property="article:published_time" content={article.publishedTime.toISOString()} />
+		{article.modifiedTime && <meta property="article:modified_time" content={article.modifiedTime.toISOString()} />}
+		<meta property="article:author" content={authorUrl} />
+		{article.section && <meta property="article:section" content={article.section} />}
+		{article.tags?.map((tag) => <meta property="article:tag" content={tag} />)}
+	</>
+)}
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalUrl.href} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image:alt" content={imageAlt} />

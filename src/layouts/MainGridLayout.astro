@@ -2,6 +2,7 @@
 import BackToTop from "@components/control/BackToTop.astro";
 import Footer from "@components/Footer.astro";
 import Navbar from "@components/Navbar.astro";
+import type { OpenGraphArticle } from "@components/OpenGraph.astro";
 import SideBar from "@components/widget/SideBar.astro";
 import type { MarkdownHeading } from "astro";
 import { Icon } from "astro-icon/components";
@@ -21,6 +22,9 @@ interface Props {
 	description?: string;
 	lang?: string;
 	setOGTypeArticle?: boolean;
+	openGraphImage?: string;
+	openGraphImageBasePath?: string;
+	openGraphArticle?: OpenGraphArticle;
 	headings?: MarkdownHeading[];
 }
 
@@ -30,6 +34,9 @@ const {
 	description,
 	lang,
 	setOGTypeArticle,
+	openGraphImage,
+	openGraphImageBasePath,
+	openGraphArticle,
 	headings = [],
 } = Astro.props;
 const hasBannerCredit =
@@ -41,7 +48,7 @@ const mainPanelTop = siteConfig.banner.enable
 	: "5.5rem";
 ---
 
-<Layout title={title} banner={banner} description={description} lang={lang} setOGTypeArticle={setOGTypeArticle}>
+<Layout title={title} banner={banner} description={description} lang={lang} setOGTypeArticle={setOGTypeArticle} openGraphImage={openGraphImage} openGraphImageBasePath={openGraphImageBasePath} openGraphArticle={openGraphArticle}>
 
 <!-- Navbar -->
 <slot slot="head" name="head"></slot>

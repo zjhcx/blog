@@ -7,6 +7,7 @@ import "../styles/variables.css";
 import "../styles/markdown-extend.css";
 
 import ConfigCarrier from "@components/ConfigCarrier.astro";
+import OpenGraph, { type OpenGraphArticle } from "@components/OpenGraph.astro";
 import { customHtmlConfig, profileConfig, siteConfig } from "@/config";
 import {
 	AUTO_MODE,
@@ -28,9 +29,21 @@ interface Props {
 	description?: string;
 	lang?: string;
 	setOGTypeArticle?: boolean;
+	openGraphImage?: string;
+	openGraphImageBasePath?: string;
+	openGraphArticle?: OpenGraphArticle;
 }
 
-let { title, banner, description, lang, setOGTypeArticle } = Astro.props;
+let {
+	title,
+	banner,
+	description,
+	lang,
+	setOGTypeArticle,
+	openGraphImage,
+	openGraphImageBasePath,
+	openGraphArticle,
+} = Astro.props;
 
 // apply a class to the body element to decide the height of the banner, only used for initial page load
 // Swup can update the body for each page visit, but it's after the page transition, causing a delay for banner height change
@@ -64,6 +77,11 @@ if (!lang) {
 	lang = `${siteConfig.lang}`;
 }
 const siteLang = lang.replace("_", "-");
+const metaDescription = description || pageTitle;
+const canonicalUrl = new URL(
+	Astro.url.pathname,
+	Astro.site ?? Astro.url.origin,
+);
 
 const bannerOffsetByPosition = {
 	top: `${BANNER_HEIGHT_EXTEND}vh`,
@@ -76,29 +94,25 @@ const pageBgImage = `url("${url("/bg.jpg")}")`;
 ---
 
 <!DOCTYPE html>
-<html lang={siteLang} class="bg-[var(--page-bg)] transition text-[14px] md:text-[16px]">
+<html lang={siteLang} prefix="og: https://ogp.me/ns# article: https://ogp.me/ns/article#" class="bg-[var(--page-bg)] transition text-[14px] md:text-[16px]">
 	<head>
 
 		<title>{pageTitle}</title>
 
 		<meta charset="UTF-8" />
-		<meta name="description" content={description || pageTitle}>
+		<meta name="description" content={metaDescription}>
 		<meta name="author" content={profileConfig.name}>
-
-		<meta property="og:site_name" content={siteConfig.title}>
-		<meta property="og:url" content={Astro.url}>
-		<meta property="og:title" content={pageTitle}>
-		<meta property="og:description" content={description || pageTitle}>
-		{setOGTypeArticle ? (
-        <meta property="og:type" content="article" />
-        ) : (
-        <meta property="og:type" content="website" />
-        )}
-
-		<meta name="twitter:card" content="summary_large_image">
-		<meta property="twitter:url" content={Astro.url}>
-		<meta name="twitter:title" content={pageTitle}>
-		<meta name="twitter:description" content={description || pageTitle}>
+		<link rel="canonical" href={canonicalUrl.href} />
+		<OpenGraph
+			title={title || pageTitle}
+			description={metaDescription}
+			canonicalUrl={canonicalUrl}
+			locale={lang}
+			image={openGraphImage}
+			imageBasePath={openGraphImageBasePath}
+			article={openGraphArticle}
+			isArticle={setOGTypeArticle}
+		/>
 
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
