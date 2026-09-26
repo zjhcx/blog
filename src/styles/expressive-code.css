@@ -1,4 +1,4 @@
-@reference "./tailwind-reference.css";
+@reference "./global.css";
 
 .expressive-code {
     .frame {

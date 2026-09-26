@@ -1,10 +1,10 @@
-@import "./tailwind-reference.css";
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@custom-variant dark (&:where(.dark, .dark *));
 
-@import "./main.css";
-@import "./markdown.css";
-@import "./transition.css";
-@import "./expressive-code.css";
-@import "./photoswipe.css";
+@theme {
+	--font-sans: "Roboto", sans-serif;
+}
 
 html {
 	min-height: 100%;

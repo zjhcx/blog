@@ -548,7 +548,7 @@
 				<audio
 					bind:this={audioElement}
 					src={currentTrack?.sourceUrl}
-					preload="metadata"
+					preload="none"
 					referrerpolicy="no-referrer"
 					on:timeupdate={updateTime}
 					on:loadedmetadata={updateTime}

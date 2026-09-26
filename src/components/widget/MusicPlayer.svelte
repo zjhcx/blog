@@ -550,7 +550,7 @@
 			<audio
 				bind:this={audio}
 				src={currentTrack?.sourceUrl}
-				preload="metadata"
+				preload="none"
 				referrerpolicy="no-referrer"
 				on:loadedmetadata={onAudioReady}
 				on:timeupdate={onTimeUpdate}

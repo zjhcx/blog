@@ -236,7 +236,7 @@ export const LinksPageConfig: LinksPageConfigType = {
 };
 
 export const profileConfig: ProfileConfig = {
-	avatar: "/avatar.jpg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+	avatar: "/avatar.webp", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 	name: "Chenxi",
 	bio: "114514",
 	links: [

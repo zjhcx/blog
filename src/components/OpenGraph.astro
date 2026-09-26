@@ -28,7 +28,7 @@ const {
 	description,
 	canonicalUrl,
 	locale,
-	image = "/bg.jpg",
+	image = "/og.jpg",
 	imageAlt = title,
 	imageBasePath = "/",
 	article,
@@ -71,9 +71,9 @@ if (!isRemoteImage && !isPublicImage) {
 		imageHeight = optimized.attributes.height;
 		imageType = `image/${optimized.options.format === "jpg" ? "jpeg" : optimized.options.format}`;
 	}
-} else if (image === "/bg.jpg") {
-	imageWidth = 2048;
-	imageHeight = 1152;
+} else if (image === "/og.jpg") {
+	imageWidth = 1200;
+	imageHeight = 630;
 	imageType = "image/jpeg";
 } else {
 	const extension = new URL(imageUrl).pathname.split(".").pop()?.toLowerCase();

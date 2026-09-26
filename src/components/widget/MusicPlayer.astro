@@ -28,7 +28,7 @@ const tracks = MusicConfig.enable ? items : [];
 			style={style}
 		>
 			<div class="px-1 pb-1">
-				<MusicPlayerWidget client:load tracks={tracks} musicPageUrl={url("/music/")} />
+				<MusicPlayerWidget client:idle tracks={tracks} musicPageUrl={url("/music/")} />
 			</div>
 		</WidgetLayout>
 	)

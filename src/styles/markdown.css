@@ -1,4 +1,4 @@
-@reference "./tailwind-reference.css";
+@reference "./global.css";
 
 .custom-md {
     h1 {
