@@ -1,8 +1,11 @@
 ---
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
+import "../styles/fonts.css";
 import "../styles/global.css";
+import "../styles/main.css";
+import "../styles/markdown.css";
+import "../styles/transition.css";
+import "../styles/expressive-code.css";
+import "../styles/photoswipe.css";
 import "../styles/variables.css";
 import "../styles/markdown-extend.css";
 
@@ -90,7 +93,7 @@ const bannerOffsetByPosition = {
 };
 const bannerOffset =
 	bannerOffsetByPosition[siteConfig.banner.position || "center"];
-const pageBgImage = `url("${url("/bg.jpg")}")`;
+const pageBgImage = `url("${url("/bg.webp")}")`;
 ---
 
 <!DOCTYPE html>
@@ -317,7 +320,7 @@ function showBanner() {
 }
 
 function applyPageChromeStyles() {
-	const pageBgImage = `url("${url("/bg.jpg")}")`;
+	const pageBgImage = `url("${url("/bg.webp")}")`;
 	document.documentElement.style.setProperty('--page-bg-image', pageBgImage);
 	document.body.style.setProperty('--page-bg-image', pageBgImage);
 }

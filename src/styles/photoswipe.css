@@ -1,4 +1,4 @@
-@reference "./tailwind-reference.css";
+@reference "./global.css";
 
 .pswp__button {
     @apply transition bg-black/40 hover:bg-black/50 active:bg-black/60 flex items-center justify-center mr-0 w-12 h-12;

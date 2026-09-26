@@ -1,4 +1,4 @@
-@reference "./tailwind-reference.css";
+@reference "./global.css";
 
 /* Page transition animations with Swup */
 html.is-changing .transition-swup-fade {
