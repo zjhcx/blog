@@ -1,9 +1,9 @@
 import type { APIRoute } from "astro";
-import { absoluteUrl, url } from "@/utils/url-utils";
+import { absoluteUrl } from "@/utils/url-utils";
 
 const robotsTxt = `
 User-agent: *
-Disallow: ${url("/_astro/")}
+Allow: /
 
 Sitemap: ${absoluteUrl("/sitemap.xml")}
 `.trim();

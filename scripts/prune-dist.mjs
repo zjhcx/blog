@@ -24,3 +24,11 @@ for (const asset of unusedPagefindAssets) {
 }
 
 console.log(`Pruned ${unusedPagefindAssets.length} unused Pagefind UI assets (${removedBytes} bytes).`);
+
+const redundantSitemapIndex = path.resolve("dist/sitemap-index.xml");
+try {
+	await rm(redundantSitemapIndex);
+	console.log("Removed redundant sitemap-index.xml.");
+} catch (error) {
+	if (error?.code !== "ENOENT") throw error;
+}

@@ -1,0 +1,26 @@
+---
+import type { GetStaticPaths } from "astro";
+import ArchiveList from "@components/ArchiveList.astro";
+import I18nKey from "@i18n/i18nKey";
+import { i18n } from "@i18n/translation";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { getSortedPostsList, getTagList, type PostForList } from "@utils/content-utils";
+
+export const getStaticPaths = (async () => {
+	const [tags, posts] = await Promise.all([getTagList(), getSortedPostsList()]);
+	return tags.map(({ name }) => ({
+		params: { tag: name },
+		props: {
+			tag: name,
+			posts: posts.filter((post) => post.data.tags.includes(name)),
+		},
+	}));
+}) satisfies GetStaticPaths;
+
+const { tag, posts }: { tag: string; posts: PostForList[] } = Astro.props;
+const title = `${tag} - ${i18n(I18nKey.tags)}`;
+---
+
+<MainGridLayout title={title} description={title}>
+	<ArchiveList posts={posts} />
+</MainGridLayout>
