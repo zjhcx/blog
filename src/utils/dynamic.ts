@@ -121,24 +121,25 @@ function parseDynamicPayload(payload: DynamicJsonPayload): DynamicItem[] {
 	if (!isRecord(payload)) {
 		return [];
 	}
+	const record: Record<string, unknown> = payload;
 
-	if (typeof payload.code === "number" && payload.code !== 0) {
+	if (typeof record.code === "number" && record.code !== 0) {
 		throw new Error(
-			typeof payload.message === "string"
-				? payload.message
-				: `Bilibili code ${payload.code}`,
+			typeof record.message === "string"
+				? record.message
+				: `Bilibili code ${record.code}`,
 		);
 	}
 
-	if (Array.isArray(payload.items)) {
-		return payload.items as DynamicItem[];
+	if (Array.isArray(record.items)) {
+		return record.items as DynamicItem[];
 	}
 
-	if (Array.isArray(payload.data)) {
-		return payload.data as DynamicItem[];
+	if (Array.isArray(record.data)) {
+		return record.data as DynamicItem[];
 	}
 
-	const data = payload.data;
+	const data = record.data;
 	if (isRecord(data) && Array.isArray(data.items)) {
 		return data.items as DynamicItem[];
 	}

@@ -1,27 +1,4 @@
 <script>
-import { url } from "../../utils/url-utils";
-
-const loadedStylesheets = new Set<string>();
-
-function loadStylesheet(href: string) {
-    if (loadedStylesheets.has(href)) {
-        return;
-    }
-    if (document.querySelector(`link[data-lazy-style="${href}"]`)) {
-        loadedStylesheets.add(href);
-        return;
-    }
-
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = href;
-    link.dataset.lazyStyle = href;
-    document.head.appendChild(link);
-    loadedStylesheets.add(href);
-}
-</script>
-
-<script>
 if (!window.__fuwariCopyButtonBound) {
     window.__fuwariCopyButtonBound = true;
 
@@ -54,7 +31,7 @@ if (!window.__fuwariCopyButtonBound) {
 </script>
 
 <script>
-let codeFontPromise;
+let codeFontPromise: Promise<unknown> | undefined;
 
 async function loadCodeFont() {
     if (!codeFontPromise) {
@@ -73,7 +50,21 @@ if (document.querySelector(".custom-md pre code, .custom-md code")) {
 </script>
 
 <script>
-let katexCssPromise;
+import { url } from "../../utils/url-utils";
+
+let katexCssPromise: Promise<void> | undefined;
+
+function loadStylesheet(href: string): void {
+    if (document.querySelector(`link[data-lazy-style="${href}"]`)) {
+        return;
+    }
+
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = href;
+    link.dataset.lazyStyle = href;
+    document.head.appendChild(link);
+}
 
 async function loadKatexStyles() {
     if (!katexCssPromise) {
@@ -89,9 +80,26 @@ if (document.querySelector(".custom-md .katex, .custom-md .katex-display")) {
 </script>
 
 <script>
-let lightbox;
-let photoSwipeLightboxPromise;
+import { url } from "../../utils/url-utils";
+import type PhotoSwipeLightboxType from "photoswipe/lightbox";
+
+type PhotoSwipeLightboxConstructor = typeof PhotoSwipeLightboxType;
+
+let lightbox: InstanceType<PhotoSwipeLightboxConstructor> | undefined;
+let photoSwipeLightboxPromise: Promise<PhotoSwipeLightboxConstructor> | undefined;
 const gallerySelector = ".custom-md img, #post-cover img";
+
+function loadStylesheet(href: string): void {
+    if (document.querySelector(`link[data-lazy-style="${href}"]`)) {
+        return;
+    }
+
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = href;
+    link.dataset.lazyStyle = href;
+    document.head.appendChild(link);
+}
 
 async function loadPhotoSwipeLightbox() {
     if (!photoSwipeLightboxPromise) {
