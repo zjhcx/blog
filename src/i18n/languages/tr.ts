@@ -18,6 +18,9 @@ export const tr: Translation = {
 	[Key.searchDevTestDescription]:
 		"Bunun yerine <mark>npm build && npm preview</mark> çalıştırın.",
 	[Key.language]: "Dil",
+	[Key.notFoundTitle]: "Sayfa bulunamadı",
+	[Key.notFoundDescription]: "Aradığınız sayfa mevcut değil veya taşınmış.",
+	[Key.notFoundBackHome]: "Ana sayfaya dön",
 
 	[Key.bangumi]: "Bangumi",
 	[Key.bangumiDrama]: "Dizi",

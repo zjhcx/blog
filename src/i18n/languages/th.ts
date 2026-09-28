@@ -18,6 +18,9 @@ export const th: Translation = {
 	[Key.searchDevTestDescription]:
 		"ให้รัน <mark>npm build && npm preview</mark> แทน",
 	[Key.language]: "ภาษา",
+	[Key.notFoundTitle]: "ไม่พบหน้า",
+	[Key.notFoundDescription]: "หน้าที่คุณกำลังค้นหาไม่มีอยู่หรือถูกย้ายแล้ว",
+	[Key.notFoundBackHome]: "กลับหน้าหลัก",
 
 	[Key.bangumi]: "Bangumi",
 	[Key.bangumiDrama]: "ซีรีส์",

@@ -18,6 +18,9 @@ export const vi: Translation = {
 	[Key.searchDevTestDescription]:
 		"Hãy chạy <mark>npm build && npm preview</mark> thay thế.",
 	[Key.language]: "Ngôn ngữ",
+	[Key.notFoundTitle]: "Không tìm thấy trang",
+	[Key.notFoundDescription]: "Trang bạn đang tìm không tồn tại hoặc đã được di chuyển.",
+	[Key.notFoundBackHome]: "Về trang chủ",
 
 	[Key.bangumi]: "Bangumi",
 	[Key.bangumiDrama]: "Phim bộ",

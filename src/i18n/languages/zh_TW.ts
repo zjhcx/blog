@@ -17,6 +17,9 @@ export const zh_TW: Translation = {
 	[Key.searchDevTestDescription]:
 		"請改為執行 <mark>npm build && npm preview</mark>。",
 	[Key.language]: "語言",
+	[Key.notFoundTitle]: "找不到頁面",
+	[Key.notFoundDescription]: "你造訪的頁面不存在或已被移動。",
+	[Key.notFoundBackHome]: "返回首頁",
 
 	[Key.bangumi]: "追番",
 	[Key.bangumiDrama]: "追劇",

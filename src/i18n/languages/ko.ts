@@ -18,6 +18,9 @@ export const ko: Translation = {
 	[Key.searchDevTestDescription]:
 		"<mark>npm build && npm preview</mark>를 실행해 보세요.",
 	[Key.language]: "언어",
+	[Key.notFoundTitle]: "페이지를 찾을 수 없습니다",
+	[Key.notFoundDescription]: "찾으시는 페이지가 없거나 이동되었습니다.",
+	[Key.notFoundBackHome]: "홈으로 돌아가기",
 
 	[Key.bangumi]: "방구미",
 	[Key.bangumiDrama]: "드라마",
