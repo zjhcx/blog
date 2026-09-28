@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { language } from "@/i18n/client";
-	import { init, type WalineInstance } from "@waline/client";
-	import "@waline/client/style";
+	import type { WalineInstance } from "@waline/client";
 	import { onMount } from "svelte";
 
 	export let serverURL = "";
@@ -10,6 +9,23 @@
 	let container: HTMLDivElement | null = null;
 	let waline: WalineInstance | null = null;
 	let mounted = false;
+	let syncQueue = Promise.resolve();
+	let walineModulePromise: Promise<typeof import("@waline/client")> | null = null;
+
+	function loadWalineStyle(): Promise<void> {
+		const existing = document.getElementById("waline-style") as HTMLLinkElement | null;
+		if (existing) return Promise.resolve();
+
+		return new Promise((resolve, reject) => {
+			const link = document.createElement("link");
+			link.id = "waline-style";
+			link.rel = "stylesheet";
+			link.href = `${import.meta.env.BASE_URL}vendor/waline.css`;
+			link.onload = () => resolve();
+			link.onerror = () => reject(new Error("Failed to load Waline styles"));
+			document.head.appendChild(link);
+		});
+	}
 
 	function resolveWalineLanguage(lang: string): string {
 		switch (lang) {
@@ -28,7 +44,7 @@
 		}
 	}
 
-	function syncWaline(): void {
+	async function syncWaline(): Promise<void> {
 		if (!mounted || !container) return;
 
 		const normalizedServerURL = serverURL.trim();
@@ -46,6 +62,13 @@
 		};
 
 		if (!waline) {
+			walineModulePromise ??= Promise.all([
+				import("@waline/client"),
+				loadWalineStyle(),
+			]).then(([module]) => module);
+			const { init } = await walineModulePromise;
+			if (!mounted || !container) return;
+
 			waline = init({
 				el: container,
 				...options,
@@ -56,9 +79,13 @@
 		waline.update(options);
 	}
 
+	function queueWalineSync(): void {
+		syncQueue = syncQueue.then(syncWaline);
+	}
+
 	onMount(() => {
 		mounted = true;
-		syncWaline();
+		queueWalineSync();
 
 		return () => {
 			waline?.destroy();
@@ -66,58 +93,12 @@
 		};
 	});
 
-	$: syncWaline();
+	$: {
+		serverURL;
+		path;
+		$language;
+		queueWalineSync();
+	}
 </script>
 
 <div bind:this={container} class="waline-root"></div>
-
-<style>
-	.waline-root {
-		min-height: 12rem;
-	}
-
-	:global(.waline-root) {
-		--waline-font-size: 0.95rem;
-		--waline-theme-color: var(--primary);
-		--waline-active-color: var(--primary);
-		--waline-color: color-mix(in srgb, var(--deep-text) 88%, transparent);
-		--waline-bg-color: transparent;
-		--waline-bg-color-light: color-mix(in srgb, var(--card-bg) 70%, white 30%);
-		--waline-bg-color-hover: var(--btn-plain-bg-hover);
-		--waline-border-color: var(--line-divider);
-		--waline-disable-bg-color: var(--btn-regular-bg);
-		--waline-disable-color: color-mix(in srgb, var(--deep-text) 42%, transparent);
-		--waline-bq-color: var(--btn-regular-bg);
-		--waline-info-bg-color: var(--btn-regular-bg);
-		--waline-info-color: color-mix(in srgb, var(--deep-text) 45%, transparent);
-		--waline-border: 1px solid var(--waline-border-color);
-		--waline-box-shadow: none;
-	}
-
-	:global(html.dark .waline-root) {
-		--waline-color: color-mix(in srgb, white 70%, transparent);
-		--waline-bg-color-light: color-mix(in srgb, var(--card-bg) 72%, black 28%);
-		--waline-border-color: var(--line-divider);
-		--waline-disable-bg-color: var(--btn-regular-bg);
-		--waline-disable-color: color-mix(in srgb, white 35%, transparent);
-		--waline-bq-color: var(--btn-regular-bg);
-		--waline-info-bg-color: var(--btn-regular-bg);
-		--waline-info-color: color-mix(in srgb, white 42%, transparent);
-	}
-
-	:global(.waline-root .wl-card) {
-		box-shadow: none;
-	}
-
-	:global(.waline-root .wl-editor),
-	:global(.waline-root .wl-input),
-	:global(.waline-root .wl-panel),
-	:global(.waline-root .wl-preview),
-	:global(.waline-root .wl-meta),
-	:global(.waline-root .wl-sort),
-	:global(.waline-root .wl-content),
-	:global(.waline-root .wl-empty),
-	:global(.waline-root .wl-count) {
-		transition: all 150ms ease;
-	}
-</style>
