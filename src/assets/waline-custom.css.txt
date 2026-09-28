@@ -1,0 +1,45 @@
++.waline-root {
+	min-height: 12rem;
+	--waline-font-size: 0.95rem;
+	--waline-theme-color: var(--primary);
+	--waline-active-color: var(--primary);
+	--waline-color: color-mix(in srgb, var(--deep-text) 88%, transparent);
+	--waline-bg-color: transparent;
+	--waline-bg-color-light: color-mix(in srgb, var(--card-bg) 70%, white 30%);
+	--waline-bg-color-hover: var(--btn-plain-bg-hover);
+	--waline-border-color: var(--line-divider);
+	--waline-disable-bg-color: var(--btn-regular-bg);
+	--waline-disable-color: color-mix(in srgb, var(--deep-text) 42%, transparent);
+	--waline-bq-color: var(--btn-regular-bg);
+	--waline-info-bg-color: var(--btn-regular-bg);
+	--waline-info-color: color-mix(in srgb, var(--deep-text) 45%, transparent);
+	--waline-border: 1px solid var(--waline-border-color);
+	--waline-box-shadow: none;
+}
+
+html.dark .waline-root {
+	--waline-color: color-mix(in srgb, white 70%, transparent);
+	--waline-bg-color-light: color-mix(in srgb, var(--card-bg) 72%, black 28%);
+	--waline-border-color: var(--line-divider);
+	--waline-disable-bg-color: var(--btn-regular-bg);
+	--waline-disable-color: color-mix(in srgb, white 35%, transparent);
+	--waline-bq-color: var(--btn-regular-bg);
+	--waline-info-bg-color: var(--btn-regular-bg);
+	--waline-info-color: color-mix(in srgb, white 42%, transparent);
+}
+
+.waline-root .wl-card {
+	box-shadow: none;
+}
+
+.waline-root .wl-editor,
+.waline-root .wl-input,
+.waline-root .wl-panel,
+.waline-root .wl-preview,
+.waline-root .wl-meta,
+.waline-root .wl-sort,
+.waline-root .wl-content,
+.waline-root .wl-empty,
+.waline-root .wl-count {
+	transition: all 150ms ease;
+}
