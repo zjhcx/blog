@@ -63,24 +63,25 @@ function parseFansPayload(payload: FansJsonPayload): FanItem[] {
 	if (!isRecord(payload)) {
 		return [];
 	}
+	const record: Record<string, unknown> = payload;
 
-	if (typeof payload.code === "number" && payload.code !== 0) {
+	if (typeof record.code === "number" && record.code !== 0) {
 		throw new Error(
-			typeof payload.message === "string"
-				? payload.message
-				: `Bilibili code ${payload.code}`,
+			typeof record.message === "string"
+				? record.message
+				: `Bilibili code ${record.code}`,
 		);
 	}
 
-	if (Array.isArray(payload.list)) {
-		return payload.list as FanItem[];
+	if (Array.isArray(record.list)) {
+		return record.list as FanItem[];
 	}
 
-	if (Array.isArray(payload.data)) {
-		return payload.data as FanItem[];
+	if (Array.isArray(record.data)) {
+		return record.data as FanItem[];
 	}
 
-	const data = payload.data;
+	const data = record.data;
 	if (isRecord(data) && Array.isArray(data.list)) {
 		return data.list as FanItem[];
 	}

@@ -103,14 +103,15 @@ function parseFavoriteFoldersPayload(
 	if (!isRecord(payload)) {
 		return [];
 	}
+	const record: Record<string, unknown> = payload;
 
-	parseApiError(payload);
+	parseApiError(record);
 
-	if (Array.isArray(payload.list)) {
-		return payload.list as FavoriteFolder[];
+	if (Array.isArray(record.list)) {
+		return record.list as FavoriteFolder[];
 	}
 
-	const data = payload.data;
+	const data = record.data;
 	if (isRecord(data) && Array.isArray(data.list)) {
 		return data.list as FavoriteFolder[];
 	}
@@ -129,17 +130,18 @@ function parseFavoriteResourcesPayload(payload: FavoriteResourcesJsonPayload): {
 	if (!isRecord(payload)) {
 		return { folder: null, items: [] };
 	}
+	const record: Record<string, unknown> = payload;
 
-	parseApiError(payload);
+	parseApiError(record);
 
-	if (Array.isArray(payload.medias)) {
+	if (Array.isArray(record.medias)) {
 		return {
-			folder: isRecord(payload.info) ? (payload.info as FavoriteFolder) : null,
-			items: payload.medias as FavoriteMedia[],
+			folder: isRecord(record.info) ? (record.info as FavoriteFolder) : null,
+			items: record.medias as FavoriteMedia[],
 		};
 	}
 
-	const data = payload.data;
+	const data = record.data;
 	if (isRecord(data)) {
 		return {
 			folder: isRecord(data.info) ? (data.info as FavoriteFolder) : null,

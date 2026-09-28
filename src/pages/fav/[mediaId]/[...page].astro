@@ -2,7 +2,7 @@
 import Pagination from "@components/control/Pagination.astro";
 import FavResourcesComponent from "@components/FavResources.astro";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
-import type { GetStaticPaths } from "astro";
+import type { GetStaticPaths, Page } from "astro";
 import { FavoritesConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
@@ -42,7 +42,7 @@ const {
 	errorMessage,
 	folder,
 }: {
-	page: { data: FavoriteMedia[]; lastPage: number };
+	page: Page<FavoriteMedia>;
 	errorMessage: string;
 	folder: FavoriteFolder | null;
 } = Astro.props;
