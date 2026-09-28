@@ -150,6 +150,8 @@ export const vi: Translation = {
 	[Key.friendXDescription]: "Nền tảng mạng xã hội",
 	[Key.friendDiscordDescription]: "Nền tảng trò chuyện và cộng đồng phổ biến",
 	[Key.friendCloudflareDescription]: "Nền tảng hiệu năng và bảo mật web",
+	[Key.friendFeiqiDescription]: "Một chú cáo đang phát triển trò chơi",
+	[Key.friendEdgeCatDescription]: "Khi kể lại, nước mắt vẫn tuôn rơi",
 
 	[Key.tags]: "Thẻ",
 	[Key.categories]: "Danh mục",

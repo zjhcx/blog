@@ -150,6 +150,8 @@ export const tr: Translation = {
 	[Key.friendXDescription]: "Sosyal ağ platformu",
 	[Key.friendDiscordDescription]: "Popüler sohbet ve topluluk platformu",
 	[Key.friendCloudflareDescription]: "Web performansı ve güvenlik platformu",
+	[Key.friendFeiqiDescription]: "Oyun geliştiren bir tilki",
+	[Key.friendEdgeCatDescription]: "Anlatınca gözyaşları hâlâ sel olur",
 
 	[Key.tags]: "Etiketler",
 	[Key.categories]: "Kategoriler",

@@ -153,6 +153,8 @@ export const es: Translation = {
 	[Key.friendDiscordDescription]: "Plataforma popular de chat y comunidades",
 	[Key.friendCloudflareDescription]:
 		"Plataforma de rendimiento y seguridad web",
+	[Key.friendFeiqiDescription]: "Un zorro que desarrolla videojuegos",
+	[Key.friendEdgeCatDescription]: "Al contarlo, las lágrimas aún se derraman",
 
 	[Key.tags]: "Etiquetas",
 	[Key.categories]: "Categorías",

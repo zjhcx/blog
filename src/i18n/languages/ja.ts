@@ -152,6 +152,8 @@ export const ja: Translation = {
 		"人気のチャットとコミュニティプラットフォーム",
 	[Key.friendCloudflareDescription]:
 		"Web パフォーマンスとセキュリティのプラットフォーム",
+	[Key.friendFeiqiDescription]: "ゲームを開発しているキツネ",
+	[Key.friendEdgeCatDescription]: "語れば今も、涙があふれる",
 
 	[Key.tags]: "タグ",
 	[Key.categories]: "カテゴリ",

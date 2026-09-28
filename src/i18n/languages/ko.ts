@@ -150,6 +150,8 @@ export const ko: Translation = {
 	[Key.friendXDescription]: "소셜 네트워킹 플랫폼",
 	[Key.friendDiscordDescription]: "인기 있는 채팅 및 커뮤니티 플랫폼",
 	[Key.friendCloudflareDescription]: "웹 성능 및 보안 플랫폼",
+	[Key.friendFeiqiDescription]: "게임을 개발하는 여우",
+	[Key.friendEdgeCatDescription]: "말할 때면 여전히 눈물이 쏟아진다",
 
 	[Key.tags]: "태그",
 	[Key.categories]: "카테고리",

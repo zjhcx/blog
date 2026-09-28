@@ -150,6 +150,8 @@ export const en: Translation = {
 	[Key.friendXDescription]: "Social networking platform",
 	[Key.friendDiscordDescription]: "A popular chat and community platform",
 	[Key.friendCloudflareDescription]: "Web performance and security platform",
+	[Key.friendFeiqiDescription]: "A fox developing games",
+	[Key.friendEdgeCatDescription]: "As the tale is told, tears still pour",
 
 	[Key.tags]: "Tags",
 	[Key.categories]: "Categories",

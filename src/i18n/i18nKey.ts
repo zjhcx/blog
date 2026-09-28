@@ -144,6 +144,8 @@ enum I18nKey {
 	friendXDescription = "friendXDescription",
 	friendDiscordDescription = "friendDiscordDescription",
 	friendCloudflareDescription = "friendCloudflareDescription",
+	friendFeiqiDescription = "friendFeiqiDescription",
+	friendEdgeCatDescription = "friendEdgeCatDescription",
 
 	tags = "tags",
 	categories = "categories",
