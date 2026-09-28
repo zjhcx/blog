@@ -104,6 +104,12 @@ export const MomentsConfig: MomentsConfigType = {
 			homepage: "https://status.cdnjs.com/",
 			avatar: "https://cdnjs.com/_/f7a2ebfb819c118086546e481876aef6.svg",
 		},
+		{
+			name: "EdgeCat",
+			url: "https://blog.catp.cc/atom.xml",
+			homepage: "https://catp.cc",
+			avatar: "https://file.catp.cc/avatar.png",
+		},
 	],
 };
 
@@ -220,6 +226,20 @@ export const linksConfig: FriendLink[] = [
 		avatar: "https://cloudflare.com/favicon.ico",
 		desc: "赛博活佛",
 		descI18nKey: I18nKey.friendCloudflareDescription,
+	},
+	{
+		name: "飞起的小窝",
+		url: "https://feiqi3.cn",
+		avatar: "https://pic.feiqi3.cn/blogPic/avatar_feiqi3.png",
+		desc: "在开发游戏的狐狸",
+		descI18nKey: I18nKey.friendFeiqiDescription,
+	},
+	{
+		name: "EdgeCat",
+		url: "https://catp.cc",
+		avatar: "https://file.catp.cc/avatar.png",
+		desc: "说时依旧，有泪如倾",
+		descI18nKey: I18nKey.friendEdgeCatDescription,
 	},
 	{
 		name: "電籽的灵质空间 | 小小电子xxdz 主站",

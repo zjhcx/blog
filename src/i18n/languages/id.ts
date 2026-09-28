@@ -150,6 +150,8 @@ export const id: Translation = {
 	[Key.friendXDescription]: "Platform jejaring sosial",
 	[Key.friendDiscordDescription]: "Platform chat dan komunitas populer",
 	[Key.friendCloudflareDescription]: "Platform performa dan keamanan web",
+	[Key.friendFeiqiDescription]: "Seekor rubah yang mengembangkan gim",
+	[Key.friendEdgeCatDescription]: "Saat diceritakan, air mata masih mengalir",
 
 	[Key.tags]: "Tag",
 	[Key.categories]: "Kategori",

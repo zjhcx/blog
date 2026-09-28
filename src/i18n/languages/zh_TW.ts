@@ -148,6 +148,8 @@ export const zh_TW: Translation = {
 	[Key.friendXDescription]: "社群平台",
 	[Key.friendDiscordDescription]: "流行的聊天和社群平台",
 	[Key.friendCloudflareDescription]: "Web 效能與安全平台",
+	[Key.friendFeiqiDescription]: "正在開發遊戲的狐狸",
+	[Key.friendEdgeCatDescription]: "說時依舊，有淚如傾",
 
 	[Key.tags]: "標籤",
 	[Key.categories]: "分類",

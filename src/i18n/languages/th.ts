@@ -149,6 +149,8 @@ export const th: Translation = {
 	[Key.friendXDescription]: "แพลตฟอร์มโซเชียล",
 	[Key.friendDiscordDescription]: "แพลตฟอร์มแชตและชุมชนยอดนิยม",
 	[Key.friendCloudflareDescription]: "แพลตฟอร์มประสิทธิภาพและความปลอดภัยเว็บ",
+	[Key.friendFeiqiDescription]: "จิ้งจอกที่กำลังพัฒนาเกม",
+	[Key.friendEdgeCatDescription]: "เมื่อเอ่ยถึง น้ำตาก็ยังหลั่งไหล",
 
 	[Key.tags]: "ป้ายกำกับ",
 	[Key.categories]: "หมวดหมู่",
