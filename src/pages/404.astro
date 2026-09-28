@@ -1,0 +1,26 @@
+---
+import { Icon } from "astro-icon/components";
+import I18nKey from "../i18n/i18nKey";
+import { i18n } from "../i18n/translation";
+import MainGridLayout from "../layouts/MainGridLayout.astro";
+import { url } from "../utils/url-utils";
+
+const title = i18n(I18nKey.notFoundTitle);
+const description = i18n(I18nKey.notFoundDescription);
+---
+
+<MainGridLayout title={title} description={description}>
+	<meta slot="head" name="robots" content="noindex, nofollow" />
+	<section class="card-base flex min-h-80 flex-col items-center justify-center px-6 py-12 text-center">
+		<p class="text-[5rem] font-bold leading-none text-[var(--primary)]" aria-hidden="true">404</p>
+		<h1 class="mt-5 text-2xl font-bold text-90">{title}</h1>
+		<p class="mt-3 max-w-md text-50">{description}</p>
+		<a
+			href={url("/")}
+			class="btn-card mt-8 inline-flex h-11 items-center gap-2 rounded-xl px-5 font-medium text-[var(--primary)] transition active:scale-95"
+		>
+			<Icon name="fa6-solid:house" aria-hidden="true" />
+			<span>{i18n(I18nKey.notFoundBackHome)}</span>
+		</a>
+	</section>
+</MainGridLayout>

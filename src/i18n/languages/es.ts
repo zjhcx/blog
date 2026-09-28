@@ -18,6 +18,9 @@ export const es: Translation = {
 	[Key.searchDevTestDescription]:
 		"Ejecuta <mark>npm build && npm preview</mark> en su lugar.",
 	[Key.language]: "Idioma",
+	[Key.notFoundTitle]: "Página no encontrada",
+	[Key.notFoundDescription]: "La página que buscas no existe o se ha movido.",
+	[Key.notFoundBackHome]: "Volver al inicio",
 
 	[Key.bangumi]: "Bangumi",
 	[Key.bangumiDrama]: "Series",

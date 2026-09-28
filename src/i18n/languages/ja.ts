@@ -17,6 +17,9 @@ export const ja: Translation = {
 	[Key.searchDevTestDescription]:
 		"<mark>npm build && npm preview</mark> を実行してください。",
 	[Key.language]: "言語",
+	[Key.notFoundTitle]: "ページが見つかりません",
+	[Key.notFoundDescription]: "お探しのページは存在しないか、移動されました。",
+	[Key.notFoundBackHome]: "ホームに戻る",
 
 	[Key.bangumi]: "追番",
 	[Key.bangumiDrama]: "ドラマ",

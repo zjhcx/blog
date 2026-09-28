@@ -18,6 +18,9 @@ export const id: Translation = {
 	[Key.searchDevTestDescription]:
 		"Jalankan <mark>npm build && npm preview</mark> sebagai gantinya.",
 	[Key.language]: "Bahasa",
+	[Key.notFoundTitle]: "Halaman tidak ditemukan",
+	[Key.notFoundDescription]: "Halaman yang Anda cari tidak ada atau telah dipindahkan.",
+	[Key.notFoundBackHome]: "Kembali ke beranda",
 
 	[Key.bangumi]: "Bangumi",
 	[Key.bangumiDrama]: "Drama",

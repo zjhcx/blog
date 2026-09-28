@@ -13,6 +13,9 @@ enum I18nKey {
 	searchDevTestTitle = "searchDevTestTitle",
 	searchDevTestDescription = "searchDevTestDescription",
 	language = "language",
+	notFoundTitle = "notFoundTitle",
+	notFoundDescription = "notFoundDescription",
+	notFoundBackHome = "notFoundBackHome",
 
 	bangumi = "bangumi",
 	bangumiDrama = "bangumiDrama",

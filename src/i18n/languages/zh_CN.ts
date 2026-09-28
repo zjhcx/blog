@@ -17,6 +17,9 @@ export const zh_CN: Translation = {
 	[Key.searchDevTestDescription]:
 		"请改为运行 <mark>npm build && npm preview</mark>。",
 	[Key.language]: "语言",
+	[Key.notFoundTitle]: "页面未找到",
+	[Key.notFoundDescription]: "你访问的页面不存在或已被移动。",
+	[Key.notFoundBackHome]: "返回主页",
 
 	[Key.bangumi]: "追番",
 	[Key.bangumiDrama]: "追剧",
