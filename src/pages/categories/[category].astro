@@ -1,0 +1,39 @@
+---
+import type { GetStaticPaths } from "astro";
+import ArchiveList from "@components/ArchiveList.astro";
+import I18nKey from "@i18n/i18nKey";
+import { i18n } from "@i18n/translation";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { getSortedPostsList, type PostForList } from "@utils/content-utils";
+
+export const getStaticPaths = (async () => {
+	const posts = await getSortedPostsList();
+	const categories = new Set(
+		posts.map((post) => post.data.category?.trim()).filter((category): category is string => Boolean(category)),
+	);
+	const paths = [...categories].map((category) => ({
+		params: { category },
+		props: {
+			category,
+			posts: posts.filter((post) => post.data.category?.trim() === category),
+		},
+	}));
+
+	const uncategorizedPosts = posts.filter((post) => !post.data.category?.trim());
+	if (uncategorizedPosts.length > 0) {
+		paths.push({
+			params: { category: "uncategorized" },
+			props: { category: i18n(I18nKey.uncategorized), posts: uncategorizedPosts },
+		});
+	}
+
+	return paths;
+}) satisfies GetStaticPaths;
+
+const { category, posts }: { category: string; posts: PostForList[] } = Astro.props;
+const title = `${category} - ${i18n(I18nKey.categories)}`;
+---
+
+<MainGridLayout title={title} description={title}>
+	<ArchiveList posts={posts} />
+</MainGridLayout>
