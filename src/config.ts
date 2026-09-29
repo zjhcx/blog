@@ -62,7 +62,7 @@ export const viewCountConfig: ViewCountConfig = {
 export const customHtmlConfig: CustomHtmlConfigType = {
 	top: "", // Inserted immediately after <body>
 	footer:
-		'<a href="https://icp.gov.moe/?keyword=20267892" target="_blank">萌ICP备20267892号</a>', // Appended below the built-in footer content
+		'<a href="https://icp.gov.moe/?keyword=20267892" target="_blank">萌ICP备20267892号</a><br><a href="https://lemail.asia/ticp.php?keyword=66666666" target="_blank">TICP备66666666号</a>', // Appended below the built-in footer content
 	bottom: "", // Inserted immediately before </body>
 };
 
