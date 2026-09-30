@@ -25,15 +25,8 @@ onMount(async () => {
 		if (!response.ok) return;
 
 		const payload: unknown = await response.json();
-		if (
-			typeof payload === "object" &&
-			payload !== null &&
-			"views" in payload &&
-			typeof payload.views === "number" &&
-			Number.isSafeInteger(payload.views) &&
-			payload.views >= 0
-		) {
-			count = payload.views;
+		if (typeof payload === "number" && Number.isSafeInteger(payload) && payload >= 0) {
+			count = payload;
 			if (shouldIncrement) sessionStorage.setItem(sessionKey, "1");
 		}
 	} catch {
