@@ -12,13 +12,14 @@ let count = initialCount;
 onMount(async () => {
 	if (source !== "api" || !apiUrl) return;
 
-	const endpoint = `${apiUrl.replace(/\/$/, "")}/${encodeURIComponent(slug)}`;
 	const sessionKey = `post-view:${slug}`;
 	const shouldIncrement = sessionStorage.getItem(sessionKey) !== "1";
+	const action = shouldIncrement ? "add" : "get";
+	const endpoint = `${apiUrl.replace(/\/$/, "")}/${action}?path=${encodeURIComponent(slug)}`;
 
 	try {
 		const response = await fetch(endpoint, {
-			method: shouldIncrement ? "POST" : "GET",
+			method: "GET",
 			headers: { Accept: "application/json" },
 		});
 		if (!response.ok) return;
