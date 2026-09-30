@@ -110,6 +110,13 @@ export const MomentsConfig: MomentsConfigType = {
 			homepage: "https://catp.cc",
 			avatar: "https://file.catp.cc/avatar.png",
 		},
+		{
+			name: "ahyun的爱孤岛",
+			url: "https://ahyun.org.cn/rss.xml",
+			homepage: "https://ahyun.org.cn",
+			avatar:
+				"https://img.ahyun.org.cn/ahyun%E7%9A%84%E7%88%B1%E5%AD%A4%E5%B2%9B%E4%B9%8B%E5%BE%80%E6%97%A5%E5%9B%9E%E5%BF%86/20260807174352286.png",
+		},
 	],
 };
 
@@ -240,6 +247,13 @@ export const linksConfig: FriendLink[] = [
 		avatar: "https://file.catp.cc/avatar.png",
 		desc: "说时依旧，有泪如倾",
 		descI18nKey: I18nKey.friendEdgeCatDescription,
+	},
+	{
+		name: "ahyun的爱孤岛",
+		url: "https://ahyun.org.cn",
+		avatar:
+			"https://img.ahyun.org.cn/ahyun%E7%9A%84%E7%88%B1%E5%AD%A4%E5%B2%9B%E4%B9%8B%E5%BE%80%E6%97%A5%E5%9B%9E%E5%BF%86/20260807174352286.png",
+		desc: "问灵十三载，候一不归人",
 	},
 	{
 		name: "電籽的灵质空间 | 小小电子xxdz 主站",
