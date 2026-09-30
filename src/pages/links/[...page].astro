@@ -1,11 +1,12 @@
 ---
-import LinksComponent from "@components/Links.astro";
 import Pagination from "@components/control/Pagination.astro";
-import { LinksPageConfig, linksConfig } from "@/config";
+import LinksComponent from "@components/Links.astro";
+import WalineComments from "@components/WalineComments.astro";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 import type { GetStaticPaths } from "astro";
+import { LinksPageConfig, linksConfig } from "@/config";
 
 export const getStaticPaths = (async ({ paginate }) => {
 	return paginate(linksConfig, {
@@ -31,4 +32,7 @@ const showPagination =
 			/>
 		)
 	}
+	<div class="mt-4">
+		<WalineComments path="/links/" />
+	</div>
 </MainGridLayout>
