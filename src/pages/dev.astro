@@ -122,7 +122,7 @@ const totalMemory = `${(os.totalmem() / 1024 ** 3).toFixed(1)} GiB`;
 ---
 
 <MainGridLayout title={text.title} description={text.description}>
-	<div class="dev-page">
+	<div class="dev-page text-90">
 		<header class="dev-hero card-base">
 			<div class="hero-icon"><Icon name="material-symbols:terminal-rounded" /></div>
 			<div>
@@ -198,12 +198,12 @@ const totalMemory = `${(os.totalmem() / 1024 ** 3).toFixed(1)} GiB`;
 	.info-card { padding: 1.25rem; }
 	.info-card h2 { display: flex; align-items: center; gap: .55rem; margin: 0 0 1rem; color: rgb(var(--primary)); font-size: 1.05rem; font-weight: 700; }
 	.info-card h2 :global(svg) { flex: 0 0 auto; font-size: 1.35rem; }
-	.info-card h2 span { margin-left: auto; color: var(--text-color); font-size: .75rem; font-weight: 500; opacity: .5; }
+	.info-card h2 span { margin-left: auto; color: inherit; font-size: .75rem; font-weight: 500; opacity: .6; }
 	dl { margin: 0; }
 	dl > div { display: grid; grid-template-columns: minmax(7rem, .7fr) minmax(0, 1.3fr); gap: 1rem; padding: .65rem 0; border-top: 1px solid var(--line-color); }
 	dl > div:first-child { padding-top: 0; border-top: 0; }
 	dl > div:last-child { padding-bottom: 0; }
-	dt { color: var(--text-color); opacity: .55; }
+	dt { color: inherit; opacity: .55; }
 	dd { min-width: 0; margin: 0; overflow-wrap: anywhere; text-align: right; }
 	code { font-family: "JetBrains Mono Variable", monospace; font-size: .86em; }
 	.dependency-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem 1.25rem; }
