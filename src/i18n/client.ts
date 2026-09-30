@@ -1,16 +1,7 @@
 import { type Writable, writable } from "svelte/store";
 import { siteConfig } from "@/config";
 import type I18nKey from "./i18nKey";
-import { en } from "./languages/en";
-import { es } from "./languages/es";
-import { id } from "./languages/id";
-import { ja } from "./languages/ja";
-import { ko } from "./languages/ko";
-import { th } from "./languages/th";
-import { tr } from "./languages/tr";
-import { vi } from "./languages/vi";
 import { zh_CN } from "./languages/zh_CN";
-import { zh_TW } from "./languages/zh_TW";
 import type { Translation } from "./translation";
 
 export const supportedLanguages = [
@@ -28,47 +19,74 @@ export const supportedLanguages = [
 
 export type SupportedLanguage = (typeof supportedLanguages)[number]["code"];
 
-const translations: Record<SupportedLanguage, Translation> = {
-	en,
-	es,
-	id,
-	ja,
-	ko,
-	th,
-	tr,
-	vi,
-	zh_CN,
-	zh_TW,
+const translationLoaders: Record<
+	Exclude<SupportedLanguage, "zh_CN">,
+	() => Promise<Translation>
+> = {
+	zh_TW: () => import("./languages/zh_TW").then((module) => module.zh_TW),
+	en: () => import("./languages/en").then((module) => module.en),
+	ja: () => import("./languages/ja").then((module) => module.ja),
+	ko: () => import("./languages/ko").then((module) => module.ko),
+	es: () => import("./languages/es").then((module) => module.es),
+	th: () => import("./languages/th").then((module) => module.th),
+	vi: () => import("./languages/vi").then((module) => module.vi),
+	tr: () => import("./languages/tr").then((module) => module.tr),
+	id: () => import("./languages/id").then((module) => module.id),
 };
+
+const translations = new Map<SupportedLanguage, Translation>([
+	["zh_CN", zh_CN],
+]);
+const pendingTranslations = new Map<SupportedLanguage, Promise<Translation>>();
+let languageRequestId = 0;
 
 function isSupportedLanguage(lang: string | null): lang is SupportedLanguage {
 	return supportedLanguages.some((item) => item.code === lang);
 }
 
-function getInitialLanguage(): SupportedLanguage {
+function getPreferredLanguage(): SupportedLanguage {
 	if (typeof window === "undefined") {
-		return siteConfig.lang;
+		return isSupportedLanguage(siteConfig.lang) ? siteConfig.lang : "zh_CN";
 	}
 
 	const stored = localStorage.getItem("language");
-	return isSupportedLanguage(stored) ? stored : siteConfig.lang;
+	return isSupportedLanguage(stored) ? stored : "zh_CN";
 }
 
 export function getCurrentLanguage(): SupportedLanguage {
-	return getInitialLanguage();
+	return getPreferredLanguage();
 }
 
 export const language: Writable<SupportedLanguage> =
-	writable<SupportedLanguage>(getInitialLanguage());
+	writable<SupportedLanguage>("zh_CN");
+export const languageLoading: Writable<boolean> = writable(false);
+
+async function loadTranslation(lang: SupportedLanguage): Promise<Translation> {
+	const cached = translations.get(lang);
+	if (cached) return cached;
+
+	const pending = pendingTranslations.get(lang);
+	if (pending) return pending;
+
+	const loader =
+		translationLoaders[lang as Exclude<SupportedLanguage, "zh_CN">];
+	const request = loader().then((translation) => {
+		translations.set(lang, translation);
+		pendingTranslations.delete(lang);
+		return translation;
+	});
+	pendingTranslations.set(lang, request);
+	return request;
+}
 
 export function translate(
 	key: I18nKey,
-	lang: SupportedLanguage = getInitialLanguage(),
+	lang: SupportedLanguage = "zh_CN",
 ): string {
-	return translations[lang]?.[key] || en[key];
+	return translations.get(lang)?.[key] ?? zh_CN[key];
 }
 
-export function applyLanguage(lang: SupportedLanguage): void {
+function updateDocument(lang: SupportedLanguage): void {
 	if (typeof document === "undefined") {
 		return;
 	}
@@ -92,8 +110,32 @@ export function applyLanguage(lang: SupportedLanguage): void {
 	}
 }
 
-export function setLanguage(lang: SupportedLanguage): void {
-	localStorage.setItem("language", lang);
-	language.set(lang);
-	applyLanguage(lang);
+export async function applyLanguage(lang: SupportedLanguage): Promise<boolean> {
+	if (typeof document === "undefined") return false;
+
+	const requestId = ++languageRequestId;
+	const loadingTimer = window.setTimeout(() => {
+		if (requestId === languageRequestId) languageLoading.set(true);
+	}, 180);
+	try {
+		await loadTranslation(lang);
+		if (requestId !== languageRequestId) return false;
+		language.set(lang);
+		updateDocument(lang);
+		return true;
+	} catch (error) {
+		console.error(`Failed to load the ${lang} translation`, error);
+		if (requestId === languageRequestId) {
+			language.set("zh_CN");
+			updateDocument("zh_CN");
+		}
+		return false;
+	} finally {
+		window.clearTimeout(loadingTimer);
+		if (requestId === languageRequestId) languageLoading.set(false);
+	}
+}
+
+export async function setLanguage(lang: SupportedLanguage): Promise<void> {
+	if (await applyLanguage(lang)) localStorage.setItem("language", lang);
 }
