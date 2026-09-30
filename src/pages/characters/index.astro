@@ -1,0 +1,39 @@
+---
+import { Icon } from "astro-icon/components";
+import I18nKey from "../../i18n/i18nKey";
+import { i18n } from "../../i18n/translation";
+import MainGridLayout from "../../layouts/MainGridLayout.astro";
+import { getAllCharacters, getNovelMetas } from "../../utils/novel-utils";
+
+const characters = await getAllCharacters();
+const novels = await getNovelMetas();
+const novelNames = new Map(novels.map((novel) => [novel.slug, novel.title]));
+const grouped = new Map<string, typeof characters>();
+for (const character of characters) grouped.set(character.data.novel, [...(grouped.get(character.data.novel) ?? []), character]);
+const roleOrder = { protagonist: 0, antagonist: 1, supporting: 2, minor: 3, guest: 4 } as const;
+---
+
+<MainGridLayout title={i18n(I18nKey.characters)} description={i18n(I18nKey.charactersDescription)}>
+	{characters.length === 0 ? (
+		<div class="card-base text-50 p-12 text-center">
+			<Icon name="material-symbols:groups-outline-rounded" class="mx-auto mb-4 text-5xl opacity-50" />
+			<p data-i18n-key={I18nKey.charactersEmpty}>{i18n(I18nKey.charactersEmpty)}</p>
+		</div>
+	) : (
+		<div class="flex flex-col gap-6">
+			{Array.from(grouped.entries()).map(([novelSlug, entries]) => (
+				<section class="card-base p-6">
+					<h1 class="text-75 mb-4 flex items-center gap-2 text-xl font-bold"><Icon name="material-symbols:auto-stories-rounded" class="text-2xl text-[var(--primary)]" />{novelNames.get(novelSlug) ?? novelSlug}</h1>
+					<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+						{[...entries].sort((a, b) => (roleOrder[a.data.role ?? "guest"] ?? 9) - (roleOrder[b.data.role ?? "guest"] ?? 9)).map((character) => (
+							<article class="flex items-center gap-3 rounded-xl bg-[var(--btn-plain-bg-hover)] p-3">
+								{character.data.avatar ? <img src={character.data.avatar} alt={character.data.name} width="48" height="48" loading="lazy" referrerpolicy="no-referrer" class="h-12 w-12 shrink-0 rounded-full object-cover" /> : <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[var(--btn-regular-bg)] text-lg font-bold text-[var(--primary)]">{character.data.name[0]}</div>}
+								<div class="min-w-0"><h2 class="text-90 font-medium">{character.data.name}{character.data.role === "protagonist" && <Icon name="material-symbols:star-rounded" class="ml-1 inline text-sm text-[var(--primary)]" />}</h2>{character.data.alias.length > 0 && <p class="text-50 truncate text-xs">{character.data.alias.join("、")}</p>}{character.data.description && <p class="text-50 mt-1 line-clamp-2 text-xs">{character.data.description}</p>}</div>
+							</article>
+						))}
+					</div>
+				</section>
+			))}
+		</div>
+	)}
+</MainGridLayout>

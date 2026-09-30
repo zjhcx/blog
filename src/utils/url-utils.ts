@@ -20,6 +20,16 @@ export function getPostUrlBySlug(slug: string): string {
 	return url(`/posts/${slug}/`);
 }
 
+export function getNovelUrl(slug: string): string {
+	return url(`/novels/${slug}/`);
+}
+
+export function getChapterUrl(novelSlug: string, chapterId: string): string {
+	const cleanId = chapterId.replace(/\.mdx?$/, "");
+	const chapterSlug = cleanId.replace(`${novelSlug}/`, "");
+	return url(`/novels/${novelSlug}/${chapterSlug}/`);
+}
+
 export function getTagUrl(tag: string): string {
 	if (!tag) return url("/archive/");
 	return url(`/tag/${encodeURIComponent(tag.trim())}/`);
