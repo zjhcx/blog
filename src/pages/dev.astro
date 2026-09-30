@@ -1,0 +1,229 @@
+---
+import { execFileSync } from "node:child_process";
+import os from "node:os";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { Icon } from "astro-icon/components";
+import { siteConfig } from "@/config";
+import packageJson from "../../package.json";
+import packageLock from "../../package-lock.json";
+
+type LockPackage = { version?: string };
+type Commit = {
+	hash: string;
+	shortHash: string;
+	message: string;
+	date: string;
+};
+
+const isChinese = siteConfig.lang.toLowerCase().startsWith("zh");
+const text = isChinese
+	? {
+			title: "开发信息",
+			description: "当前站点的构建环境、版本与最近提交日志",
+			environment: "构建环境",
+			dependencies: "依赖版本",
+			system: "系统信息",
+			version: "版本信息",
+			logs: "提交日志",
+			buildTime: "构建时间",
+			packageManager: "包管理器",
+			platform: "平台",
+			architecture: "架构",
+			release: "系统版本",
+			cpus: "逻辑处理器",
+			memory: "总内存",
+			commitMessage: "提交消息",
+			commitHash: "提交哈希",
+			unavailable: "不可用",
+			commits: "条最近提交",
+		}
+	: {
+			title: "Development information",
+			description:
+				"Build environment, version, and recent commit log for this site",
+			environment: "Build environment",
+			dependencies: "Dependency versions",
+			system: "System information",
+			version: "Version information",
+			logs: "Commit log",
+			buildTime: "Build time",
+			packageManager: "Package manager",
+			platform: "Platform",
+			architecture: "Architecture",
+			release: "System release",
+			cpus: "Logical processors",
+			memory: "Total memory",
+			commitMessage: "Commit message",
+			commitHash: "Commit hash",
+			unavailable: "Unavailable",
+			commits: "recent commits",
+		};
+
+function run(command: string, args: string[]): string {
+	try {
+		return execFileSync(command, args, {
+			cwd: process.cwd(),
+			encoding: "utf8",
+			stdio: ["ignore", "pipe", "ignore"],
+		}).trim();
+	} catch {
+		return "";
+	}
+}
+
+const lockPackages =
+	(packageLock as { packages?: Record<string, LockPackage> }).packages ?? {};
+const dependencyEntries = Object.entries({
+	...packageJson.dependencies,
+	...packageJson.devDependencies,
+})
+	.map(([name, requested]) => ({
+		name,
+		version: lockPackages[`node_modules/${name}`]?.version ?? requested,
+	}))
+	.sort((left, right) => left.name.localeCompare(right.name));
+
+const npmVersion =
+	process.env.npm_config_user_agent?.match(/(?:^|\s)npm\/([^\s]+)/)?.[1] ??
+	run("npm", ["--version"]);
+const packageManager = npmVersion ? `npm ${npmVersion}` : "npm";
+const buildDate = new Date();
+const buildTime = new Intl.DateTimeFormat(siteConfig.lang.replace("_", "-"), {
+	dateStyle: "full",
+	timeStyle: "long",
+}).format(buildDate);
+
+const gitLog = run("git", [
+	"log",
+	"-10",
+	"--date=iso-strict",
+	"--pretty=format:%H%x1f%h%x1f%s%x1f%ad%x1e",
+]);
+const commits: Commit[] = gitLog
+	.split("\x1e")
+	.map((entry) => entry.trim())
+	.filter(Boolean)
+	.map((entry) => {
+		const [hash, shortHash, message, date] = entry.split("\x1f");
+		return { hash, shortHash, message, date };
+	});
+
+const currentCommit = commits[0];
+const commitHash =
+	currentCommit?.hash ||
+	process.env.VERCEL_GIT_COMMIT_SHA ||
+	process.env.CF_PAGES_COMMIT_SHA ||
+	text.unavailable;
+const commitMessage =
+	currentCommit?.message ||
+	process.env.VERCEL_GIT_COMMIT_MESSAGE ||
+	text.unavailable;
+const totalMemory = `${(os.totalmem() / 1024 ** 3).toFixed(1)} GiB`;
+---
+
+<MainGridLayout title={text.title} description={text.description}>
+	<div class="dev-page">
+		<header class="dev-hero card-base">
+			<div class="hero-icon"><Icon name="material-symbols:terminal-rounded" /></div>
+			<div>
+				<h1 class="text-90">{text.title}</h1>
+				<p class="text-50">{text.description}</p>
+			</div>
+		</header>
+
+		<div class="summary-grid">
+			<section class="info-card card-base">
+				<h2><Icon name="material-symbols:deployed-code-outline-rounded" />{text.environment}</h2>
+				<dl>
+					<div><dt>Node.js</dt><dd>{process.version}</dd></div>
+					<div><dt>{text.packageManager}</dt><dd>{packageManager}</dd></div>
+					<div><dt>Astro</dt><dd>{lockPackages["node_modules/astro"]?.version ?? packageJson.dependencies.astro}</dd></div>
+					<div><dt>{text.buildTime}</dt><dd><time datetime={buildDate.toISOString()}>{buildTime}</time></dd></div>
+				</dl>
+			</section>
+
+			<section class="info-card card-base">
+				<h2><Icon name="material-symbols:memory-rounded" />{text.system}</h2>
+				<dl>
+					<div><dt>{text.platform}</dt><dd>{os.platform()}</dd></div>
+					<div><dt>{text.architecture}</dt><dd>{os.arch()}</dd></div>
+					<div><dt>{text.release}</dt><dd>{os.release()}</dd></div>
+					<div><dt>{text.cpus}</dt><dd>{os.cpus().length}</dd></div>
+					<div><dt>{text.memory}</dt><dd>{totalMemory}</dd></div>
+				</dl>
+			</section>
+		</div>
+
+		<section class="info-card version-card card-base">
+			<h2><Icon name="material-symbols:commit-rounded" />{text.version}</h2>
+			<dl>
+				<div><dt>{text.commitMessage}</dt><dd>{commitMessage}</dd></div>
+				<div><dt>{text.commitHash}</dt><dd><code title={commitHash}>{commitHash}</code></dd></div>
+			</dl>
+		</section>
+
+		<section class="info-card dependencies-card card-base">
+			<h2><Icon name="material-symbols:account-tree-outline-rounded" />{text.dependencies}<span>{dependencyEntries.length}</span></h2>
+			<div class="dependency-list">
+				{dependencyEntries.map((dependency) => <div><code>{dependency.name}</code><span>{dependency.version}</span></div>)}
+			</div>
+		</section>
+
+		<section class="info-card logs-card card-base">
+			<h2><Icon name="material-symbols:history-rounded" />{text.logs}<span>{commits.length} {text.commits}</span></h2>
+			{commits.length > 0 ? (
+				<ol class="commit-list">
+					{commits.map((commit) => (
+						<li>
+							<div class="commit-marker"></div>
+							<div class="commit-content">
+								<p class="text-90">{commit.message}</p>
+								<div class="commit-meta text-50"><code title={commit.hash}>{commit.shortHash}</code><time datetime={commit.date}>{new Intl.DateTimeFormat(siteConfig.lang.replace("_", "-"), { dateStyle: "medium", timeStyle: "short" }).format(new Date(commit.date))}</time></div>
+							</div>
+						</li>
+					))}
+				</ol>
+			) : <p class="empty text-50">{text.unavailable}</p>}
+		</section>
+	</div>
+</MainGridLayout>
+
+<style>
+	.dev-page { display: flex; flex-direction: column; gap: 1rem; }
+	.dev-hero { display: flex; align-items: center; gap: 1rem; padding: 1.5rem; }
+	.hero-icon { display: grid; flex: 0 0 auto; width: 3.5rem; height: 3.5rem; place-items: center; border-radius: 1rem; background: rgba(var(--primary), .14); color: rgb(var(--primary)); font-size: 1.8rem; }
+	.dev-hero h1 { margin: 0 0 .35rem; font-size: 1.8rem; font-weight: 700; }
+	.dev-hero p { margin: 0; line-height: 1.5; }
+	.summary-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+	.info-card { padding: 1.25rem; }
+	.info-card h2 { display: flex; align-items: center; gap: .55rem; margin: 0 0 1rem; color: rgb(var(--primary)); font-size: 1.05rem; font-weight: 700; }
+	.info-card h2 :global(svg) { flex: 0 0 auto; font-size: 1.35rem; }
+	.info-card h2 span { margin-left: auto; color: var(--text-color); font-size: .75rem; font-weight: 500; opacity: .5; }
+	dl { margin: 0; }
+	dl > div { display: grid; grid-template-columns: minmax(7rem, .7fr) minmax(0, 1.3fr); gap: 1rem; padding: .65rem 0; border-top: 1px solid var(--line-color); }
+	dl > div:first-child { padding-top: 0; border-top: 0; }
+	dl > div:last-child { padding-bottom: 0; }
+	dt { color: var(--text-color); opacity: .55; }
+	dd { min-width: 0; margin: 0; overflow-wrap: anywhere; text-align: right; }
+	code { font-family: "JetBrains Mono Variable", monospace; font-size: .86em; }
+	.dependency-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem 1.25rem; }
+	.dependency-list > div { display: flex; justify-content: space-between; gap: .75rem; min-width: 0; padding: .55rem .7rem; border-radius: .55rem; background: rgba(var(--primary), .06); }
+	.dependency-list code { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+	.dependency-list span { flex: 0 0 auto; color: rgb(var(--primary)); font-family: "JetBrains Mono Variable", monospace; font-size: .78rem; }
+	.commit-list { margin: 0; padding: 0; list-style: none; }
+	.commit-list li { display: grid; grid-template-columns: 1rem minmax(0, 1fr); gap: .65rem; }
+	.commit-marker { position: relative; width: .6rem; height: .6rem; margin-top: .42rem; border: 2px solid rgb(var(--primary)); border-radius: 50%; }
+	.commit-marker::after { position: absolute; top: .65rem; bottom: -3rem; left: 50%; width: 1px; background: rgba(var(--primary), .25); content: ""; }
+	.commit-list li:last-child .commit-marker::after { display: none; }
+	.commit-content { padding-bottom: 1rem; }
+	.commit-content p { margin: 0 0 .35rem; line-height: 1.45; }
+	.commit-meta { display: flex; flex-wrap: wrap; gap: .65rem; font-size: .78rem; }
+	.commit-meta code { padding: .08rem .35rem; border-radius: .3rem; background: rgba(var(--primary), .1); color: rgb(var(--primary)); }
+	.empty { margin: 0; }
+	@media (max-width: 700px) {
+		.summary-grid, .dependency-list { grid-template-columns: 1fr; }
+		.dev-hero, .info-card { padding: 1rem; }
+		dl > div { grid-template-columns: 1fr; gap: .2rem; }
+		dd { text-align: left; }
+	}
+</style>
