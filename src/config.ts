@@ -54,8 +54,8 @@ export const siteConfig: SiteConfig = {
 };
 
 export const viewCountConfig: ViewCountConfig = {
-	source: "json",
-	apiUrl: "",
+	source: "api",
+	apiUrl: "https://bcnt.zjh.li",
 };
 
 // Trusted HTML only. The strings are rendered as-is and are not sanitized.
