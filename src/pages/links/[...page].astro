@@ -21,18 +21,26 @@ const showPagination =
 ---
 
 <MainGridLayout title={i18n(I18nKey.links)} description={i18n(I18nKey.linksDescription)}>
-	<LinksComponent items={page.data} />
-	{
-		showPagination && (
-			<Pagination
-				class="mx-auto mt-4 onload-animation"
-				page={page}
-				basePath="/links/"
-				style={`animation-delay: calc(var(--content-delay) + ${page.data.length * 50}ms)`}
-			/>
-		)
-	}
-	<div class="mt-4">
-		<WalineComments path="/links/" />
+	<div class="comments-page">
+		<LinksComponent items={page.data} />
+		{
+			showPagination && (
+				<Pagination
+					class="mx-auto mt-4 onload-animation"
+					page={page}
+					basePath="/links/"
+					style={`animation-delay: calc(var(--content-delay) + ${page.data.length * 50}ms)`}
+				/>
+			)
+		}
+		<div class="mt-4">
+			<WalineComments path="/links/" />
+		</div>
 	</div>
 </MainGridLayout>
+
+<style is:global>
+	#main-grid:has(.comments-page) .footer > .card-base {
+		margin-top: 1rem;
+	}
+</style>

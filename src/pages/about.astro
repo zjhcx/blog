@@ -16,12 +16,20 @@ if (!aboutPost) {
 const { Content } = await render(aboutPost);
 ---
 <MainGridLayout title={i18n(I18nKey.about)} description={i18n(I18nKey.about)}>
-    <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32 mb-4">
-        <div class="card-base z-10 px-9 py-6 relative w-full ">
-            <Markdown class="mt-2">
-                <Content />
-            </Markdown>
-        </div>
-    </div>
-	<WalineComments path={Astro.url.pathname} />
+	<div class="comments-page">
+		<div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32 mb-4">
+			<div class="card-base z-10 px-9 py-6 relative w-full ">
+				<Markdown class="mt-2">
+					<Content />
+				</Markdown>
+			</div>
+		</div>
+		<WalineComments path={Astro.url.pathname} />
+	</div>
 </MainGridLayout>
+
+<style is:global>
+	#main-grid:has(.comments-page) .footer > .card-base {
+		margin-top: 1rem;
+	}
+</style>
