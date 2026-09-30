@@ -4,15 +4,17 @@ import Icon from "@iconify/svelte";
 import { onMount } from "svelte";
 import {
 	applyLanguage,
+	getCurrentLanguage,
 	language,
+	languageLoading,
+	type SupportedLanguage,
 	setLanguage,
 	supportedLanguages,
 	translate,
-	type SupportedLanguage,
 } from "@/i18n/client";
 
 onMount(() => {
-	applyLanguage($language);
+	void applyLanguage(getCurrentLanguage());
 
 	const handlePointerDown = (event: PointerEvent) => {
 		const target = event.target;
@@ -50,7 +52,7 @@ function togglePanel() {
 }
 
 function chooseLanguage(lang: SupportedLanguage) {
-	setLanguage(lang);
+	void setLanguage(lang);
 	hidePanel();
 }
 </script>
@@ -89,3 +91,68 @@ function chooseLanguage(lang: SupportedLanguage) {
 		</div>
 	</div>
 </div>
+
+{#if $languageLoading}
+	<div class="language-loading text-90" role="alert" aria-live="assertive">
+		<div class="language-loading__dialog card-base">
+			<Icon icon="material-symbols:translate-rounded" class="language-loading__icon"></Icon>
+			<div class="language-loading__spinner" aria-hidden="true"></div>
+			<p data-i18n-key={I18nKey.languageLoading}>
+				{translate(I18nKey.languageLoading, $language)}
+			</p>
+		</div>
+	</div>
+{/if}
+
+<style>
+	.language-loading {
+		position: fixed;
+		inset: 0;
+		z-index: 9999;
+		display: grid;
+		pointer-events: auto;
+		place-items: center;
+		padding: 1rem;
+		background: rgb(0 0 0 / 45%);
+		backdrop-filter: blur(8px);
+	}
+
+	.language-loading__dialog {
+		display: grid;
+		grid-template-columns: auto auto;
+		align-items: center;
+		gap: 0.75rem 1rem;
+		min-width: min(20rem, 90vw);
+		padding: 1.25rem 1.5rem;
+	}
+
+	.language-loading__icon {
+		font-size: 1.5rem;
+		color: var(--primary);
+	}
+
+	.language-loading__spinner {
+		justify-self: end;
+		width: 1.25rem;
+		height: 1.25rem;
+		border: 2px solid currentColor;
+		border-right-color: transparent;
+		border-radius: 50%;
+		opacity: 0.65;
+		animation: language-loading-spin 0.7s linear infinite;
+	}
+
+	.language-loading__dialog p {
+		grid-column: 1 / -1;
+		margin: 0;
+		text-align: center;
+	}
+
+	@keyframes language-loading-spin {
+		to { transform: rotate(360deg); }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.language-loading__spinner { animation-duration: 1.5s; }
+	}
+</style>

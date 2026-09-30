@@ -4,6 +4,8 @@ import os from "node:os";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 import { Icon } from "astro-icon/components";
 import { siteConfig } from "@/config";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
 import packageJson from "../../package.json";
 import packageLock from "../../package-lock.json";
 
@@ -14,50 +16,6 @@ type Commit = {
 	message: string;
 	date: string;
 };
-
-const isChinese = siteConfig.lang.toLowerCase().startsWith("zh");
-const text = isChinese
-	? {
-			title: "开发信息",
-			description: "当前站点的构建环境、版本与最近提交日志",
-			environment: "构建环境",
-			dependencies: "依赖版本",
-			system: "系统信息",
-			version: "版本信息",
-			logs: "提交日志",
-			buildTime: "构建时间",
-			packageManager: "包管理器",
-			platform: "平台",
-			architecture: "架构",
-			release: "系统版本",
-			cpus: "逻辑处理器",
-			memory: "总内存",
-			commitMessage: "提交消息",
-			commitHash: "提交哈希",
-			unavailable: "不可用",
-			commits: "条最近提交",
-		}
-	: {
-			title: "Development information",
-			description:
-				"Build environment, version, and recent commit log for this site",
-			environment: "Build environment",
-			dependencies: "Dependency versions",
-			system: "System information",
-			version: "Version information",
-			logs: "Commit log",
-			buildTime: "Build time",
-			packageManager: "Package manager",
-			platform: "Platform",
-			architecture: "Architecture",
-			release: "System release",
-			cpus: "Logical processors",
-			memory: "Total memory",
-			commitMessage: "Commit message",
-			commitHash: "Commit hash",
-			unavailable: "Unavailable",
-			commits: "recent commits",
-		};
 
 function run(command: string, args: string[]): string {
 	try {
@@ -113,64 +71,64 @@ const commitHash =
 	currentCommit?.hash ||
 	process.env.VERCEL_GIT_COMMIT_SHA ||
 	process.env.CF_PAGES_COMMIT_SHA ||
-	text.unavailable;
+	i18n(I18nKey.devUnavailable);
 const commitMessage =
 	currentCommit?.message ||
 	process.env.VERCEL_GIT_COMMIT_MESSAGE ||
-	text.unavailable;
+	i18n(I18nKey.devUnavailable);
 const totalMemory = `${(os.totalmem() / 1024 ** 3).toFixed(1)} GiB`;
 ---
 
-<MainGridLayout title={text.title} description={text.description}>
+<MainGridLayout title={i18n(I18nKey.devTitle)} description={i18n(I18nKey.devDescription)}>
 	<div class="dev-page text-90">
 		<header class="dev-hero card-base">
 			<div class="hero-icon"><Icon name="material-symbols:terminal-rounded" /></div>
 			<div>
-				<h1 class="text-90">{text.title}</h1>
-				<p class="text-50">{text.description}</p>
+				<h1 class="text-90" data-i18n-key={I18nKey.devTitle}>{i18n(I18nKey.devTitle)}</h1>
+				<p class="text-50" data-i18n-key={I18nKey.devDescription}>{i18n(I18nKey.devDescription)}</p>
 			</div>
 		</header>
 
 		<div class="summary-grid">
 			<section class="info-card card-base">
-				<h2><Icon name="material-symbols:deployed-code-outline-rounded" />{text.environment}</h2>
+				<h2><Icon name="material-symbols:deployed-code-outline-rounded" /><span class="section-title" data-i18n-key={I18nKey.devEnvironment}>{i18n(I18nKey.devEnvironment)}</span></h2>
 				<dl>
 					<div><dt>Node.js</dt><dd>{process.version}</dd></div>
-					<div><dt>{text.packageManager}</dt><dd>{packageManager}</dd></div>
+					<div><dt data-i18n-key={I18nKey.devPackageManager}>{i18n(I18nKey.devPackageManager)}</dt><dd>{packageManager}</dd></div>
 					<div><dt>Astro</dt><dd>{lockPackages["node_modules/astro"]?.version ?? packageJson.dependencies.astro}</dd></div>
-					<div><dt>{text.buildTime}</dt><dd><time datetime={buildDate.toISOString()}>{buildTime}</time></dd></div>
+					<div><dt data-i18n-key={I18nKey.devBuildTime}>{i18n(I18nKey.devBuildTime)}</dt><dd><time datetime={buildDate.toISOString()}>{buildTime}</time></dd></div>
 				</dl>
 			</section>
 
 			<section class="info-card card-base">
-				<h2><Icon name="material-symbols:memory-rounded" />{text.system}</h2>
+				<h2><Icon name="material-symbols:memory-rounded" /><span class="section-title" data-i18n-key={I18nKey.devSystem}>{i18n(I18nKey.devSystem)}</span></h2>
 				<dl>
-					<div><dt>{text.platform}</dt><dd>{os.platform()}</dd></div>
-					<div><dt>{text.architecture}</dt><dd>{os.arch()}</dd></div>
-					<div><dt>{text.release}</dt><dd>{os.release()}</dd></div>
-					<div><dt>{text.cpus}</dt><dd>{os.cpus().length}</dd></div>
-					<div><dt>{text.memory}</dt><dd>{totalMemory}</dd></div>
+					<div><dt data-i18n-key={I18nKey.devPlatform}>{i18n(I18nKey.devPlatform)}</dt><dd>{os.platform()}</dd></div>
+					<div><dt data-i18n-key={I18nKey.devArchitecture}>{i18n(I18nKey.devArchitecture)}</dt><dd>{os.arch()}</dd></div>
+					<div><dt data-i18n-key={I18nKey.devRelease}>{i18n(I18nKey.devRelease)}</dt><dd>{os.release()}</dd></div>
+					<div><dt data-i18n-key={I18nKey.devCpus}>{i18n(I18nKey.devCpus)}</dt><dd>{os.cpus().length}</dd></div>
+					<div><dt data-i18n-key={I18nKey.devMemory}>{i18n(I18nKey.devMemory)}</dt><dd>{totalMemory}</dd></div>
 				</dl>
 			</section>
 		</div>
 
 		<section class="info-card version-card card-base">
-			<h2><Icon name="material-symbols:commit-rounded" />{text.version}</h2>
+			<h2><Icon name="material-symbols:commit-rounded" /><span class="section-title" data-i18n-key={I18nKey.devVersion}>{i18n(I18nKey.devVersion)}</span></h2>
 			<dl>
-				<div><dt>{text.commitMessage}</dt><dd>{commitMessage}</dd></div>
-				<div><dt>{text.commitHash}</dt><dd><code title={commitHash}>{commitHash}</code></dd></div>
+				<div><dt data-i18n-key={I18nKey.devCommitMessage}>{i18n(I18nKey.devCommitMessage)}</dt><dd>{commitMessage}</dd></div>
+				<div><dt data-i18n-key={I18nKey.devCommitHash}>{i18n(I18nKey.devCommitHash)}</dt><dd><code title={commitHash}>{commitHash}</code></dd></div>
 			</dl>
 		</section>
 
 		<section class="info-card dependencies-card card-base">
-			<h2><Icon name="material-symbols:account-tree-outline-rounded" />{text.dependencies}<span>{dependencyEntries.length}</span></h2>
+			<h2><Icon name="material-symbols:account-tree-outline-rounded" /><span class="section-title" data-i18n-key={I18nKey.devDependencies}>{i18n(I18nKey.devDependencies)}</span><span class="section-count">{dependencyEntries.length}</span></h2>
 			<div class="dependency-list">
 				{dependencyEntries.map((dependency) => <div><code>{dependency.name}</code><span>{dependency.version}</span></div>)}
 			</div>
 		</section>
 
 		<section class="info-card logs-card card-base">
-			<h2><Icon name="material-symbols:history-rounded" />{text.logs}<span>{commits.length} {text.commits}</span></h2>
+			<h2><Icon name="material-symbols:history-rounded" /><span class="section-title" data-i18n-key={I18nKey.devLogs}>{i18n(I18nKey.devLogs)}</span><span class="section-count">{commits.length} <span data-i18n-key={I18nKey.devRecentCommits}>{i18n(I18nKey.devRecentCommits)}</span></span></h2>
 			{commits.length > 0 ? (
 				<ol class="commit-list">
 					{commits.map((commit) => (
@@ -183,7 +141,7 @@ const totalMemory = `${(os.totalmem() / 1024 ** 3).toFixed(1)} GiB`;
 						</li>
 					))}
 				</ol>
-			) : <p class="empty text-50">{text.unavailable}</p>}
+			) : <p class="empty text-50" data-i18n-key={I18nKey.devUnavailable}>{i18n(I18nKey.devUnavailable)}</p>}
 		</section>
 	</div>
 </MainGridLayout>
@@ -198,7 +156,8 @@ const totalMemory = `${(os.totalmem() / 1024 ** 3).toFixed(1)} GiB`;
 	.info-card { padding: 1.25rem; }
 	.info-card h2 { display: flex; align-items: center; gap: .55rem; margin: 0 0 1rem; color: rgb(var(--primary)); font-size: 1.05rem; font-weight: 700; }
 	.info-card h2 :global(svg) { flex: 0 0 auto; font-size: 1.35rem; }
-	.info-card h2 span { margin-left: auto; color: inherit; font-size: .75rem; font-weight: 500; opacity: .6; }
+	.info-card h2 .section-title { color: inherit; }
+	.info-card h2 .section-count { margin-left: auto; color: inherit; font-size: .75rem; font-weight: 500; opacity: .6; }
 	dl { margin: 0; }
 	dl > div { display: grid; grid-template-columns: minmax(7rem, .7fr) minmax(0, 1.3fr); gap: 1rem; padding: .65rem 0; border-top: 1px solid var(--line-color); }
 	dl > div:first-child { padding-top: 0; border-top: 0; }
