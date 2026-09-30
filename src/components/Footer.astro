@@ -1,28 +1,62 @@
 ---
-
 import { customHtmlConfig, profileConfig } from "../config";
 import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
+import { getSiteStats } from "../utils/site-stats";
 import { url } from "../utils/url-utils";
 
 const currentYear = new Date().getFullYear();
+const stats = await getSiteStats();
 ---
 
-<!--<div class="border-t border-[var(&#45;&#45;primary)] mx-16 border-dashed py-8 max-w-[var(&#45;&#45;page-width)] flex flex-col items-center justify-center px-6">-->
-<div class="transition border-t border-black/10 dark:border-white/15 my-10 border-dashed mx-32"></div>
-<!--<div class="transition bg-[oklch(92%_0.01_var(&#45;&#45;hue))] dark:bg-black rounded-2xl py-8 mt-4 mb-8 flex flex-col items-center justify-center px-6">-->
-<div class="transition border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6">
-    <div class="transition text-50 text-sm text-center">
-        &copy; <span id="copyright-year">{currentYear}</span> {profileConfig.name}. <span data-i18n-key={I18nKey.allRightsReserved}>{i18n(I18nKey.allRightsReserved)}</span> /
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('rss.xml')}>RSS</a> /
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('sitemap.xml')}>Sitemap</a><br>
-        <span data-i18n-key={I18nKey.poweredBy}>{i18n(I18nKey.poweredBy)}</span>
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://astro.build">Astro</a> &
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/saicaca/fuwari">Fuwari</a><br>
-        <span data-i18n-key={I18nKey.siteSource}>{i18n(I18nKey.siteSource)}</span>
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/zjhcx/blog">GitHub</a>
-		{customHtmlConfig.footer && (
-			<div class="mt-2" set:html={customHtmlConfig.footer}></div>
-		)}
-    </div>
+<div class="card-base my-8 flex flex-col items-center justify-center px-6 py-6 text-center">
+	<div class="text-75 space-y-2 text-sm leading-6">
+		<p>
+			<span data-i18n-key={I18nKey.footerBuiltWith}>{i18n(I18nKey.footerBuiltWith)}</span>{" "}
+			<a class="link font-medium text-[var(--primary)]" target="_blank" rel="noopener" href="https://astro.build">Astro</a>
+			<span aria-hidden="true"> · </span>
+			<a class="link font-medium text-[var(--primary)]" target="_blank" rel="noopener" href="https://github.com/saicaca/fuwari">Fuwari</a>
+		</p>
+		<p>
+			<span data-i18n-key={I18nKey.footerLicense}>{i18n(I18nKey.footerLicense)}</span>{" "}
+			<a class="link font-medium text-[var(--primary)]" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+		</p>
+		<p>&copy; {stats.startedAt.getFullYear()}–{currentYear} {profileConfig.name}</p>
+		<p class="font-semibold text-90" data-i18n-key={I18nKey.footerThanks}>{i18n(I18nKey.footerThanks)}</p>
+		<site-runtime class="text-50 block tabular-nums" data-start-time={stats.startedAt.toISOString()} data-day-label={i18n(I18nKey.days)} data-hour-label={i18n(I18nKey.hours)} data-minute-label={i18n(I18nKey.minutes)} data-second-label={i18n(I18nKey.seconds)}></site-runtime>
+		<p class="flex flex-wrap justify-center gap-x-3">
+			<a class="link font-medium text-[var(--primary)]" href={url("rss.xml")}>RSS</a>
+			<a class="link font-medium text-[var(--primary)]" href={url("sitemap.xml")}>Sitemap</a>
+			<a class="link font-medium text-[var(--primary)]" target="_blank" rel="noopener" href="https://github.com/zjhcx/blog">GitHub</a>
+		</p>
+		{customHtmlConfig.footer && <div class="pt-1" set:html={customHtmlConfig.footer}></div>}
+	</div>
 </div>
+
+<script>
+	class SiteRuntime extends HTMLElement {
+		private timer?: number;
+
+		connectedCallback() {
+			this.update();
+			this.timer = window.setInterval(() => this.update(), 1000);
+		}
+
+		disconnectedCallback() {
+			if (this.timer) window.clearInterval(this.timer);
+		}
+
+		private update() {
+			if (!this.dataset.startTime) return;
+			const elapsed = Math.max(0, Date.now() - Date.parse(this.dataset.startTime));
+			const totalSeconds = Math.floor(elapsed / 1000);
+			const days = Math.floor(totalSeconds / 86_400);
+			const hours = Math.floor((totalSeconds % 86_400) / 3_600);
+			const minutes = Math.floor((totalSeconds % 3_600) / 60);
+			const seconds = totalSeconds % 60;
+			this.textContent = `${days} ${this.dataset.dayLabel} ${hours} ${this.dataset.hourLabel} ${minutes} ${this.dataset.minuteLabel} ${seconds} ${this.dataset.secondLabel}`;
+		}
+	}
+
+	if (!customElements.get("site-runtime")) customElements.define("site-runtime", SiteRuntime);
+</script>

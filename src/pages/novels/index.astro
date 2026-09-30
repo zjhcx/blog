@@ -1,0 +1,57 @@
+---
+import { Icon } from "astro-icon/components";
+import I18nKey from "../../i18n/i18nKey";
+import { i18n } from "../../i18n/translation";
+import MainGridLayout from "../../layouts/MainGridLayout.astro";
+import { getNovelMetas, getSeriesList } from "../../utils/novel-utils";
+import { getNovelUrl, url } from "../../utils/url-utils";
+
+const seriesList = getSeriesList(await getNovelMetas());
+const hasNovels = seriesList.some((series) => series.novels.length > 0);
+---
+
+<MainGridLayout title={i18n(I18nKey.novels)} description={i18n(I18nKey.novelsDescription)}>
+	<div class="flex flex-col gap-6">
+		<div class="card-base flex items-center justify-between gap-4 p-6">
+			<div>
+				<h1 class="text-90 text-3xl font-bold" data-i18n-key={I18nKey.novels}>{i18n(I18nKey.novels)}</h1>
+				<p class="text-50 mt-2" data-i18n-key={I18nKey.novelsDescription}>{i18n(I18nKey.novelsDescription)}</p>
+			</div>
+			<a href={url("/characters/")} class="btn-regular shrink-0 gap-2 rounded-xl px-4 py-3 font-medium">
+				<Icon name="material-symbols:groups-rounded" />
+				<span data-i18n-key={I18nKey.characters}>{i18n(I18nKey.characters)}</span>
+			</a>
+		</div>
+
+		{hasNovels && seriesList.map((series) => (
+			<section class="card-base p-6">
+				<h2 class="text-75 mb-4 flex items-center gap-2 text-xl font-bold">
+					<Icon name="material-symbols:book-2-rounded" class="text-2xl text-[var(--primary)]" />
+					{series.name}
+				</h2>
+				<div class="flex flex-col gap-2">
+					{series.novels.map((novel) => (
+						<a href={getNovelUrl(novel.slug)} class="flex items-center gap-4 rounded-xl p-4 transition hover:bg-[var(--btn-plain-bg-hover)] active:scale-[0.98]">
+							<div class="min-w-0 flex-1">
+								<h3 class="text-90 text-lg font-bold">{novel.title}</h3>
+								{novel.description && <p class="text-50 mt-1 line-clamp-2 text-sm">{novel.description}</p>}
+								<div class="text-50 mt-2 flex items-center gap-3 text-xs">
+									<span class="flex items-center gap-1"><Icon name="material-symbols:notes-rounded" />{novel.wordCount.toLocaleString()} {i18n(I18nKey.totalWords)}</span>
+									<span class="flex items-center gap-1"><Icon name="material-symbols:library-books-rounded" />{novel.chapterCount} {i18n(I18nKey.chapters)}</span>
+								</div>
+							</div>
+							<Icon name="material-symbols:chevron-right-rounded" class="text-2xl text-[var(--primary)]" />
+						</a>
+					))}
+				</div>
+			</section>
+		))}
+
+		{!hasNovels && (
+			<div class="card-base text-50 p-12 text-center">
+				<Icon name="material-symbols:auto-stories-outline-rounded" class="mx-auto mb-4 text-5xl opacity-50" />
+				<p data-i18n-key={I18nKey.novelsEmpty}>{i18n(I18nKey.novelsEmpty)}</p>
+			</div>
+		)}
+	</div>
+</MainGridLayout>

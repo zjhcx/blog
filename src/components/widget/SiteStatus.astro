@@ -1,0 +1,32 @@
+---
+import I18nKey from "../../i18n/i18nKey";
+import { i18n } from "../../i18n/translation";
+import { formatCompactNumber, formatDate, getSiteStats } from "../../utils/site-stats";
+import WidgetLayout from "./WidgetLayout.astro";
+
+interface Props { class?: string; style?: string; }
+
+const stats = await getSiteStats();
+const runningDays = Math.max(1, Math.floor((Date.now() - stats.startedAt.getTime()) / 86_400_000));
+---
+
+<WidgetLayout id="site-status" i18nKey={I18nKey.siteStatus} name={i18n(I18nKey.siteStatus)} class={Astro.props.class} style={Astro.props.style}>
+	<div class="flex flex-col gap-2 py-1">
+		<div class="flex items-center justify-between rounded-lg px-2 py-1 text-sm transition-colors hover:bg-[var(--btn-plain-bg-hover)]">
+			<span class="text-50" data-i18n-key={I18nKey.sitePostCount}>{i18n(I18nKey.sitePostCount)}</span>
+			<span class="font-semibold text-[var(--primary)]">{stats.postCount}</span>
+		</div>
+		<div class="flex items-center justify-between rounded-lg px-2 py-1 text-sm transition-colors hover:bg-[var(--btn-plain-bg-hover)]">
+			<span class="text-50" data-i18n-key={I18nKey.siteRunningDays}>{i18n(I18nKey.siteRunningDays)}</span>
+			<span class="font-semibold text-[var(--primary)]">{runningDays} <span data-i18n-key={I18nKey.days}>{i18n(I18nKey.days)}</span></span>
+		</div>
+		<div class="flex items-center justify-between rounded-lg px-2 py-1 text-sm transition-colors hover:bg-[var(--btn-plain-bg-hover)]">
+			<span class="text-50" data-i18n-key={I18nKey.siteTotalWords}>{i18n(I18nKey.siteTotalWords)}</span>
+			<span class="font-semibold text-[var(--primary)]">{formatCompactNumber(stats.wordCount)}</span>
+		</div>
+		<div class="flex items-center justify-between rounded-lg px-2 py-1 text-sm transition-colors hover:bg-[var(--btn-plain-bg-hover)]">
+			<span class="text-50" data-i18n-key={I18nKey.siteLastUpdated}>{i18n(I18nKey.siteLastUpdated)}</span>
+			<time class="font-semibold text-[var(--primary)]" datetime={stats.lastUpdatedAt.toISOString()}>{formatDate(stats.lastUpdatedAt)}</time>
+		</div>
+	</div>
+</WidgetLayout>

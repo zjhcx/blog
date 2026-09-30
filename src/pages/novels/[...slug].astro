@@ -1,0 +1,116 @@
+---
+import Markdown from "../../components/misc/Markdown.astro";
+import I18nKey from "../../i18n/i18nKey";
+import { i18n } from "../../i18n/translation";
+import MainGridLayout from "../../layouts/MainGridLayout.astro";
+import {
+	computeNovelWordCount,
+	getAllNovelEntries,
+	getCharactersByNovel,
+	getNovelChapters,
+	getNovelSlug,
+} from "../../utils/novel-utils";
+import { getChapterUrl, getNovelUrl, url } from "../../utils/url-utils";
+import { render } from "astro:content";
+import { Icon } from "astro-icon/components";
+
+export async function getStaticPaths() {
+	const entries = await getAllNovelEntries();
+	return entries.map((entry) => {
+		const id = entry.id.replace(/\.mdx?$/, "");
+		return {
+			params: { slug: id.endsWith("/index") ? id.slice(0, -6) : id },
+			props: { entry },
+		};
+	});
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const isIndex = entry.data.chapter === undefined;
+const novelSlug = getNovelSlug(entry);
+const chapters = await getNovelChapters(novelSlug);
+const characters = isIndex ? await getCharactersByNovel(novelSlug) : [];
+const currentChapterIndex = isIndex ? -1 : chapters.findIndex((chapter) => chapter.id === entry.id);
+const previousChapter = currentChapterIndex > 0 ? chapters[currentChapterIndex - 1] : undefined;
+const nextChapter = currentChapterIndex >= 0 ? chapters[currentChapterIndex + 1] : undefined;
+---
+
+<MainGridLayout title={isIndex ? entry.data.novelTitle : entry.data.title} description={entry.data.description} headings={isIndex ? [] : headings}>
+	{isIndex ? (
+		<article class="card-base p-6 md:p-9">
+			<h1 class="text-90 mb-4 text-3xl font-bold before:mr-3 before:inline-block before:h-5 before:w-1 before:rounded-md before:bg-[var(--primary)] before:align-middle">{entry.data.novelTitle}</h1>
+			{entry.data.series && <p class="mb-3 font-medium text-[var(--primary)]"><Icon name="material-symbols:book-2-rounded" class="mr-1 inline" />{entry.data.series}{entry.data.seriesOrder && ` #${entry.data.seriesOrder}`}</p>}
+			{entry.data.description && <p class="text-50 mb-6 leading-relaxed">{entry.data.description}</p>}
+			<div class="text-50 mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-dashed border-black/10 pb-6 text-xs dark:border-white/10">
+				<div class="flex gap-4">
+					<span class="flex items-center gap-1"><Icon name="material-symbols:notes-rounded" />{chapters.reduce((sum, chapter) => sum + computeNovelWordCount(chapter.body), 0).toLocaleString()} {i18n(I18nKey.totalWords)}</span>
+					<span class="flex items-center gap-1"><Icon name="material-symbols:library-books-rounded" />{chapters.length} {i18n(chapters.length === 1 ? I18nKey.chapterCount : I18nKey.chaptersCount)}</span>
+				</div>
+				<a href={url(`/novels/${novelSlug}/rss.xml`)} class="btn-regular flex items-center gap-1 rounded-xl px-3 py-2 font-medium" target="_blank" rel="noopener"><Icon name="material-symbols:rss-feed-rounded" />RSS</a>
+			</div>
+			{characters.length > 0 && <section class="mb-6"><h2 class="text-75 mb-3 flex items-center gap-2 font-bold"><Icon name="material-symbols:groups-rounded" class="text-[var(--primary)]" />{i18n(I18nKey.characters)}</h2><div class="flex flex-wrap gap-2">{characters.map((character) => <span class="text-75 rounded-full bg-[var(--btn-regular-bg)] px-3 py-1 text-sm">{character.data.role === "protagonist" && <Icon name="material-symbols:star-rounded" class="mr-1 inline text-sm text-[var(--primary)]" />}{character.data.name}</span>)}</div></section>}
+			<section>
+				<h2 class="text-75 mb-4 flex items-center gap-2 text-lg font-bold"><Icon name="material-symbols:list-alt-rounded" class="text-[var(--primary)]" />{i18n(I18nKey.chapters)}</h2>
+				{chapters.length === 0 ? <p class="text-50 py-6 text-center" data-i18n-key={I18nKey.chaptersEmpty}>{i18n(I18nKey.chaptersEmpty)}</p> : <div class="flex flex-col gap-1">{chapters.map((chapter, index) => <a href={getChapterUrl(novelSlug, chapter.id)} class="flex items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-[var(--btn-plain-bg-hover)] active:scale-[0.98]"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--btn-regular-bg)] text-sm font-bold text-[var(--primary)]">{chapter.data.chapter ?? index + 1}</span><span class="text-75 min-w-0 flex-1 font-medium">{chapter.data.title}</span><span class="text-50 whitespace-nowrap text-xs">{computeNovelWordCount(chapter.body).toLocaleString()} {i18n(I18nKey.wordsCount)}</span><Icon name="material-symbols:chevron-right-rounded" class="text-50 text-xl" /></a>)}</div>}
+			</section>
+		</article>
+	) : (
+		<div id="novel-chapter-container" class="relative mb-4 flex w-full overflow-hidden rounded-[var(--radius-large)]">
+			<article id="chapter-content" class="card-base relative z-10 w-full px-6 pb-4 pt-6 md:px-9">
+				<div class="mb-4 flex items-center justify-between gap-3">
+					<a href={getNovelUrl(novelSlug)} class="btn-plain scale-animation flex h-9 items-center gap-1 rounded-lg px-3 active:scale-95"><Icon name="material-symbols:chevron-left-rounded" /><span class="max-w-40 truncate">{entry.data.novelTitle}</span></a>
+					<button id="reading-mode-toggle" class="btn-plain scale-animation flex h-9 items-center gap-1 rounded-lg px-3 active:scale-95" aria-pressed="false"><Icon name="material-symbols:contract-delete-outline-rounded" /><span data-i18n-key={I18nKey.readingMode}>{i18n(I18nKey.readingMode)}</span></button>
+				</div>
+				<header class="mb-6 text-center">
+					{entry.data.volume && <p class="mb-1 text-xs font-medium text-[var(--primary)]">{i18n(I18nKey.volume)} {entry.data.volume}{entry.data.volumeTitle && ` ${entry.data.volumeTitle}`}</p>}
+					<h1 class="text-90 text-2xl font-bold md:text-3xl"><span class="text-[var(--primary)]">{i18n(I18nKey.chapters)} {entry.data.chapter} · </span>{entry.data.title}</h1>
+					<p class="text-50 mt-2 text-xs">{computeNovelWordCount(entry.body).toLocaleString()} {i18n(I18nKey.wordsCount)}</p>
+				</header>
+				<div class="mb-6 border-t border-dashed border-black/10 pt-6 dark:border-white/10"></div>
+				<Markdown class="novel-content mb-6 text-base leading-[2] md:text-lg"><Content /></Markdown>
+				<nav class="border-t border-dashed border-black/10 pt-4 dark:border-white/10" aria-label={i18n(I18nKey.chapters)}>
+					<div class="flex flex-col justify-between gap-3 md:flex-row">
+						{previousChapter ? <a href={getChapterUrl(novelSlug, previousChapter.id)} class="btn-card flex flex-1 items-center gap-2 rounded-xl px-4 py-3 active:scale-[0.98]"><Icon name="material-symbols:chevron-left-rounded" class="text-xl text-[var(--primary)]" /><div class="min-w-0"><p class="text-50 text-xs">{i18n(I18nKey.chapters)} {previousChapter.data.chapter}</p><p class="text-75 truncate text-sm font-medium">{previousChapter.data.title}</p></div></a> : <span class="flex-1"></span>}
+						{nextChapter ? <a href={getChapterUrl(novelSlug, nextChapter.id)} class="btn-card flex flex-1 items-center justify-end gap-2 rounded-xl px-4 py-3 text-right active:scale-[0.98]"><div class="min-w-0"><p class="text-50 text-xs">{i18n(I18nKey.chapters)} {nextChapter.data.chapter}</p><p class="text-75 truncate text-sm font-medium">{nextChapter.data.title}</p></div><Icon name="material-symbols:chevron-right-rounded" class="text-xl text-[var(--primary)]" /></a> : <span class="flex-1"></span>}
+					</div>
+				</nav>
+			</article>
+		</div>
+	)}
+</MainGridLayout>
+
+<script>
+	class ReadingModeToggle extends HTMLElement {
+		connectedCallback() {
+			const toggle = document.querySelector<HTMLButtonElement>("#reading-mode-toggle");
+			const content = document.querySelector<HTMLElement>("#chapter-content");
+			const grid = document.querySelector<HTMLElement>("#main-grid");
+			if (!toggle || !content || !grid || toggle.dataset.initialized) return;
+			toggle.dataset.initialized = "true";
+			const apply = (enabled: boolean) => {
+				content.classList.toggle("reading-mode", enabled);
+				grid.classList.toggle("reading-mode", enabled);
+				toggle.classList.toggle("text-[var(--primary)]", enabled);
+				toggle.setAttribute("aria-pressed", String(enabled));
+			};
+			apply(localStorage.getItem("novel-reading-mode") === "true");
+			toggle.addEventListener("click", () => {
+				const enabled = !content.classList.contains("reading-mode");
+				apply(enabled);
+				localStorage.setItem("novel-reading-mode", String(enabled));
+			});
+		}
+	}
+	if (!customElements.get("reading-mode-toggle")) customElements.define("reading-mode-toggle", ReadingModeToggle);
+</script>
+
+<reading-mode-toggle></reading-mode-toggle>
+
+<style is:global>
+	.novel-content p { margin-bottom: 0.75em; text-indent: 2em; }
+	.novel-content p:first-child { text-indent: 0; }
+	#main-grid.reading-mode { grid-template-columns: 0 auto !important; overflow: hidden; }
+	#chapter-content.reading-mode { max-width: 48rem; margin-inline: auto; }
+	#chapter-content.reading-mode .novel-content { font-size: 1.125rem; line-height: 2.1; }
+</style>
