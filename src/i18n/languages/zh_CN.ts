@@ -140,6 +140,7 @@ export const zh_CN: Translation = {
 	[Key.timelineLoadFailed]: "加载时间线失败：",
 	[Key.timelineEmpty]: "暂无时间线内容。",
 	[Key.timelineLoading]: "加载中...",
+	[Key.timelineRetry]: "重试",
 	[Key.timelineLoadMore]: "加载更多",
 
 	[Key.favs]: "B站收藏夹",

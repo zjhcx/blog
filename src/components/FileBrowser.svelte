@@ -87,6 +87,7 @@ let detailError = "";
 let initialized = false;
 let searchTimer: ReturnType<typeof setTimeout> | null = null;
 let requestController: AbortController | null = null;
+let detailController: AbortController | null = null;
 
 function getText(key: I18nKey): string {
 	return translate(key, $language);
@@ -201,6 +202,10 @@ function buildEntries(items: FileItem[], path: string): BrowserEntry[] {
 }
 
 async function fetchFiles(nextOffset = offset): Promise<void> {
+	if (!initialized) return;
+	detailController?.abort();
+	detailController = null;
+	isDetailLoading = false;
 	requestController?.abort();
 	const controller = new AbortController();
 	requestController = controller;
@@ -225,6 +230,7 @@ async function fetchFiles(nextOffset = offset): Promise<void> {
 		}
 
 		const data = (await response.json()) as FilesResponse;
+		if (!initialized || controller.signal.aborted) return;
 		files = Array.isArray(data.files) ? data.files : [];
 		total = Number.isFinite(data.total) ? data.total : files.length;
 		offset = Number.isFinite(data.offset) ? data.offset : nextOffset;
@@ -248,22 +254,31 @@ async function fetchFiles(nextOffset = offset): Promise<void> {
 }
 
 async function selectFile(file: FileItem): Promise<void> {
+	if (!initialized) return;
+	detailController?.abort();
+	const controller = new AbortController();
+	detailController = controller;
 	selectedFile = file;
 	isDetailLoading = true;
 	detailError = "";
 
 	try {
-		const response = await fetch(buildApiUrl(String(file.id)));
+		const response = await fetch(buildApiUrl(String(file.id)), { signal: controller.signal });
 		if (!response.ok) {
 			throw new Error(`${response.status} ${response.statusText}`);
 		}
 		const data = (await response.json()) as FileResponse;
+		if (!initialized || controller.signal.aborted || selectedFile?.id !== file.id) return;
 		selectedFile = data.file || file;
 	} catch (error) {
+		if (!initialized || controller.signal.aborted || selectedFile?.id !== file.id) return;
 		detailError = error instanceof Error ? error.message : String(error);
 		selectedFile = file;
 	} finally {
-		isDetailLoading = false;
+		if (detailController === controller) {
+			detailController = null;
+			isDetailLoading = false;
+		}
 	}
 }
 
@@ -342,11 +357,14 @@ function shouldPreviewImage(file: FileItem): boolean {
 
 onMount(() => {
 	initialized = true;
-	if (!enabled) {
-		isLoading = false;
-		return;
-	}
-	fetchFiles(0);
+	if (enabled) fetchFiles(0);
+	else isLoading = false;
+	return () => {
+		initialized = false;
+		if (searchTimer) clearTimeout(searchTimer);
+		requestController?.abort();
+		detailController?.abort();
+	};
 });
 
 $: entries = buildEntries(files, currentPath);

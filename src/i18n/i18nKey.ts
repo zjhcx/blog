@@ -138,6 +138,7 @@ enum I18nKey {
 	timelineEmpty = "timelineEmpty",
 	timelineLoading = "timelineLoading",
 	timelineLoadMore = "timelineLoadMore",
+	timelineRetry = "timelineRetry",
 
 	favs = "favs",
 	favsDescription = "favsDescription",

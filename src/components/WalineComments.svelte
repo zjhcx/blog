@@ -12,18 +12,38 @@
 	let syncQueue = Promise.resolve();
 	let walineModulePromise: Promise<typeof import("@waline/client")> | null = null;
 
+	let retryTimer: ReturnType<typeof setTimeout> | undefined;
+	let retryCount = 0;
+
 	function loadWalineStyle(): Promise<void> {
 		const existing = document.getElementById("waline-style") as HTMLLinkElement | null;
-		if (existing) return Promise.resolve();
+		if (existing?.sheet) return Promise.resolve();
 
 		return new Promise((resolve, reject) => {
-			const link = document.createElement("link");
-			link.id = "waline-style";
-			link.rel = "stylesheet";
-			link.href = `${import.meta.env.BASE_URL}vendor/waline.css`;
-			link.onload = () => resolve();
-			link.onerror = () => reject(new Error("Failed to load Waline styles"));
-			document.head.appendChild(link);
+			const link = existing ?? document.createElement("link");
+			const cleanup = () => {
+				clearTimeout(timeout);
+				link.removeEventListener("load", onLoad);
+				link.removeEventListener("error", onError);
+			};
+			const onLoad = () => {
+				cleanup();
+				resolve();
+			};
+			const onError = () => {
+				cleanup();
+				link.remove();
+				reject(new Error("Failed to load Waline styles"));
+			};
+			const timeout = setTimeout(onError, 15000);
+			link.addEventListener("load", onLoad, { once: true });
+			link.addEventListener("error", onError, { once: true });
+			if (!existing) {
+				link.id = "waline-style";
+				link.rel = "stylesheet";
+				link.href = `${import.meta.env.BASE_URL}vendor/waline.css`;
+				document.head.appendChild(link);
+			}
 		});
 	}
 
@@ -45,7 +65,7 @@
 	}
 
 	async function syncWaline(): Promise<void> {
-		if (!mounted || !container) return;
+		if (!mounted || !container?.isConnected) return;
 
 		const normalizedServerURL = serverURL.trim();
 		if (!normalizedServerURL) {
@@ -67,7 +87,7 @@
 				loadWalineStyle(),
 			]).then(([module]) => module);
 			const { init } = await walineModulePromise;
-			if (!mounted || !container) return;
+			if (!mounted || !container?.isConnected) return;
 
 			waline = init({
 				el: container,
@@ -80,7 +100,19 @@
 	}
 
 	function queueWalineSync(): void {
-		syncQueue = syncQueue.then(syncWaline);
+		syncQueue = syncQueue.then(syncWaline).then(() => {
+			retryCount = 0;
+		}).catch((error) => {
+			walineModulePromise = null;
+			if (!mounted) return;
+			console.error("Failed to initialize Waline", error);
+			if (retryCount < 3 && retryTimer === undefined) {
+				retryTimer = setTimeout(() => {
+					retryTimer = undefined;
+					queueWalineSync();
+				}, 1000 * 2 ** retryCount++);
+			}
+		});
 	}
 
 	onMount(() => {
@@ -88,6 +120,8 @@
 		queueWalineSync();
 
 		return () => {
+			mounted = false;
+			clearTimeout(retryTimer);
 			waline?.destroy();
 			waline = null;
 		};

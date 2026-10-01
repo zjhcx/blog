@@ -141,6 +141,7 @@ export const ko: Translation = {
 	[Key.timelineLoadFailed]: "Failed to load timeline: ",
 	[Key.timelineEmpty]: "No timeline entries yet.",
 	[Key.timelineLoading]: "Loading...",
+	[Key.timelineRetry]: "다시 시도",
 	[Key.timelineLoadMore]: "Load more",
 
 	[Key.favs]: "Bilibili 즐겨찾기",

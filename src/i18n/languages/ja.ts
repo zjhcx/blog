@@ -141,6 +141,7 @@ export const ja: Translation = {
 	[Key.timelineLoadFailed]: "Failed to load timeline: ",
 	[Key.timelineEmpty]: "No timeline entries yet.",
 	[Key.timelineLoading]: "Loading...",
+	[Key.timelineRetry]: "再試行",
 	[Key.timelineLoadMore]: "Load more",
 
 	[Key.favs]: "Bilibili お気に入り",

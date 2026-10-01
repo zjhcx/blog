@@ -6,27 +6,42 @@
 	type Chunk = { file: string; count: number };
 	let items: Item[] = [], chunks: Chunk[] = [];
 	let nextChunk = 0, loading = true, error = "";
+	let manifestLoaded = false;
+	let mounted = false;
+	let controller: AbortController | null = null;
 	const loadMore = async () => {
-		if (loading || nextChunk >= chunks.length) return;
+		if (!mounted || loading || (manifestLoaded && nextChunk >= chunks.length)) return;
 		loading = true;
+		error = "";
+		const request = new AbortController();
+		controller = request;
 		try {
-			const response = await fetch(`/timeline/${chunks[nextChunk].file}`);
+			if (!manifestLoaded) {
+				const response = await fetch("/timeline/manifest.json", { cache: "no-cache", signal: request.signal });
+				if (!response.ok) throw new Error(`HTTP ${response.status}`);
+				const manifest = await response.json() as { chunks?: Chunk[] };
+				if (!mounted || request.signal.aborted) return;
+				chunks = Array.isArray(manifest.chunks) ? manifest.chunks : [];
+				manifestLoaded = true;
+			}
+			if (nextChunk >= chunks.length) return;
+			const response = await fetch(`/timeline/${chunks[nextChunk].file}`, { signal: request.signal });
 			if (!response.ok) throw new Error(`HTTP ${response.status}`);
 			const payload = await response.json() as { items?: Item[] };
+			if (!mounted || request.signal.aborted) return;
 			if (!Array.isArray(payload.items)) throw new Error("Invalid timeline chunk");
 			items = [...items, ...payload.items]; nextChunk += 1;
-		} catch (reason) { error = reason instanceof Error ? reason.message : String(reason); }
-		finally { loading = false; }
+		} catch (reason) {
+			if (mounted && !request.signal.aborted) error = reason instanceof Error ? reason.message : String(reason);
+		} finally {
+			if (controller === request) { controller = null; loading = false; }
+		}
 	};
-	onMount(async () => {
-		try {
-			const response = await fetch("/timeline/manifest.json", { cache: "no-cache" });
-			if (!response.ok) throw new Error(`HTTP ${response.status}`);
-			const manifest = await response.json() as { chunks?: Chunk[] };
-			chunks = Array.isArray(manifest.chunks) ? manifest.chunks : [];
-		} catch (reason) { error = reason instanceof Error ? reason.message : String(reason); }
-		finally { loading = false; }
-		await loadMore();
+	onMount(() => {
+		mounted = true;
+		loading = false;
+		void loadMore();
+		return () => { mounted = false; controller?.abort(); };
 	});
 	const formatTime = (value: string) => new Intl.DateTimeFormat($language.replace("_", "-"), {
 		year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit",
@@ -42,7 +57,7 @@
 			{#each items as item (item.id)}<article class="timeline-entry card-base"><div class="timeline-marker" aria-hidden="true"></div><time class="text-50" datetime={item.time}>{formatTime(item.time)}</time><p class="text-90">{item.content}</p></article>{/each}
 		</section>
 	{/if}
-	{#if !error && nextChunk < chunks.length}<button class="load-more btn-regular" type="button" disabled={loading} onclick={loadMore}>{loading ? translate(I18nKey.timelineLoading, $language) : translate(I18nKey.timelineLoadMore, $language)}</button>{/if}
+	{#if !manifestLoaded || nextChunk < chunks.length}<button class="load-more btn-regular" type="button" disabled={loading} onclick={loadMore}>{loading ? translate(I18nKey.timelineLoading, $language) : translate(error ? I18nKey.timelineRetry : I18nKey.timelineLoadMore, $language)}</button>{/if}
 </div>
 
 <style>
