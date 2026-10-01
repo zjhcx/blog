@@ -46,5 +46,11 @@
 		"deployment": "Cloudflare Pages",
 		"providerSize": "large",
 		"domainOwnership": "shared"
+	},
+	{
+		"url": "https://z.asia.ci/",
+		"deployment": "Cloudflare Pages",
+		"providerSize": "large",
+		"domainOwnership": "shared"
 	}
 ]
