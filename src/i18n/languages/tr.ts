@@ -2,6 +2,22 @@ import Key from "../i18nKey";
 import type { Translation } from "../translation";
 
 export const tr: Translation = {
+	[Key.backupDomain]: "Alan adı",
+	[Key.backupDomainOwned]: "Kendine ait (sahibi)",
+	[Key.backupDomainShared]: "Herkese açık (sahibi değil)",
+	[Key.backupDomainUnknown]: "Belirtilmemiş",
+
+	[Key.backupProviderSize]: "Sağlayıcı ölçeği",
+	[Key.backupLargeProvider]: "Büyük sağlayıcı",
+	[Key.backupSmallProvider]: "Küçük sağlayıcı",
+	[Key.backupProviderUnknown]: "Belirtilmemiş",
+	[Key.backup]: "Yedekler",
+	[Key.backupDescription]: "Yedek site URL’leri ve dağıtım yöntemleri",
+	[Key.backupUrl]: "Yedek URL",
+	[Key.backupDeploymentEsa]: "Alibaba Cloud ESA Pages",
+	[Key.backupDeployment]: "Dağıtım yöntemi",
+	[Key.backupEmpty]: "Henüz yedek kaydı yok.",
+
 	[Key.home]: "Anasayfa",
 	[Key.about]: "Hakkında",
 	[Key.archive]: "Arşiv",

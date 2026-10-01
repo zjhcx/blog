@@ -2,6 +2,22 @@ import Key from "../i18nKey";
 import type { Translation } from "../translation";
 
 export const th: Translation = {
+	[Key.backupDomain]: "โดเมน",
+	[Key.backupDomainOwned]: "ของตนเอง (เจ้าของ)",
+	[Key.backupDomainShared]: "สาธารณะ (ไม่ใช่เจ้าของ)",
+	[Key.backupDomainUnknown]: "ยังไม่ระบุ",
+
+	[Key.backupProviderSize]: "ขนาดผู้ให้บริการ",
+	[Key.backupLargeProvider]: "ผู้ให้บริการรายใหญ่",
+	[Key.backupSmallProvider]: "ผู้ให้บริการรายเล็ก",
+	[Key.backupProviderUnknown]: "ยังไม่ระบุ",
+	[Key.backup]: "ข้อมูลสำรอง",
+	[Key.backupDescription]: "URL เว็บไซต์สำรองและวิธีการปรับใช้",
+	[Key.backupUrl]: "URL สำรอง",
+	[Key.backupDeploymentEsa]: "Alibaba Cloud ESA Pages",
+	[Key.backupDeployment]: "วิธีการปรับใช้",
+	[Key.backupEmpty]: "ยังไม่มีรายการสำรอง",
+
 	[Key.home]: "หน้าแรก",
 	[Key.about]: "เกี่ยวกับ",
 	[Key.archive]: "คลัง",

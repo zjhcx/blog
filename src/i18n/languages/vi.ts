@@ -2,6 +2,22 @@ import Key from "../i18nKey";
 import type { Translation } from "../translation";
 
 export const vi: Translation = {
+	[Key.backupDomain]: "Tên miền",
+	[Key.backupDomainOwned]: "Sở hữu riêng (chủ sở hữu)",
+	[Key.backupDomainShared]: "Công cộng (không phải chủ sở hữu)",
+	[Key.backupDomainUnknown]: "Chưa xác định",
+
+	[Key.backupProviderSize]: "Quy mô nhà cung cấp",
+	[Key.backupLargeProvider]: "Nhà cung cấp lớn",
+	[Key.backupSmallProvider]: "Nhà cung cấp nhỏ",
+	[Key.backupProviderUnknown]: "Chưa xác định",
+	[Key.backup]: "Bản sao lưu",
+	[Key.backupDescription]: "URL trang dự phòng và phương thức triển khai",
+	[Key.backupUrl]: "URL dự phòng",
+	[Key.backupDeploymentEsa]: "Alibaba Cloud ESA Pages",
+	[Key.backupDeployment]: "Phương thức triển khai",
+	[Key.backupEmpty]: "Chưa có bản ghi sao lưu.",
+
 	[Key.home]: "Trang chủ",
 	[Key.about]: "Giới thiệu",
 	[Key.archive]: "Kho bài",

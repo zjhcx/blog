@@ -1,0 +1,77 @@
+---
+import records from "@/data/backups.json";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+
+// providerSize is optional: "large" for 大厂, "small" for 小厂.
+// domainOwnership: "owned" for 自有（所有者）, "shared" for 公共（非所有者）.
+type BackupRecord = {
+	url: string;
+	deployment: string;
+	providerSize?: string;
+	domainOwnership?: string;
+};
+function domainOwnershipKey(ownership: string | undefined): I18nKey {
+	if (ownership === "owned") return I18nKey.backupDomainOwned;
+	if (ownership === "shared") return I18nKey.backupDomainShared;
+	return I18nKey.backupDomainUnknown;
+}
+function providerSizeKey(size: string | undefined): I18nKey {
+	if (size === "large") return I18nKey.backupLargeProvider;
+	if (size === "small") return I18nKey.backupSmallProvider;
+	return I18nKey.backupProviderUnknown;
+}
+const backups: BackupRecord[] = records;
+---
+
+<MainGridLayout title={i18n(I18nKey.backup)} description={i18n(I18nKey.backupDescription)}>
+	<div class="flex flex-col gap-4 text-90">
+		<header class="card-base p-6">
+			<h1 class="text-2xl font-bold mb-2" data-i18n-key={I18nKey.backup}>{i18n(I18nKey.backup)}</h1>
+			<p class="text-50" data-i18n-key={I18nKey.backupDescription}>{i18n(I18nKey.backupDescription)}</p>
+		</header>
+		<section class="card-base p-6">
+			{backups.length === 0 ? (
+				<p class="text-50" data-i18n-key={I18nKey.backupEmpty}>{i18n(I18nKey.backupEmpty)}</p>
+			) : (
+				<div class="overflow-x-auto">
+					<table class="w-full text-left">
+						<thead>
+							<tr>
+								<th scope="col" class="p-3" data-i18n-key={I18nKey.backupUrl}>{i18n(I18nKey.backupUrl)}</th>
+								<th scope="col" class="p-3" data-i18n-key={I18nKey.backupDeployment}>{i18n(I18nKey.backupDeployment)}</th>
+								<th scope="col" class="p-3" data-i18n-key={I18nKey.backupProviderSize}>{i18n(I18nKey.backupProviderSize)}</th>
+								<th scope="col" class="p-3" data-i18n-key={I18nKey.backupDomain}>{i18n(I18nKey.backupDomain)}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{backups.map((backup) => (
+								<tr>
+									<td class="p-3 break-all">
+										{ /^https?:\/\//i.test(backup.url) ? (
+											<a class="link" href={backup.url} target="_blank" rel="noopener noreferrer">{backup.url}</a>
+										) : backup.url }
+									</td>
+									<td class="p-3 text-75 whitespace-pre-wrap" data-i18n-key={backup.deployment === "Alibaba Cloud ESA Pages" ? I18nKey.backupDeploymentEsa : undefined}>
+										{backup.deployment === "Alibaba Cloud ESA Pages" ? i18n(I18nKey.backupDeploymentEsa) : backup.deployment}
+									</td>
+									<td class="p-3">
+										<span class="inline-flex rounded-full border border-current px-3 py-1 text-sm text-75 whitespace-nowrap" data-i18n-key={providerSizeKey(backup.providerSize)}>
+											{i18n(providerSizeKey(backup.providerSize))}
+										</span>
+									</td>
+									<td class="p-3">
+										<span class="inline-flex rounded-full border border-current px-3 py-1 text-sm text-75 whitespace-nowrap" data-i18n-key={domainOwnershipKey(backup.domainOwnership)}>
+											{i18n(domainOwnershipKey(backup.domainOwnership))}
+										</span>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			)}
+		</section>
+	</div>
+</MainGridLayout>

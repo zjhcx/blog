@@ -1,4 +1,21 @@
 enum I18nKey {
+	backupDeploymentEsa = "backupDeploymentEsa",
+	backupDomain = "backupDomain",
+	backupDomainOwned = "backupDomainOwned",
+	backupDomainShared = "backupDomainShared",
+	backupDomainUnknown = "backupDomainUnknown",
+
+	backupProviderSize = "backupProviderSize",
+	backupLargeProvider = "backupLargeProvider",
+	backupSmallProvider = "backupSmallProvider",
+	backupProviderUnknown = "backupProviderUnknown",
+
+	backup = "backup",
+	backupDescription = "backupDescription",
+	backupUrl = "backupUrl",
+	backupDeployment = "backupDeployment",
+	backupEmpty = "backupEmpty",
+
 	home = "home",
 	about = "about",
 	archive = "archive",
