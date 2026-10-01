@@ -2,6 +2,22 @@ import Key from "../i18nKey";
 import type { Translation } from "../translation";
 
 export const zh_CN: Translation = {
+	[Key.backupDomain]: "域名",
+	[Key.backupDomainOwned]: "自有（所有者）",
+	[Key.backupDomainShared]: "公共（非所有者）",
+	[Key.backupDomainUnknown]: "未标注",
+
+	[Key.backupProviderSize]: "厂商规模",
+	[Key.backupLargeProvider]: "大厂",
+	[Key.backupSmallProvider]: "小厂",
+	[Key.backupProviderUnknown]: "未标注",
+	[Key.backup]: "备份",
+	[Key.backupDescription]: "备份站点 URL 及其部署方式",
+	[Key.backupUrl]: "备份 URL",
+	[Key.backupDeploymentEsa]: "阿里云 ESA Pages",
+	[Key.backupDeployment]: "部署方式",
+	[Key.backupEmpty]: "暂无备份记录。",
+
 	[Key.home]: "主页",
 	[Key.about]: "关于",
 	[Key.archive]: "归档",

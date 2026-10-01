@@ -1,0 +1,32 @@
+[
+	{
+		"url": "https://b.lemail.asia",
+		"deployment": "Cloudflare Pages",
+		"providerSize": "large",
+		"domainOwnership": "shared"
+	},
+	{
+		"url": "https://z.3d3k.org",
+		"deployment": "Cloudflare Pages",
+		"providerSize": "large",
+		"domainOwnership": "shared"
+	},
+	{
+		"url": "https://blog.4r.ink",
+		"deployment": "Alibaba Cloud ESA Pages",
+		"providerSize": "large",
+		"domainOwnership": "owned"
+	},
+	{
+		"url": "https://h9.l.cd",
+		"deployment": "Cloudflare Pages",
+		"providerSize": "large",
+		"domainOwnership": "shared"
+	},
+	{
+		"url": "https://zjh.l.cd",
+		"deployment": "Alibaba Cloud ESA Pages",
+		"providerSize": "large",
+		"domainOwnership": "shared"
+	}
+]

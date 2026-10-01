@@ -2,6 +2,22 @@ import Key from "../i18nKey";
 import type { Translation } from "../translation";
 
 export const id: Translation = {
+	[Key.backupDomain]: "Domain",
+	[Key.backupDomainOwned]: "Milik sendiri (pemilik)",
+	[Key.backupDomainShared]: "Publik (bukan pemilik)",
+	[Key.backupDomainUnknown]: "Belum ditentukan",
+
+	[Key.backupProviderSize]: "Ukuran penyedia",
+	[Key.backupLargeProvider]: "Penyedia besar",
+	[Key.backupSmallProvider]: "Penyedia kecil",
+	[Key.backupProviderUnknown]: "Belum ditentukan",
+	[Key.backup]: "Cadangan",
+	[Key.backupDescription]: "URL situs cadangan dan metode penerapan",
+	[Key.backupUrl]: "URL cadangan",
+	[Key.backupDeploymentEsa]: "Alibaba Cloud ESA Pages",
+	[Key.backupDeployment]: "Metode penerapan",
+	[Key.backupEmpty]: "Belum ada catatan cadangan.",
+
 	[Key.home]: "Beranda",
 	[Key.about]: "Tentang",
 	[Key.archive]: "Arsip",

@@ -2,6 +2,22 @@ import Key from "../i18nKey";
 import type { Translation } from "../translation";
 
 export const es: Translation = {
+	[Key.backupDomain]: "Dominio",
+	[Key.backupDomainOwned]: "Propio (propietario)",
+	[Key.backupDomainShared]: "Público (no propietario)",
+	[Key.backupDomainUnknown]: "Sin especificar",
+
+	[Key.backupProviderSize]: "Tamaño del proveedor",
+	[Key.backupLargeProvider]: "Proveedor grande",
+	[Key.backupSmallProvider]: "Proveedor pequeño",
+	[Key.backupProviderUnknown]: "Sin especificar",
+	[Key.backup]: "Copias de seguridad",
+	[Key.backupDescription]: "URL de sitios de respaldo y métodos de despliegue",
+	[Key.backupUrl]: "URL de respaldo",
+	[Key.backupDeploymentEsa]: "Alibaba Cloud ESA Pages",
+	[Key.backupDeployment]: "Método de despliegue",
+	[Key.backupEmpty]: "Todavía no hay registros de respaldo.",
+
 	[Key.home]: "Inicio",
 	[Key.about]: "Sobre mí",
 	[Key.archive]: "Archivo",

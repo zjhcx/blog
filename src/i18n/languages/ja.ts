@@ -2,6 +2,22 @@ import Key from "../i18nKey";
 import type { Translation } from "../translation";
 
 export const ja: Translation = {
+	[Key.backupDomain]: "ドメイン",
+	[Key.backupDomainOwned]: "自己所有（所有者）",
+	[Key.backupDomainShared]: "公共（非所有者）",
+	[Key.backupDomainUnknown]: "未指定",
+
+	[Key.backupProviderSize]: "事業者の規模",
+	[Key.backupLargeProvider]: "大手",
+	[Key.backupSmallProvider]: "小規模",
+	[Key.backupProviderUnknown]: "未指定",
+	[Key.backup]: "バックアップ",
+	[Key.backupDescription]: "バックアップサイトの URL とデプロイ方法",
+	[Key.backupUrl]: "バックアップ URL",
+	[Key.backupDeploymentEsa]: "Alibaba Cloud ESA Pages",
+	[Key.backupDeployment]: "デプロイ方法",
+	[Key.backupEmpty]: "バックアップの記録はまだありません。",
+
 	[Key.home]: "ホーム",
 	[Key.about]: "プロフィール",
 	[Key.archive]: "アーカイブ",

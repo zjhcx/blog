@@ -2,6 +2,22 @@ import Key from "../i18nKey";
 import type { Translation } from "../translation";
 
 export const ko: Translation = {
+	[Key.backupDomain]: "도메인",
+	[Key.backupDomainOwned]: "자체 소유 (소유자)",
+	[Key.backupDomainShared]: "공용 (비소유자)",
+	[Key.backupDomainUnknown]: "미지정",
+
+	[Key.backupProviderSize]: "업체 규모",
+	[Key.backupLargeProvider]: "대형 업체",
+	[Key.backupSmallProvider]: "소형 업체",
+	[Key.backupProviderUnknown]: "미지정",
+	[Key.backup]: "백업",
+	[Key.backupDescription]: "백업 사이트 URL 및 배포 방식",
+	[Key.backupUrl]: "백업 URL",
+	[Key.backupDeploymentEsa]: "Alibaba Cloud ESA Pages",
+	[Key.backupDeployment]: "배포 방식",
+	[Key.backupEmpty]: "아직 백업 기록이 없습니다.",
+
 	[Key.home]: "홈",
 	[Key.about]: "소개",
 	[Key.archive]: "아카이브",
