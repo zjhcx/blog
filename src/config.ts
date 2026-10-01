@@ -331,8 +331,9 @@ export const profileConfig: ProfileConfig = {
 
 export const CommentConfig: CommentConfigType = {
 	enable: true,
-	serverURL:
-		"https://api.zcservice.houlang.cloud/comment/e206fc02ce77d248f35f27fad11b32a1", // Waline 服务端地址，例如 https://your-waline-server.example.com
+	serverURL: "https://cmt.zjh.li",
+	capApiEndpoint: "https://cap.zjh.li/28ba7b93bd/",
+	capWidgetUrl: "/vendor/cap/cap.min.js",
 };
 
 export const licenseConfig: LicenseConfig = {

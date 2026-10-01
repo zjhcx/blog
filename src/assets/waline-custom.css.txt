@@ -1,4 +1,4 @@
-+.waline-root {
+.waline-root {
 	min-height: 12rem;
 	--waline-font-size: 0.95rem;
 	--waline-theme-color: var(--primary);

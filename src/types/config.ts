@@ -196,6 +196,8 @@ export type LicenseConfig = {
 export type CommentConfig = {
 	enable: boolean;
 	serverURL: string;
+	capApiEndpoint?: string;
+	capWidgetUrl?: string;
 };
 
 export type ViewCountConfig = {
