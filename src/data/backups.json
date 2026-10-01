@@ -28,5 +28,17 @@
 		"deployment": "Alibaba Cloud ESA Pages",
 		"providerSize": "large",
 		"domainOwnership": "shared"
+	},
+	{
+		"url": "https://cx12.vercel.app/",
+		"deployment": "Vercel",
+		"providerSize": "large",
+		"domainOwnership": "shared"
+	},
+	{
+		"url": "https://cx12.pages.dev/",
+		"deployment": "Cloudflare Pages",
+		"providerSize": "large",
+		"domainOwnership": "shared"
 	}
 ]
