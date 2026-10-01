@@ -63,6 +63,11 @@ const backups: BackupRecord[] = records;
 											{backup.deployment === "Alibaba Cloud ESA Pages" && (
 												<AlibabaCloudLogo class="h-6 w-6 shrink-0" style="color: #FF6A00" aria-hidden="true" focusable="false" />
 											)}
+											{backup.deployment === "Vercel" && (
+												<svg class="h-6 w-6 shrink-0 text-black dark:text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+													<path d="M12 3 24 24H0Z" />
+												</svg>
+											)}
 											<span class="whitespace-pre-wrap" data-i18n-key={backup.deployment === "Alibaba Cloud ESA Pages" ? I18nKey.backupDeploymentEsa : undefined}>
 												{backup.deployment === "Alibaba Cloud ESA Pages" ? i18n(I18nKey.backupDeploymentEsa) : backup.deployment}
 											</span>
