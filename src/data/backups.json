@@ -40,5 +40,11 @@
 		"deployment": "Cloudflare Pages",
 		"providerSize": "large",
 		"domainOwnership": "shared"
+	},
+	{
+		"url": "https://cx.asia.ci/",
+		"deployment": "Cloudflare Pages",
+		"providerSize": "large",
+		"domainOwnership": "shared"
 	}
 ]
