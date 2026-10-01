@@ -1,4 +1,6 @@
 ---
+import { Icon } from "astro-icon/components";
+import AlibabaCloudLogo from "@/assets/svg/alibaba-cloud.svg";
 import records from "@/data/backups.json";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
@@ -53,8 +55,18 @@ const backups: BackupRecord[] = records;
 											<a class="link" href={backup.url} target="_blank" rel="noopener noreferrer">{backup.url}</a>
 										) : backup.url }
 									</td>
-									<td class="p-3 text-75 whitespace-pre-wrap" data-i18n-key={backup.deployment === "Alibaba Cloud ESA Pages" ? I18nKey.backupDeploymentEsa : undefined}>
-										{backup.deployment === "Alibaba Cloud ESA Pages" ? i18n(I18nKey.backupDeploymentEsa) : backup.deployment}
+									<td class="p-3 text-75">
+										<div class="flex items-center gap-2">
+											{backup.deployment === "Cloudflare Pages" && (
+												<Icon name="fa6-brands:cloudflare" class="h-6 w-6 shrink-0" style="color: #F38020" aria-hidden="true" />
+											)}
+											{backup.deployment === "Alibaba Cloud ESA Pages" && (
+												<AlibabaCloudLogo class="h-6 w-6 shrink-0" style="color: #FF6A00" aria-hidden="true" focusable="false" />
+											)}
+											<span class="whitespace-pre-wrap" data-i18n-key={backup.deployment === "Alibaba Cloud ESA Pages" ? I18nKey.backupDeploymentEsa : undefined}>
+												{backup.deployment === "Alibaba Cloud ESA Pages" ? i18n(I18nKey.backupDeploymentEsa) : backup.deployment}
+											</span>
+										</div>
 									</td>
 									<td class="p-3">
 										<span class="inline-flex rounded-full border border-current px-3 py-1 text-sm text-75 whitespace-nowrap" data-i18n-key={providerSizeKey(backup.providerSize)}>
