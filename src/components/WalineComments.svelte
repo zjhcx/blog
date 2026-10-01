@@ -1,10 +1,14 @@
 <script lang="ts">
+	import { loadStylesheet } from "@/utils/lazy-resources";
+	import { url } from "@/utils/url-utils";
 	import { language } from "@/i18n/client";
 	import type { WalineInstance } from "@waline/client";
 	import { onMount } from "svelte";
 
 	export let serverURL = "";
 	export let path = "";
+	export let capApiEndpoint = "";
+	export let capWidgetUrl = "";
 
 	let container: HTMLDivElement | null = null;
 	let waline: WalineInstance | null = null;
@@ -41,7 +45,7 @@
 			if (!existing) {
 				link.id = "waline-style";
 				link.rel = "stylesheet";
-				link.href = `${import.meta.env.BASE_URL}vendor/waline.css`;
+				link.href = url("/vendor/waline/waline.css");
 				document.head.appendChild(link);
 			}
 		});
@@ -79,12 +83,17 @@
 			path,
 			lang: resolveWalineLanguage($language),
 			dark: "html.dark",
+			capApiEndpoint: capApiEndpoint.trim(),
+			capWidgetUrl: capWidgetUrl.trim().startsWith("/")
+				? url(capWidgetUrl.trim())
+				: capWidgetUrl.trim(),
 		};
 
 		if (!waline) {
 			walineModulePromise ??= Promise.all([
-				import("@waline/client"),
+				import(/* @vite-ignore */ new URL(url("/vendor/waline/waline.js"), window.location.origin).href) as Promise<typeof import("@waline/client")>,
 				loadWalineStyle(),
+				loadStylesheet(url("/vendor/waline.css")),
 			]).then(([module]) => module);
 			const { init } = await walineModulePromise;
 			if (!mounted || !container?.isConnected) return;
@@ -130,6 +139,8 @@
 	$: {
 		serverURL;
 		path;
+		capApiEndpoint;
+		capWidgetUrl;
 		$language;
 		queueWalineSync();
 	}
