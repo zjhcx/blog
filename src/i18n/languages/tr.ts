@@ -142,6 +142,7 @@ export const tr: Translation = {
 	[Key.timelineLoadFailed]: "Failed to load timeline: ",
 	[Key.timelineEmpty]: "No timeline entries yet.",
 	[Key.timelineLoading]: "Loading...",
+	[Key.timelineRetry]: "Tekrar dene",
 	[Key.timelineLoadMore]: "Load more",
 
 	[Key.favs]: "Bilibili Favorileri",

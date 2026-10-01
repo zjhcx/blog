@@ -143,6 +143,7 @@ export const vi: Translation = {
 	[Key.timelineLoadFailed]: "Failed to load timeline: ",
 	[Key.timelineEmpty]: "No timeline entries yet.",
 	[Key.timelineLoading]: "Loading...",
+	[Key.timelineRetry]: "Thử lại",
 	[Key.timelineLoadMore]: "Load more",
 
 	[Key.favs]: "Yeu thich Bilibili",

@@ -72,8 +72,9 @@ async function loadTranslation(lang: SupportedLanguage): Promise<Translation> {
 		translationLoaders[lang as Exclude<SupportedLanguage, "zh_CN">];
 	const request = loader().then((translation) => {
 		translations.set(lang, translation);
-		pendingTranslations.delete(lang);
 		return translation;
+	}).finally(() => {
+		pendingTranslations.delete(lang);
 	});
 	pendingTranslations.set(lang, request);
 	return request;

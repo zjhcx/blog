@@ -31,85 +31,37 @@ if (!window.__fuwariCopyButtonBound) {
 </script>
 
 <script>
-let codeFontPromise: Promise<unknown> | undefined;
-
-async function loadCodeFont() {
-    if (!codeFontPromise) {
-        codeFontPromise = Promise.all([
-            import("@fontsource-variable/jetbrains-mono"),
-            import("@fontsource-variable/jetbrains-mono/wght-italic.css"),
-        ]);
-    }
-
-    return codeFontPromise;
-}
-
-if (document.querySelector(".custom-md pre code, .custom-md code")) {
-    loadCodeFont();
-}
-</script>
-
-<script>
 import { url } from "../../utils/url-utils";
-
-let katexCssPromise: Promise<void> | undefined;
-
-function loadStylesheet(href: string): void {
-    if (document.querySelector(`link[data-lazy-style="${href}"]`)) {
-        return;
-    }
-
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = href;
-    link.dataset.lazyStyle = href;
-    document.head.appendChild(link);
-}
-
-async function loadKatexStyles() {
-    if (!katexCssPromise) {
-        katexCssPromise = Promise.resolve(loadStylesheet(url("/vendor/katex/katex.css")));
-    }
-
-    return katexCssPromise;
-}
-
-if (document.querySelector(".custom-md .katex, .custom-md .katex-display")) {
-    loadKatexStyles();
-}
-</script>
-
-<script>
-import { url } from "../../utils/url-utils";
+import { loadStylesheet, retryResource } from "../../utils/lazy-resources";
+import codeFontUrl from "@fontsource-variable/jetbrains-mono/index.css?url";
+import codeFontItalicUrl from "@fontsource-variable/jetbrains-mono/wght-italic.css?url";
 import type PhotoSwipeLightboxType from "photoswipe/lightbox";
 
 type PhotoSwipeLightboxConstructor = typeof PhotoSwipeLightboxType;
-
 let lightbox: InstanceType<PhotoSwipeLightboxConstructor> | undefined;
 let photoSwipeLightboxPromise: Promise<PhotoSwipeLightboxConstructor> | undefined;
+let pageVersion = 0;
+let hooksBound = false;
 const gallerySelector = ".custom-md img, #post-cover img";
 
-function loadStylesheet(href: string): void {
-    if (document.querySelector(`link[data-lazy-style="${href}"]`)) {
-        return;
-    }
-
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = href;
-    link.dataset.lazyStyle = href;
-    document.head.appendChild(link);
+function loadCodeFont() {
+    return Promise.all([
+        retryResource(() => loadStylesheet(codeFontUrl)),
+        retryResource(() => loadStylesheet(codeFontItalicUrl)),
+    ]);
 }
 
 async function loadPhotoSwipeLightbox() {
-    if (!photoSwipeLightboxPromise) {
-        loadStylesheet(url("/vendor/photoswipe/photoswipe.css"));
-        photoSwipeLightboxPromise = import("photoswipe/lightbox").then(
-            (module) => module.default,
-        );
-    }
-
-    return photoSwipeLightboxPromise;
+    photoSwipeLightboxPromise ??= retryResource(() => import("photoswipe/lightbox"))
+        .then((module) => module.default).catch((error) => {
+            photoSwipeLightboxPromise = undefined;
+            throw error;
+        });
+    const [Lightbox] = await Promise.all([
+        photoSwipeLightboxPromise,
+        retryResource(() => loadStylesheet(url("/vendor/photoswipe/photoswipe.css"))),
+    ]);
+    return Lightbox;
 }
 
 function enhanceEmbeddedMedia() {
@@ -132,6 +84,7 @@ function enhanceEmbeddedMedia() {
 }
 
 async function createPhotoSwipe() {
+    const version = ++pageVersion;
     if (!document.querySelector(gallerySelector)) {
         lightbox?.destroy?.();
         lightbox = undefined;
@@ -139,7 +92,8 @@ async function createPhotoSwipe() {
     }
 
     const PhotoSwipeLightbox = await loadPhotoSwipeLightbox();
-    const pswpModule = () => import("photoswipe");
+    if (version !== pageVersion || !document.querySelector(gallerySelector)) return;
+    const pswpModule = () => retryResource(() => import("photoswipe"));
 
     lightbox?.destroy?.();
     lightbox = new PhotoSwipeLightbox({
@@ -170,30 +124,30 @@ async function createPhotoSwipe() {
     lightbox.init();
 }
 
+function enhancePage() {
+    enhanceEmbeddedMedia();
+    if (document.querySelector(".custom-md pre code, .custom-md code")) {
+        void loadCodeFont().catch((error) => console.error("Failed to load code font", error));
+    }
+    if (document.querySelector(".custom-md .katex, .custom-md .katex-display")) {
+        void retryResource(() => loadStylesheet(url("/vendor/katex/katex.css")))
+            .catch((error) => console.error("Failed to load KaTeX styles", error));
+    }
+    void createPhotoSwipe().catch((error) => console.error("Failed to initialize PhotoSwipe", error));
+}
+
 function setupPhotoSwipe() {
-    if (document.querySelector(gallerySelector)) {
-        createPhotoSwipe();
-    }
-
-    if (!window.swup?.hooks) {
-        return;
-    }
-
-    window.swup.hooks.on("page:view", createPhotoSwipe);
-    window.swup.hooks.on(
-        "content:replace",
-        () => {
-            lightbox?.destroy?.();
-        },
-        { before: true },
-    );
+    if (!window.swup?.hooks || hooksBound) return;
+    hooksBound = true;
+    window.swup.hooks.on("page:view", enhancePage);
+    window.swup.hooks.on("content:replace", () => {
+        pageVersion++;
+        lightbox?.destroy();
+        lightbox = undefined;
+    }, { before: true });
 }
 
-enhanceEmbeddedMedia();
-
-if (window.swup) {
-    setupPhotoSwipe();
-} else {
-    document.addEventListener("swup:enable", setupPhotoSwipe, { once: true });
-}
+enhancePage();
+if (window.swup) setupPhotoSwipe();
+else document.addEventListener("swup:enable", setupPhotoSwipe, { once: true });
 </script>

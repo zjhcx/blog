@@ -143,6 +143,7 @@ export const es: Translation = {
 	[Key.timelineLoadFailed]: "Failed to load timeline: ",
 	[Key.timelineEmpty]: "No timeline entries yet.",
 	[Key.timelineLoading]: "Loading...",
+	[Key.timelineRetry]: "Reintentar",
 	[Key.timelineLoadMore]: "Load more",
 
 	[Key.favs]: "Favoritos de Bilibili",
