@@ -262,6 +262,13 @@ export const linksConfig: FriendLink[] = [
 			"https://i1.hdslb.com/bfs/face/87e609940c74ed2e7dcf6b2b19b3029f8e1566e1.jpg",
 		desc: "小小电子xxdz（電籽）的个人官网，分享原创项目、B站视频、术力口音乐、编程作品等",
 	},
+	{
+		name: "linmeng'blog",
+		url: "https://kslinmeng.cn/",
+		avatar:
+			"https://cdn.kslinmeng.cn/gh/tanf/my-photos@main/new-windows1/20260901222623983.png",
+		desc: "爱吃柠檬",
+	},
 ];
 
 export const LinksPageConfig: LinksPageConfigType = {
