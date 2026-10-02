@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { loadStylesheet } from "@/utils/lazy-resources";
 	import { url } from "@/utils/url-utils";
 	import { language } from "@/i18n/client";
 	import type { WalineInstance } from "@waline/client";
@@ -93,7 +92,6 @@
 			walineModulePromise ??= Promise.all([
 				import(/* @vite-ignore */ new URL(url("/vendor/waline/waline.js"), window.location.origin).href) as Promise<typeof import("@waline/client")>,
 				loadWalineStyle(),
-				loadStylesheet(url("/vendor/waline.css")),
 			]).then(([module]) => module);
 			const { init } = await walineModulePromise;
 			if (!mounted || !container?.isConnected) return;
