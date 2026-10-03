@@ -1,3 +1,6 @@
+/*
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+
 /rss.xml
   Content-Type: text/xml; charset=utf-8
 
