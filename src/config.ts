@@ -61,7 +61,7 @@ export const analyticsConfig: AnalyticsConfig = {
 		measurementId: "", // Google Analytics 4 衡量 ID，如 G-XXXXXXXXXX
 	},
 	umami: {
-		enable: true,
+		enable: false,
 		scriptUrl: "https://u.zjh.li/script.js",
 		websiteId: "af3c55e4-3bc6-40d6-a4aa-b3c32f8d65ed",
 	},
