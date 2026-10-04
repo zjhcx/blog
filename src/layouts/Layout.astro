@@ -11,7 +11,7 @@ import "../styles/markdown-extend.css";
 
 import ConfigCarrier from "@components/ConfigCarrier.astro";
 import OpenGraph, { type OpenGraphArticle } from "@components/OpenGraph.astro";
-import { customHtmlConfig, profileConfig, siteConfig } from "@/config";
+import { analyticsConfig, customHtmlConfig, profileConfig, siteConfig } from "@/config";
 import {
 	AUTO_MODE,
 	BANNER_HEIGHT,
@@ -94,11 +94,28 @@ const bannerOffsetByPosition = {
 const bannerOffset =
 	bannerOffsetByPosition[siteConfig.banner.position || "center"];
 const pageBgImage = `url("${url("/bg.webp")}")`;
+const googleMeasurementId = analyticsConfig.google.measurementId.trim();
+const umamiScriptUrl = analyticsConfig.umami.scriptUrl.trim();
+const umamiWebsiteId = analyticsConfig.umami.websiteId.trim();
 ---
 
 <!DOCTYPE html>
 <html lang={siteLang} prefix="og: https://ogp.me/ns# article: https://ogp.me/ns/article#" class="bg-[var(--page-bg)] transition text-[14px] md:text-[16px]">
 	<head>
+		{analyticsConfig.google.enable && googleMeasurementId && (
+			<>
+				<script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(googleMeasurementId)}`}></script>
+				<script is:inline define:vars={{ googleMeasurementId }}>
+					window.dataLayer = window.dataLayer || [];
+					function gtag() { window.dataLayer.push(arguments); }
+					gtag('js', new Date());
+					gtag('config', googleMeasurementId);
+				</script>
+			</>
+		)}
+		{analyticsConfig.umami.enable && umamiScriptUrl && umamiWebsiteId && (
+			<script is:inline defer src={umamiScriptUrl} data-website-id={umamiWebsiteId}></script>
+		)}
 
 		<title>{pageTitle}</title>
 

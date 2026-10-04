@@ -1,5 +1,6 @@
 import I18nKey from "./i18n/i18nKey";
 import type {
+	AnalyticsConfig,
 	BangumiConfig as BangumiConfigType,
 	CommentConfig as CommentConfigType,
 	CustomHtmlConfig as CustomHtmlConfigType,
@@ -51,6 +52,19 @@ export const siteConfig: SiteConfig = {
 		//   sizes: '32x32',              // (Optional) Size of the favicon, set only if you have favicons of different sizes
 		// }
 	],
+};
+
+// 两种统计可独立开启；关闭或缺少必要参数时不加载对应脚本。
+export const analyticsConfig: AnalyticsConfig = {
+	google: {
+		enable: false,
+		measurementId: "", // Google Analytics 4 衡量 ID，如 G-XXXXXXXXXX
+	},
+	umami: {
+		enable: true,
+		scriptUrl: "https://u.zjh.li/script.js",
+		websiteId: "af3c55e4-3bc6-40d6-a4aa-b3c32f8d65ed",
+	},
 };
 
 export const viewCountConfig: ViewCountConfig = {

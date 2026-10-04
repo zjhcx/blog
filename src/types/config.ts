@@ -39,6 +39,18 @@ export type SiteConfig = {
 	favicon: Favicon[];
 };
 
+export type AnalyticsConfig = {
+	google: {
+		enable: boolean;
+		measurementId: string;
+	};
+	umami: {
+		enable: boolean;
+		scriptUrl: string;
+		websiteId: string;
+	};
+};
+
 export type CustomHtmlConfig = {
 	/** Inserted immediately after the opening body tag. */
 	top: string;
