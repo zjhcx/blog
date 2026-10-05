@@ -9,6 +9,9 @@ description: 本站提供的各种服务
 地址：
 ::link{url="https://api.zjh.li" title="API" desc="GoAPI"}
 ::github{repo="zjhcx/goapi"}
+# GitHub卡片
+地址：
+::link{url="https://ghcd.zjh.li" title="GitHub卡片" desc="GitHub卡片服务"}
 # GitHub加速
 ## 文件加速
 **地址：** [https://ghraw.zjh.li](https://ghraw.zjh.li)
