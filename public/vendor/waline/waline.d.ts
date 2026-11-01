@@ -664,7 +664,14 @@ interface WalineSearchOptions {
   more?: (word: string, currentCount: number) => Promise<WalineSearchResult>;
 }
 type WalineMeta = 'nick' | 'mail' | 'link';
-type WalineImageUploader = (image: File) => Promise<string>;
+interface WalineUploadCaptcha {
+  cap?: string;
+  turnstile?: string;
+  recaptchaV3?: string;
+}
+type WalineImageUploader = (image: File, options?: {
+  getCaptcha?: () => Promise<WalineUploadCaptcha>;
+}) => Promise<string>;
 type WalineHighlighter = (code: string, lang: string) => string;
 type WalineTeXRenderer = (blockMode: boolean, tex: string) => string;
 //#endregion
@@ -1301,5 +1308,5 @@ export interface WalineStarResult {
 }
 export declare const Star: ({ el, path, lang, serverURL, onRate }: WalineStarOptions) => WalineStarResult;
 //#endregion
-export { type BaseWalineResponseComment, type WalineAbort, type WalineChildComment, type WalineComment, type WalineCommentData, type WalineCommentSorting, type WalineCommentStatus, type WalineDateLocale, type WalineEmojiInfo, type WalineEmojiMaps, type WalineEmojiPresets, type WalineHighlighter, type WalineImageUploader, type WalineInitOptions, type WalineLevelLocale, type WalineLocale, type WalineLoginStatus, type WalineMeta, type WalineProps, type WalineReactionLocale, type WalineRootComment, type WalineSearchImageData, type WalineSearchOptions, type WalineSearchResult, type WalineTeXRenderer, type WalineUserType, DEFAULT_LOCALES as defaultLocales };
+export { type BaseWalineResponseComment, type WalineAbort, type WalineChildComment, type WalineComment, type WalineCommentData, type WalineCommentSorting, type WalineCommentStatus, type WalineDateLocale, type WalineEmojiInfo, type WalineEmojiMaps, type WalineEmojiPresets, type WalineHighlighter, type WalineImageUploader, type WalineInitOptions, type WalineLevelLocale, type WalineLocale, type WalineLoginStatus, type WalineMeta, type WalineProps, type WalineReactionLocale, type WalineRootComment, type WalineSearchImageData, type WalineSearchOptions, type WalineSearchResult, type WalineTeXRenderer, type WalineUploadCaptcha, type WalineUserType, DEFAULT_LOCALES as defaultLocales };
 //# sourceMappingURL=waline.d.ts.map
