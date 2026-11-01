@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { url } from "@/utils/url-utils";
 	import { language } from "@/i18n/client";
-	import type { WalineInstance } from "@waline/client";
+	import type { WalineInstance } from "../../public/vendor/waline/waline";
 	import { onMount } from "svelte";
 
 	export let serverURL = "";
@@ -13,7 +13,7 @@
 	let waline: WalineInstance | null = null;
 	let mounted = false;
 	let syncQueue = Promise.resolve();
-	let walineModulePromise: Promise<typeof import("@waline/client")> | null = null;
+	let walineModulePromise: Promise<typeof import("../../public/vendor/waline/waline")> | null = null;
 
 	let retryTimer: ReturnType<typeof setTimeout> | undefined;
 	let retryCount = 0;
@@ -82,6 +82,7 @@
 			path,
 			lang: resolveWalineLanguage($language),
 			dark: "html.dark",
+			imageUploader: "s3" as const,
 			capApiEndpoint: capApiEndpoint.trim(),
 			capWidgetUrl: capWidgetUrl.trim().startsWith("/")
 				? url(capWidgetUrl.trim())
@@ -90,7 +91,7 @@
 
 		if (!waline) {
 			walineModulePromise ??= Promise.all([
-				import(/* @vite-ignore */ new URL(url("/vendor/waline/waline.js"), window.location.origin).href) as Promise<typeof import("@waline/client")>,
+				import(/* @vite-ignore */ new URL(url("/vendor/waline/waline.js"), window.location.origin).href) as Promise<typeof import("../../public/vendor/waline/waline")>,
 				loadWalineStyle(),
 			]).then(([module]) => module);
 			const { init } = await walineModulePromise;
