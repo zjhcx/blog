@@ -32,3 +32,12 @@ try {
 } catch (error) {
 	if (error?.code !== "ENOENT") throw error;
 }
+
+// Files copied from public/vendor that are never requested by the browser.
+for (const file of ["vendor/waline/waline.d.ts", "vendor/cap/README.md"]) {
+	try {
+		await rm(path.resolve("dist", file));
+	} catch (error) {
+		if (error?.code !== "ENOENT") throw error;
+	}
+}

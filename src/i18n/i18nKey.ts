@@ -137,6 +137,8 @@ enum I18nKey {
 	timelineLoadFailed = "timelineLoadFailed",
 	timelineEmpty = "timelineEmpty",
 	timelineLoading = "timelineLoading",
+	commentsLoading = "commentsLoading",
+	commentsLoadFailed = "commentsLoadFailed",
 	timelineLoadMore = "timelineLoadMore",
 	timelineRetry = "timelineRetry",
 

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { url } from "@/utils/url-utils";
-	import { language } from "@/i18n/client";
+	import { language, translate } from "@/i18n/client";
+	import I18nKey from "@/i18n/i18nKey";
 	import type { WalineInstance } from "../../public/vendor/waline/waline";
 	import { onMount } from "svelte";
 
@@ -17,6 +18,7 @@
 
 	let retryTimer: ReturnType<typeof setTimeout> | undefined;
 	let retryCount = 0;
+	let status: "loading" | "ready" | "error" = "loading";
 
 	function loadWalineStyle(): Promise<void> {
 		const existing = document.getElementById("waline-style") as HTMLLinkElement | null;
@@ -74,6 +76,7 @@
 		if (!normalizedServerURL) {
 			waline?.destroy();
 			waline = null;
+			status = "ready";
 			return;
 		}
 
@@ -101,6 +104,7 @@
 				el: container,
 				...options,
 			});
+			status = "ready";
 			return;
 		}
 
@@ -108,6 +112,7 @@
 	}
 
 	function queueWalineSync(): void {
+		if (!waline) status = "loading";
 		syncQueue = syncQueue.then(syncWaline).then(() => {
 			retryCount = 0;
 		}).catch((error) => {
@@ -119,8 +124,15 @@
 					retryTimer = undefined;
 					queueWalineSync();
 				}, 1000 * 2 ** retryCount++);
+			} else if (retryTimer === undefined) {
+				status = "error";
 			}
 		});
+	}
+
+	function retry(): void {
+		retryCount = 0;
+		queueWalineSync();
 	}
 
 	onMount(() => {
@@ -145,4 +157,16 @@
 	}
 </script>
 
+{#if status !== "ready"}
+	<div class="flex items-center justify-center gap-3 py-10 text-50" role="status" aria-live="polite">
+		{#if status === "loading"}
+			<span class="h-5 w-5 animate-spin rounded-full border-2 border-[var(--primary)] border-t-transparent" aria-hidden="true"></span>
+			<span>{translate(I18nKey.commentsLoading, $language)}</span>
+		{:else}
+			<button type="button" class="btn-plain rounded-lg px-4 py-2" on:click={retry}>
+				{translate(I18nKey.commentsLoadFailed, $language)}
+			</button>
+		{/if}
+	</div>
+{/if}
 <div bind:this={container} class="waline-root"></div>

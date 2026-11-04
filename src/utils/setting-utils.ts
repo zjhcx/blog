@@ -58,6 +58,8 @@ export function applyThemeToDocument(theme: LIGHT_DARK_MODE) {
 			}
 			break;
 	}
+	document.documentElement.style.colorScheme =
+		document.documentElement.classList.contains("dark") ? "dark" : "light";
 
 	// Set the theme for Expressive Code
 	document.documentElement.setAttribute(

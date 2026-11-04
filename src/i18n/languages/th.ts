@@ -141,6 +141,8 @@ export const th: Translation = {
 	[Key.timelineLoadFailed]: "Failed to load timeline: ",
 	[Key.timelineEmpty]: "No timeline entries yet.",
 	[Key.timelineLoading]: "Loading...",
+	[Key.commentsLoading]: "กำลังโหลดความคิดเห็น…",
+	[Key.commentsLoadFailed]: "โหลดความคิดเห็นไม่สำเร็จ คลิกเพื่อลองใหม่",
 	[Key.timelineRetry]: "ลองอีกครั้ง",
 	[Key.timelineLoadMore]: "Load more",
 

@@ -3,7 +3,8 @@ export const PAGE_SIZE = 8;
 export const LIGHT_MODE = "light",
 	DARK_MODE = "dark",
 	AUTO_MODE = "auto";
-export const DEFAULT_THEME = AUTO_MODE;
+// Dark first: visitors without a saved preference get dark mode.
+export const DEFAULT_THEME = DARK_MODE;
 
 // Banner height unit: vh
 export const BANNER_HEIGHT = 35;

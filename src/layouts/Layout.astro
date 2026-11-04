@@ -100,8 +100,41 @@ const umamiWebsiteId = analyticsConfig.umami.websiteId.trim();
 ---
 
 <!DOCTYPE html>
-<html lang={siteLang} prefix="og: https://ogp.me/ns# article: https://ogp.me/ns/article#" class="bg-[var(--page-bg)] transition text-[14px] md:text-[16px]">
+<html lang={siteLang} prefix="og: https://ogp.me/ns# article: https://ogp.me/ns/article#" class="dark bg-[var(--page-bg)] transition text-[14px] md:text-[16px]" style="color-scheme: dark">
 	<head>
+		<meta charset="UTF-8" />
+		<meta name="color-scheme" content="dark light" />
+		<!-- Set the theme before the page is rendered to avoid a flash -->
+		<script is:inline define:vars={{DEFAULT_THEME, LIGHT_MODE, DARK_MODE, AUTO_MODE, BANNER_HEIGHT_EXTEND, PAGE_WIDTH, configHue}}>
+			// Load the theme from local storage
+			const theme = localStorage.getItem('theme') || DEFAULT_THEME;
+			switch (theme) {
+				case LIGHT_MODE:
+					document.documentElement.classList.remove('dark');
+					break
+				case DARK_MODE:
+					document.documentElement.classList.add('dark');
+					break
+				case AUTO_MODE:
+					if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+						document.documentElement.classList.add('dark');
+					} else {
+						document.documentElement.classList.remove('dark');
+					}
+			}
+
+			document.documentElement.style.colorScheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+
+			// Load the hue from local storage
+			const hue = localStorage.getItem('hue') || configHue;
+			document.documentElement.style.setProperty('--hue', hue);
+
+			// calculate the --banner-height-extend, which needs to be a multiple of 4 to avoid blurry text
+			let offset = Math.floor(window.innerHeight * (BANNER_HEIGHT_EXTEND / 100));
+			offset = offset - offset % 4;
+			document.documentElement.style.setProperty('--banner-height-extend', `${offset}px`);
+		</script>
+
 		{analyticsConfig.google.enable && googleMeasurementId && (
 			<>
 				<script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(googleMeasurementId)}`}></script>
@@ -119,7 +152,6 @@ const umamiWebsiteId = analyticsConfig.umami.websiteId.trim();
 
 		<title>{pageTitle}</title>
 
-		<meta charset="UTF-8" />
 		<meta name="description" content={metaDescription}>
 		<meta name="author" content={profileConfig.name}>
 		<link rel="canonical" href={canonicalUrl.href} />
@@ -144,34 +176,6 @@ const umamiWebsiteId = analyticsConfig.umami.websiteId.trim();
 			/>
 		))}
 
-		<!-- Set the theme before the page is rendered to avoid a flash -->
-		<script is:inline define:vars={{DEFAULT_THEME, LIGHT_MODE, DARK_MODE, AUTO_MODE, BANNER_HEIGHT_EXTEND, PAGE_WIDTH, configHue}}>
-			// Load the theme from local storage
-			const theme = localStorage.getItem('theme') || DEFAULT_THEME;
-			switch (theme) {
-				case LIGHT_MODE:
-					document.documentElement.classList.remove('dark');
-					break
-				case DARK_MODE:
-					document.documentElement.classList.add('dark');
-					break
-				case AUTO_MODE:
-					if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-						document.documentElement.classList.add('dark');
-					} else {
-						document.documentElement.classList.remove('dark');
-					}
-			}
-
-			// Load the hue from local storage
-			const hue = localStorage.getItem('hue') || configHue;
-			document.documentElement.style.setProperty('--hue', hue);
-
-			// calculate the --banner-height-extend, which needs to be a multiple of 4 to avoid blurry text
-			let offset = Math.floor(window.innerHeight * (BANNER_HEIGHT_EXTEND / 100));
-			offset = offset - offset % 4;
-			document.documentElement.style.setProperty('--banner-height-extend', `${offset}px`);
-		</script>
 		<style define:vars={{
 			configHue,
 			'page-width': `${PAGE_WIDTH}rem`,

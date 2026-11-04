@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "check": "astro check",
-    "build": "astro build && pagefind --site dist && node scripts/prune-dist.mjs",
+    "build": "astro build && node scripts/optimize-dist.mjs && pagefind --site dist && node scripts/prune-dist.mjs",
     "perf:check": "node perf/bench/check-budget.mjs",
     "preview": "astro preview",
     "astro": "astro",
@@ -73,6 +73,7 @@
     "@types/mdast": "^4.0.4",
     "@types/sanitize-html": "^2.16.1",
     "@waline/client": "^3.15.2",
+    "html-minifier-terser": "^7.2.0",
     "rollup": "^4.62.4"
   },
   "allowScripts": {

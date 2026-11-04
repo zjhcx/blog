@@ -34,6 +34,10 @@ export default defineConfig({
 	site,
 	base,
 	trailingSlash: "always",
+	build: {
+		// Ship CSS as cacheable files instead of repeating ~36KB of inline <style> in every HTML page.
+		inlineStylesheets: "never",
+	},
 	integrations: [
 		sitemap(),
 		swup({
