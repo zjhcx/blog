@@ -25,6 +25,7 @@ import { LinkCardComponent } from "./src/plugins/rehype-component-link-card.mjs"
 import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
 import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
+import { iconifyOffline } from "./src/plugins/vite-iconify-offline.mjs";
 
 const site = process.env.SITE || "https://zjh.li";
 const base = process.env.SITE_BASE || process.env.BASE_PATH || "/";
@@ -175,7 +176,7 @@ export default defineConfig({
 		}),
 	},
 	vite: {
-		plugins: [tailwindcss()],
+		plugins: [tailwindcss(), iconifyOffline()],
 		build: {
 			rollupOptions: {
 				onwarn(warning, warn) {

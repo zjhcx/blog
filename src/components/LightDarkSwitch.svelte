@@ -2,6 +2,7 @@
 import { AUTO_MODE, DARK_MODE, LIGHT_MODE } from "@constants/constants.ts";
 import I18nKey from "@i18n/i18nKey";
 import Icon from "@iconify/svelte";
+import "@/utils/iconify-offline";
 import {
 	applyThemeToDocument,
 	getStoredTheme,

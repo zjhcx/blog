@@ -1,5 +1,6 @@
 <script lang="ts">
 import Icon from "@iconify/svelte";
+import "@/utils/iconify-offline";
 import { onMount } from "svelte";
 import I18nKey from "@/i18n/i18nKey";
 import { language, translate } from "@/i18n/client";

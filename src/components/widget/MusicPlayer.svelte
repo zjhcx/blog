@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
+	import "@/utils/iconify-offline";
 	import { language, translate } from "@/i18n/client";
 	import Key from "@/i18n/i18nKey";
 	import { loadLrcLines, type MusicLyricLine } from "@/utils/music-lrc";

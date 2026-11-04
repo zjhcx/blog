@@ -1,6 +1,7 @@
 <script lang="ts">
 import I18nKey from "@i18n/i18nKey";
 import Icon from "@iconify/svelte";
+import "@/utils/iconify-offline";
 import { getDefaultHue, getHue, setHue } from "@utils/setting-utils";
 import { language, translate } from "@/i18n/client";
 
