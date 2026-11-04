@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "default": "",
+      "type": "string"
+    },
+    "published": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "draft": {
+      "default": false,
+      "type": "boolean"
+    },
+    "novel": {
+      "type": "string"
+    },
+    "novelTitle": {
+      "type": "string"
+    },
+    "series": {
+      "type": "string"
+    },
+    "seriesOrder": {
+      "type": "number"
+    },
+    "volume": {
+      "type": "number"
+    },
+    "volumeTitle": {
+      "type": "string"
+    },
+    "chapter": {
+      "type": "number"
+    },
+    "part": {
+      "type": "number"
+    },
+    "characters": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "novel",
+    "novelTitle"
+  ]
+}

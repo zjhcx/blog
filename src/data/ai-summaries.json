@@ -1,0 +1,30 @@
+{
+  "4rink": {
+    "summary": "4r.ink 是一个为 ICP 备案预留并用于短链接的域名，当前由 Spaceship 注册，使用阿里云 ESA CDN 和 aTrustDNS，锁定期到 2026-08-26 后可转注册商。计划备案后接入阿里云国内 CDN，通过境外回源和海外中转链路为国内访问加速；预计 2026 年 Q4 备案落地，前提是转入国内注册商、具备云服务器并完成实名认证。",
+    "sourceHash": "e1dbca05748b5f13e8199ff858481edd57432bbfbbc493a3012945587bc87e0f",
+    "model": "Qwen3.8-27B",
+    "generatedAt": "2026-11-04T11:05:44.523Z",
+    "language": "zh-CN"
+  },
+  "free-aws": {
+    "summary": "文章介绍了一种号称无需信用卡注册AWS的操作流程：通过特定注册页完成注册，在填写地址时借助第三方网站生成信息，随后在AWS控制台搜索并启动EC2实例，再按个人偏好进行有限配置。",
+    "sourceHash": "09ec6fd0c7e4e53cbe80c724af906f593da36b96155a00a5392657372f4ac2d1",
+    "model": "Qwen3.8-27B",
+    "generatedAt": "2026-11-04T11:05:55.339Z",
+    "language": "zh-CN"
+  },
+  "service": {
+    "summary": "该文介绍了作者提供的几类服务：GoAPI 接口服务、GitHub 卡片服务，以及 GitHub 加速服务；其中加速服务用于访问 GitHub 原始文件和用户上传图片，通过替换相应 GitHub 原始地址为加速地址即可使用。",
+    "sourceHash": "74ec5946d7ea3be81fea3bbb1aed40d86664341df6692eef9fdd776022ea5c9f",
+    "model": "Qwen3.8-27B",
+    "generatedAt": "2026-11-04T11:06:07.866Z",
+    "language": "zh-CN"
+  },
+  "联系方式": {
+    "summary": "该页面提供联系方式，列出哔哩哔哩和 GitHub 主页链接，两者均标注为常用。",
+    "sourceHash": "dd7759f29ee141bd462e21958430d37ea03cb2a33ef7363108090842696d1c28",
+    "model": "Qwen3.8-27B",
+    "generatedAt": "2026-11-04T11:06:21.556Z",
+    "language": "zh-CN"
+  }
+}

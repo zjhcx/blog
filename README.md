@@ -81,7 +81,7 @@ The `/timeline/` page renders Telegram channel messages from static JSON. The br
 
 ### Input format
 
-The Telegram collector writes `/home/chenxi/tg_timeline/messages.json` as either a JSON array or an object containing a `messages` array:
+The Cloudflare Worker returns a JSON array using the same `id` / `time` / `content` contract as the original Python exporter. Local JSON input also accepts an object containing a `messages` array:
 
 ```json
 [
@@ -99,14 +99,28 @@ The Telegram collector writes `/home/chenxi/tg_timeline/messages.json` as either
 
 ### Generate static chunks
 
-Run the generator before building the site:
+For the authenticated Worker, set secrets in your shell or CI environment, then generate **before** building:
+
+```sh
+export TIMELINE_API_URL=https://tg-timeline.example.workers.dev
+export EXPORT_TOKEN=your-worker-access-token
+npm run timeline:generate -- --chunk-size 30 && npm run build
+# Or use: npm run timeline:generate -- --api-url https://tg-timeline.example.workers.dev/messages.json
+```
+
+`TIMELINE_API_URL` (or `--api-url`) can be the Worker root or `/messages.json` endpoint. The generator sends `Authorization: Bearer $EXPORT_TOKEN` and explicitly supplies `lastMessageId` from the local generation state (`0` for the first synchronization), overriding any cursor in the URL. HTTPS is required except for loopback development. Redirects are rejected. The request has a 120-second timeout; HTTP, network, or validation errors stop generation without advancing the cursor. Retry the same command after resolving the error.
+
+For an existing local export, use:
 
 ```sh
 npm run timeline:generate -- \
-  --input /home/chenxi/tg_timeline/messages.json \
-  --chunk-size 30
-npm run build
+  --input ../tg_timeline/messages.json \
+  --chunk-size 30 && npm run build
 ```
+
+Explicit `--input` always selects local JSON even if `TIMELINE_API_URL` is set. Without an API URL or explicit input, the default remains `../tg_timeline/messages.json`. A missing input is an error; an actual empty array is a successful synchronization with no new messages. `npm run build` alone does not contact the Worker.
+
+Keep `EXPORT_TOKEN` exclusively in the generator/CI environment, never in `PUBLIC_*` variables, browser code, or static JSON. Setting it via `export` or CI secrets does not require an environment file (the generator does not automatically load `.env`). The resulting timeline is public: only export channel content intended for publication.
 
 The generator writes:
 
@@ -114,16 +128,75 @@ The generator writes:
 public/timeline/
 ├── manifest.json
 ├── generation-state.json
-└── chunk-<oldest-id>-<newest-id>.json
+└── chunk-<oldest-id>-<newest-id>-<content-hash>.json
 ```
 
 - `manifest.json` lists chunks in newest-first order for dynamic loading.
 - Chunk files are immutable and can use long-lived HTTP caching.
-- `generation-state.json` records `lastMessageId` and `lastMessageTime`. The collector must use this file as the next synchronization cursor and return only newer messages.
-- A repeated run with the same input is idempotent and produces no duplicate chunks.
-- If there are no new messages, the generator only refreshes metadata and keeps the existing chunks.
+- `generation-state.json` records `lastMessageId` as a decimal **string** and `lastMessageTime`. Only the generator advances this completion cursor, after publishing all chunks and the manifest; the Worker never owns it. Empty/whitespace-only messages still advance the cursor without producing visible entries. Other text is preserved verbatim.
+- Input IDs are deduplicated numerically without floating-point conversion. Unsafe numeric IDs, invalid timestamps, and non-string content are rejected.
+- Files are replaced atomically using temporary files in the output directory. Chunk URLs include a content hash and old chunks remain available for cached manifests. A retry after manifest publication but before cursor publication excludes already-published IDs.
+- A repeated run with the same input is idempotent and produces no duplicate chunks. If there are no new messages, the generator only refreshes metadata and keeps the existing chunks.
+- Synchronization is append-only; edits/deletions of older Telegram messages are not reconciled. Use a new, empty output directory for a full rebuild or a different channel; never reuse another channel's cursor.
 
-The backend contract is documented separately in `/home/chenxi/tg_timeline/REQUEST.md` on the deployment host.
+Persist and restore the **entire** `public/timeline/` directory between CI runs, not just the cursor. Serialize generation and deployment for each timeline; do not run concurrent generators against one output directory. Publish chunks, manifest and state together, and only reuse a new checkpoint when those artifacts are retained for the next run. A failed deployment must not leave the next run with a checkpoint whose chunks were discarded. Manifest/state should revalidate; content-addressed chunks can use long-lived immutable caching.
+
+The Worker setup, login/session migration, and incremental protocol are documented in the reference project's `README.md` (`../tg_timeline/README.md`). Real Telegram authorization and network access require a deployed-Worker smoke test; local generator tests cannot verify them.
+
+Run generator regression tests with `npm run timeline:test`.
+
+## ✨ AI 文章总结
+
+文章页支持在正文上方显示预生成的 AI 总结。总结读取 [ai-summaries.json](<src/data/ai-summaries.json>)；文件初始为空，不会显示虚构内容或空卡片，也不会在访客浏览时请求模型。组件复用站点配色并支持现有站点语言。正文或 frontmatter 修改后，带有旧内容哈希的总结会自动隐藏，重新生成即可恢复。
+
+### 命令行生成
+
+需要支持 `fetch` 的 Node.js（使用项目要求的 Node 版本）。在项目根目录执行：
+
+```sh
+# 密钥仅保存在本地终端或 CI secret，不要使用 PUBLIC_ 前缀
+export AI_SUMMARY_API_KEY='your-api-key'
+export AI_SUMMARY_BASE_URL='https://api.openai.com/v1'
+export AI_SUMMARY_MODEL='gpt-4o-mini'
+
+# 先查看待处理文章，不发送 API 请求
+npm run summary:generate -- --dry-run
+
+# 批量生成公开文章的总结，再构建网站
+npm run summary:generate
+npm run build
+
+# 单篇：以文章相对路径或 Astro 文章 ID 指定
+npm run summary:generate -- --post '4r.ink.md'
+
+# 强制重新生成，或指定总结语言
+npm run summary:generate -- --force --lang en
+npm run summary:generate -- --help
+```
+
+接口采用 OpenAI 兼容的 `/chat/completions`，`--base-url` 指向 API 基地址（通常以 `/v1` 结尾），也可用 `--model` 覆盖模型。兼容 `OPENAI_API_KEY`、`OPENAI_BASE_URL`、`OPENAI_MODEL`；`AI_SUMMARY_*` 优先。脚本不自动加载 `.env`，请在终端导出变量或由 CI 注入。HTTPS 为默认要求，仅本机回环地址允许 HTTP。文章内容会发送给配置的模型服务，请先确认文章不含敏感信息；草稿默认不处理。
+
+已有且内容哈希、语言、模型一致的总结会跳过，避免重复付费。输出为按文章 ID 索引的 JSON，含 `summary`、`sourceHash`、`model`、`generatedAt`、`language`。生成失败时不提交本次变更；同一个输出文件不要并行生成。构建网站本身不会调用模型。可用 `--output <file.json>` 输出到其他文件，但页面只读取默认文件。
+
+### 使用本地 JSON
+
+无需模型 API 也可导入已有总结。创建 JSON 文件，以 Astro 文章 ID 为键（通常是去掉扩展名的小写文件路径，尊重 frontmatter `slug`）：
+
+```json
+{
+  "4rink": {
+    "summary": "这里填写经过审核的文章总结。"
+  }
+}
+```
+
+```sh
+npm run summary:generate -- --input ./summaries.json
+npm run build
+npm run summary:test
+```
+
+导入会从本地文章计算内容哈希。空 JSON 不会触发 API 请求。也可以直接编辑默认 [总结数据](<src/data/ai-summaries.json>)，同样使用上述结构；省略 `sourceHash` 的手工总结不会随文章修改自动隐藏。总结按纯文本输出而非 HTML/Markdown，避免模型输出被当作可执行 HTML。请审核 AI 生成结果；页面会显示「由 AI 生成，仅供参考」提示。
 
 ## 📝 Frontmatter of Posts
 

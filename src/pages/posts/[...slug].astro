@@ -1,6 +1,7 @@
 ---
 import { render } from "astro:content";
 import path from "node:path";
+import AISummary from "@components/AISummary.astro";
 import License from "@components/misc/License.astro";
 import Markdown from "@components/misc/Markdown.astro";
 import MarkdownEnhancements from "@components/misc/MarkdownEnhancements.astro";
@@ -128,6 +129,8 @@ const jsonLd = {
                 <ImageWrapper id="post-cover" src={entry.data.image} basePath={path.join("content/posts/", getDir(entry.id))} class="mb-8 rounded-xl banner-container onload-animation" loading="eager" fetchpriority="high"/>
             }
 
+
+            <AISummary slug={entry.id} filePath={entry.filePath} lang={entry.data.lang} />
 
             <Markdown class="mb-6 markdown-content onload-animation">
                 <Content />

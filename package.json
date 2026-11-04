@@ -13,6 +13,9 @@
     "type-check": "tsc --noEmit --isolatedDeclarations",
     "new-post": "node scripts/new-post.js",
     "timeline:generate": "node scripts/generate-timeline.mjs",
+    "timeline:test": "node --test scripts/generate-timeline.test.mjs",
+    "summary:generate": "node scripts/generate-ai-summary.mjs",
+    "summary:test": "node --test scripts/generate-ai-summary.test.mjs",
     "format": "biome format --write ./src",
     "lint": "biome check --write ./src"
   },

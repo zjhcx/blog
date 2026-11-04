@@ -1,0 +1,47 @@
+---
+import { createHash } from "node:crypto";
+import { readFile } from "node:fs/promises";
+import { Icon } from "astro-icon/components";
+import summaries from "../data/ai-summaries.json";
+import { siteConfig } from "../config";
+import { getAISummaryLabels } from "../i18n/ai-summary";
+
+interface Props {
+	slug: string;
+	filePath?: string;
+	lang?: string;
+}
+interface SummaryRecord {
+	summary: string;
+	sourceHash?: string;
+}
+
+const { slug, filePath, lang } = Astro.props;
+const labels = getAISummaryLabels(lang || siteConfig.lang || "en");
+const records = summaries as Record<string, SummaryRecord>;
+const record = Object.hasOwn(records, slug) ? records[slug] : undefined;
+let summary = typeof record?.summary === "string" ? record.summary.trim() : "";
+// Do not display generated text for an older revision of the article.
+if (summary && record?.sourceHash) {
+	if (!filePath) {
+		summary = "";
+	} else {
+		const source = await readFile(filePath, "utf8");
+		if (
+			createHash("sha256").update(source).digest("hex") !== record.sourceHash
+		) {
+			summary = "";
+		}
+	}
+}
+---
+{summary && (
+	<aside aria-label={labels.title} data-pagefind-ignore class="mb-6 rounded-xl bg-[var(--license-block-bg)] px-5 py-4 onload-animation">
+		<div class="flex items-center gap-2 font-bold text-[var(--primary)] mb-2">
+			<Icon name="material-symbols:auto-awesome-rounded" class="text-xl" />
+			<span>{labels.title}</span>
+		</div>
+		<p class="whitespace-pre-line break-words text-black/75 dark:text-white/75 leading-relaxed">{summary}</p>
+		<p class="mt-3 text-xs text-black/50 dark:text-white/50">{labels.notice}</p>
+	</aside>
+)}

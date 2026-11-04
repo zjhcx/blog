@@ -1,13 +1,30 @@
 {
-	"pid": 1769768,
+	"pid": 2819591,
 	"port": 4321,
 	"url": "http://localhost:4321",
 	"urls": {
 		"local": [
 			"http://localhost:4321/"
 		],
-		"network": []
+		"network": [
+			"http://192.168.1.82:4321/",
+			"http://172.18.0.1:4321/",
+			"http://172.19.0.1:4321/",
+			"http://172.20.0.1:4321/",
+			"http://10.42.0.0:4321/",
+			"http://10.42.0.1:4321/",
+			"http://10.0.0.3:4321/"
+		],
+		"networkInterfaceNames": [
+			"eno1",
+			"br-3d5043bd4bdc",
+			"br-a87158c40ce3",
+			"br-fabc00701d17",
+			"flannel.1",
+			"cni0",
+			"client_wg"
+		]
 	},
 	"background": false,
-	"startedAt": "2026-07-18T02:28:46.731Z"
+	"startedAt": "2026-10-08T12:02:54.115Z"
 }
