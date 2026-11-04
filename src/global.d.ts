@@ -40,8 +40,3 @@ interface SearchResult {
 	raw_url?: string;
 	sub_results?: SearchResult[];
 }
-
-declare module "virtual:iconify-offline" {
-	const collections: import("@iconify/types").IconifyJSON[];
-	export default collections;
-}
