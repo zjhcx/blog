@@ -1,0 +1,58 @@
+name: Mirror to Codeberg
+
+on:
+  push:
+    branches: ["**"]
+    tags: ["**"]
+  delete:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# 串行执行；每次执行重新获取当前引用，避免旧任务覆盖新状态。
+concurrency:
+  group: mirror-codeberg
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch current branches and tags
+        # 独立命名空间不包含 origin/HEAD、refs/pull/* 等非镜像引用。
+        run: |
+          git fetch --force --prune --no-tags origin \
+            '+refs/heads/*:refs/mirror/heads/*' \
+            '+refs/tags/*:refs/mirror/tags/*'
+
+      - name: Push mirror to Codeberg via SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.TARGET_SSH_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.TARGET_SSH_KNOWN_HOSTS }}
+          TARGET_REPO: git@codeberg.org:cx12/blog.git
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$SSH_PRIVATE_KEY" || -z "$SSH_KNOWN_HOSTS" ]]; then
+            echo '::error::Configure TARGET_SSH_KEY and TARGET_SSH_KNOWN_HOSTS repository secrets.'
+            exit 1
+          fi
+
+          ssh_dir="$(mktemp -d)"
+          trap 'rm -f "$ssh_dir/key" "$ssh_dir/known_hosts"; rmdir "$ssh_dir"' EXIT
+          chmod 700 "$ssh_dir"
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$ssh_dir/key"
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > "$ssh_dir/known_hosts"
+          chmod 600 "$ssh_dir/key" "$ssh_dir/known_hosts"
+          export GIT_SSH_COMMAND="ssh -i $ssh_dir/key -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$ssh_dir/known_hosts"
+
+          # 目标仓库是镜像：覆盖分支/标签，并删除源仓库中已不存在的引用。
+          git push --force --prune "$TARGET_REPO" \
+            'refs/mirror/heads/*:refs/heads/*' \
+            'refs/mirror/tags/*:refs/tags/*'
